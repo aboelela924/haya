@@ -31,8 +31,7 @@
             android:textColor="#FFFFFF"
             android:textAlignment="center"
             android:layout_gravity="center_vertical"
-            android:text="Sign in"
-            android:textAppearance="title"/>
+            android:text="Sign in"/>
 
     </LinearLayout>
 

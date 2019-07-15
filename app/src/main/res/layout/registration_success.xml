@@ -30,8 +30,7 @@
             android:textColor="#FFFFFF"
             android:textAlignment="center"
             android:layout_gravity="center_vertical"
-            android:text="Registration"
-            android:textAppearance="title"/>
+            android:text="Registration"/>
 
     </LinearLayout>
 

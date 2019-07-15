@@ -109,7 +109,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:shadowColor="#424242"
-                android:text="Make sure about your internet connection and refresh token to get updated user key"
+                android:text="Make sure about your internet connection and refresh token to get updated user key"
                 android:textSize="18sp" />
 
             <Button
@@ -133,7 +133,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/avenir_book"
-        android:text="Don’t have Account?Sign in"
+        android:text="Don’t have Account?Sign in"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/view2"

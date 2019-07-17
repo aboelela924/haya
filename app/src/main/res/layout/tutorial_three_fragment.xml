@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/top_tutorial_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/tutorial_bg"
+            android:alpha="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:text="Tutorial (Step 3/3)"
+                android:layout_gravity="center_vertical"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="32dp"
+            android:src="@drawable/tutorial_icon_3"/>
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome to Haya the Burner Chat App"
+                android:fontFamily="@font/arial_regular"
+                android:textColor="#242424"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="22sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share your Haya Burner Code with someon and keep your conversations discrete."
+                android:fontFamily="@font/avenir_book"
+                android:textColor="#242424"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:textSize="18sp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="if you delete the chat you can use another Burner Code to reconnect."
+                android:textColor="#242424"
+                android:fontFamily="@font/avenir_book"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+                <com.bignerdranch.android.haya.ui.CircleCheckBox
+                    android:id="@+id/are_terms_accepted_check_box"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:paddingLeft="5dp"
+                    app:borderThickness="2dp"
+                    app:circleBorderColor="#FF7A2F"
+                    app:innerCircleColor="#FF7A2F"
+                    app:innerCircleRadius="14dp"
+                    app:outerCircleColor="#64FF7E33"
+                    app:outerCircleRadius="6dp"
+                    app:showOuterCircle="true"
+                    app:textColor="#000000"
+                    app:textLeftPadding="5dp"
+                    app:textSize="16dp"
+                    app:tickColor="#ffffff"
+                    app:tickThickness="1dp"
+                    android:layout_marginRight="10dp" />
+                <TextView
+                    android:id="@+id/show_terms_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@string/accept_terms"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:layout_gravity="bottom"
+                android:gravity="bottom">
+                <Button
+                    android:id="@+id/go_to_registeration_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/round_button_no_opacity"
+                    android:fontFamily="@font/avenir_book"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="center"
+                    android:text="Get Started"
+                    android:textAllCaps="false"
+                    android:enabled="true"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+
+
+</LinearLayout>

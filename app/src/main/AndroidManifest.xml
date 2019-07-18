@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activities.TermsActivity"></activity>
+        <activity android:name=".view.activities.RegistrationActivity"></activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

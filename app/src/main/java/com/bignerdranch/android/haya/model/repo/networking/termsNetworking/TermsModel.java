@@ -4,16 +4,13 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.bignerdranch.android.haya.model.repo.BaseURL;
 import com.bignerdranch.android.haya.model.repo.TermsExample;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TermsModel implements Callback<TermsExample> {
 

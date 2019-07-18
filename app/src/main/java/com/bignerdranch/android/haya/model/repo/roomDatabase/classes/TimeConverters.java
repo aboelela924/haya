@@ -1,6 +1,7 @@
-package com.bignerdranch.android.haya.repository.roomDatabase.classes;
+package com.bignerdranch.android.haya.model.repo.roomDatabase.classes;
 
-import android.arch.persistence.room.TypeConverter;
+
+import androidx.room.TypeConverter;
 
 import java.util.Date;
 

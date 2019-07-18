@@ -1,16 +1,15 @@
-package com.bignerdranch.android.haya.repository.roomDatabase.classes;
+package com.bignerdranch.android.haya.model.repo.roomDatabase.classes;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.ForeignKey;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
-import java.sql.Time;
-import java.util.Calendar;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 
-import static android.arch.persistence.room.ForeignKey.CASCADE;
+import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "Messages",foreignKeys = {
                                                 @ForeignKey(entity = Chat.class,

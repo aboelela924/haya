@@ -1,15 +1,16 @@
-package com.bignerdranch.android.haya.repository.roomDatabase.dataAccessObjects;
+package com.bignerdranch.android.haya.model.repo.roomDatabase.dataAccessObjects;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Delete;
-import android.arch.persistence.room.Insert;
-import android.arch.persistence.room.OnConflictStrategy;
-import android.arch.persistence.room.Query;
-import android.arch.persistence.room.Update;
 
-import com.bignerdranch.android.haya.repository.roomDatabase.classes.Message;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.Message;
 
 import java.util.List;
+
 
 @Dao
 public interface Message_dao {

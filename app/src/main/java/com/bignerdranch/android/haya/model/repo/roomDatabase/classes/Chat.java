@@ -1,9 +1,9 @@
-package com.bignerdranch.android.haya.repository.roomDatabase.classes;
+package com.bignerdranch.android.haya.model.repo.roomDatabase.classes;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
@@ -20,7 +20,7 @@ public class Chat {
     @ColumnInfo(name = "admin_subscriber_id")
          String admin_subscriber_id;
     @ColumnInfo(name = "last_message_Date")
-    Date last_message_date;
+        Date last_message_date;
 
     public Chat(String burnercode, String conversation_nickname, String admin_subscriber_id, Date last_message_date) {
         this.burnercode = burnercode;

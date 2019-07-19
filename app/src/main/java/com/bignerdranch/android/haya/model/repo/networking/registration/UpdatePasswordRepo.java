@@ -12,7 +12,7 @@ import retrofit2.Retrofit;
 
 public class UpdatePasswordRepo implements Callback<MessageResponseUpdatePassword> {
     private static final UpdatePasswordRepo ourInstance = new UpdatePasswordRepo();
-    MutableLiveData<MessageResponseUpdatePassword> mData = new MutableLiveData<>();
+    public MutableLiveData<MessageResponseUpdatePassword> mData = new MutableLiveData<>();
 
     public static UpdatePasswordRepo getInstance() {
         return ourInstance;
@@ -32,7 +32,7 @@ public class UpdatePasswordRepo implements Callback<MessageResponseUpdatePasswor
     @Override
     public void onResponse(Call<MessageResponseUpdatePassword> call, Response<MessageResponseUpdatePassword> response) {
         if (response.isSuccessful()){
-
+            mData.setValue(response.body());
         }
     }
 

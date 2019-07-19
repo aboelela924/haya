@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.ContainerActivity"
+    android:orientation="vertical"
+    android:weightSum="3">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_weight="0.15"
+        android:orientation="horizontal"
+        android:background="@drawable/background_gradient"
+        android:weightSum="3">
+        <ImageView
+            android:layout_width="28sp"
+            android:layout_height="35sp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="0.2"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:id="@+id/container_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2.6"
+            android:fontFamily="@font/avenir_book"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:text="Conversations"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="27sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/conversations_add_button"
+            android:layout_width="28sp"
+            android:layout_height="35sp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_weight="0.2"
+            android:background="@drawable/add_icon"
+            android:layout_marginRight="10dp"/>
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/container_fragment"
+        android:name="com.bignerdranch.android.haya.view.fragments.ConversationsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2.6"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_weight="0.25"
+        android:background="@drawable/background_gradient"
+        android:orientation="horizontal"
+        android:weightSum="4">
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="2">
+            <ImageView
+                android:id="@+id/burnercode_imageview"
+                android:layout_width="30dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1.5"
+                android:adjustViewBounds="true"
+                android:background="@drawable/burner_code_icon"
+                android:scaleType="fitCenter"/>
+            <TextView
+                android:id="@+id/burnercode_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0"
+                android:text="Burner Code"
+                android:fontFamily="@font/arial_regular"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <ImageView
+                android:id="@+id/conversations_imageview"
+                android:layout_width="40dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1.5"
+                android:adjustViewBounds="true"
+                android:background="@drawable/conversation_icon" />
+            <TextView
+                android:id="@+id/conversations_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0"
+                android:text="Conversations"
+                android:fontFamily="@font/arial_regular"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="2">
+            <ImageView
+                android:id="@+id/randomchat_imageview"
+                android:layout_width="40dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1.5"
+                android:adjustViewBounds="true"
+                android:background="@drawable/random_chat_icon" />
+
+            <TextView
+                android:id="@+id/randomchat_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0"
+                android:fontFamily="@font/arial_regular"
+                android:text="Random Chat"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="2">
+            <ImageView
+                android:id="@+id/settings_imageview"
+                android:layout_width="40dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1.5"
+                android:adjustViewBounds="true"
+                android:background="@drawable/settings_icon" />
+            <TextView
+                android:id="@+id/settings_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="0"
+                android:text="Settings"
+                android:fontFamily="@font/arial_regular"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

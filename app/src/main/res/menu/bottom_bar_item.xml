@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/burner_code_item"
+        android:title="Burner Code"
+        android:icon="@drawable/burner_code_icon"/>
+
+    <item
+        android:id="@+id/conversations_item"
+        android:title="Conversations"
+        android:icon="@drawable/conversation_icon"/>
+
+    <item
+        android:id="@+id/random_chat_item"
+        android:title="Random Chat"
+        android:icon="@drawable/random_chat_icon"/>
+
+    <item
+        android:id="@+id/settings_item"
+        android:title="Settings"
+        android:icon="@drawable/settings_icon"/>
+</menu>

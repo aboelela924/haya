@@ -5,12 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 
 import com.bignerdranch.android.haya.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RegistrationSuccessActivity extends AppCompatActivity {
 
@@ -47,5 +49,11 @@ public class RegistrationSuccessActivity extends AppCompatActivity {
             charFiveEditText.setText(String.valueOf(userId.charAt(4)));
             passwordEditText.setText(String.valueOf(password));
         }
+    }
+
+    @OnClick(R.id.close_button_registeration_success)
+    public void goToBurner(View view){
+        Intent i = new Intent(this, ContainerActivity.class);
+        startActivity(i);
     }
 }

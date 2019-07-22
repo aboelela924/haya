@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.bignerdranch.android.haya.R;
+import com.bignerdranch.android.haya.model.repo.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,14 +22,17 @@ public class RegistrationSuccessActivity extends AppCompatActivity {
     @BindView(R.id.registeration_success_id_char_three) EditText charThreeEditText;
     @BindView(R.id.registeration_success_id_char_four) EditText charFourEditText;
     @BindView(R.id.registeration_success_id_char_five) EditText charFiveEditText;
+
     @BindView(R.id.password_edit_text_registeration_success) EditText passwordEditText;
 
-    private static final String USER_ID = "USER_ID";
+    private static final String USER = "USER";
     private static final String PASSWORD = "PASSWORD";
 
-    public static Intent newIntent(Context context, String userId, String password){
+    private User mUser;
+
+    public static Intent newIntent(Context context, User user, String password){
         Intent i = new Intent(context, RegistrationSuccessActivity.class);
-        i.putExtra(USER_ID, userId);
+        i.putExtra(USER, user);
         i.putExtra(PASSWORD, password);
         return i;
     }
@@ -40,7 +44,8 @@ public class RegistrationSuccessActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Intent i = getIntent();
         if(i != null){
-            String userId = i.getStringExtra(USER_ID);
+            mUser = i.getParcelableExtra(USER);
+            String userId = mUser.getUserId();
             String password = i.getStringExtra(PASSWORD);
             charOneEditText.setText(String.valueOf(userId.charAt(0)));
             charTwoEditText.setText(String.valueOf(userId.charAt(1)));
@@ -53,7 +58,7 @@ public class RegistrationSuccessActivity extends AppCompatActivity {
 
     @OnClick(R.id.close_button_registeration_success)
     public void goToBurner(View view){
-        Intent i = new Intent(this, ContainerActivity.class);
+        Intent i = ContainerActivity.newIntent(this, mUser);
         startActivity(i);
     }
 }

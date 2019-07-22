@@ -25,6 +25,7 @@ public class UpdatePasswordRepo implements Callback<MessageResponseUpdatePasswor
         Retrofit retrofit = GetRetrofit.getRetrofitInstance();
 
         RegistrationAPI api = retrofit.create(RegistrationAPI.class);
+        System.out.println(token);
         Call<MessageResponseUpdatePassword> call = api.updatePassword(token, body);
         call.enqueue(this);
     }

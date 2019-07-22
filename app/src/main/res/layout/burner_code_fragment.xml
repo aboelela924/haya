@@ -74,4 +74,14 @@
 
     <include layout="@layout/single_chat_code_bottom_sheet"/>
     <include layout="@layout/group_chat_code_bottom_sheet"/>
+    <include layout="@layout/show_code_bottom_sheet"/>
+    <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/loading_indecator_burnder_code_fragment"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        app:SpinKit_Color="#FF7A2F" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -68,7 +68,7 @@ public class RegistrationActivity extends AppCompatActivity {
             hideSignUpSpinner();
             Log.d(TAG, "onCreate: "+ messageResponseUpdatePassword.getMessage());
             Intent i = RegistrationSuccessActivity.newIntent(this,
-                    mUserExample.getUser().getUserId(),
+                    mUserExample.getUser(),
                     passwordEditText.getText().toString());
             startActivity(i);
         });

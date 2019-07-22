@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.RegistrationSuccessActivity"></activity>
+        <activity android:name=".view.activities.JoinConversationActivity"></activity>
+        <activity android:name=".view.activities.RegistrationSuccessActivity" />
         <activity android:name=".view.activities.SigninActivity" />
         <activity android:name=".view.activities.MainActivity">
             <intent-filter>
@@ -24,7 +25,8 @@
         </activity>
         <activity android:name=".view.activities.TermsActivity" />
         <activity android:name=".view.activities.RegistrationActivity" />
-        <activity android:name=".view.activities.ContainerActivity"/>
+        <activity android:name=".view.activities.ContainerActivity" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

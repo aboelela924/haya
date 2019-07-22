@@ -1,6 +1,9 @@
 package com.bignerdranch.android.haya.model.repo;
 
-public class Subscriber {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Subscriber implements Parcelable {
     private String is_admin;
 
     private String room_id;
@@ -150,4 +153,55 @@ public class Subscriber {
     {
         return "ClassPojo [is_admin = "+is_admin+", room_id = "+room_id+", updated_at = "+updated_at+", user_id = "+user_id+", is_secret = "+is_secret+", is_leave = "+is_leave+", custom_room_name = "+custom_room_name+", __v = "+__v+", name = "+name+", created_at = "+created_at+", _id = "+_id+", id = "+id+"]";
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.is_admin);
+        dest.writeString(this.room_id);
+        dest.writeString(this.updated_at);
+        dest.writeString(this.user_id);
+        dest.writeString(this.is_secret);
+        dest.writeString(this.is_leave);
+        dest.writeString(this.custom_room_name);
+        dest.writeString(this.__v);
+        dest.writeString(this.name);
+        dest.writeString(this.created_at);
+        dest.writeString(this._id);
+        dest.writeString(this.id);
+    }
+
+    public Subscriber() {
+    }
+
+    protected Subscriber(Parcel in) {
+        this.is_admin = in.readString();
+        this.room_id = in.readString();
+        this.updated_at = in.readString();
+        this.user_id = in.readString();
+        this.is_secret = in.readString();
+        this.is_leave = in.readString();
+        this.custom_room_name = in.readString();
+        this.__v = in.readString();
+        this.name = in.readString();
+        this.created_at = in.readString();
+        this._id = in.readString();
+        this.id = in.readString();
+    }
+
+    public static final Parcelable.Creator<Subscriber> CREATOR = new Parcelable.Creator<Subscriber>() {
+        @Override
+        public Subscriber createFromParcel(Parcel source) {
+            return new Subscriber(source);
+        }
+
+        @Override
+        public Subscriber[] newArray(int size) {
+            return new Subscriber[size];
+        }
+    };
 }

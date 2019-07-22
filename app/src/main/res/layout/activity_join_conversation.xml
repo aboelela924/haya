@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.JoinConversationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:elevation="10dp"
+        android:background="@drawable/background_gradient"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:paddingLeft="10dp"
+            android:textAlignment="viewStart"
+            android:text="cancel"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:textColor="#FFFFFF"
+            android:gravity="center_vertical"
+            android:textSize="22sp"
+            android:text="Join Conversation"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:fontFamily="@font/arial_regular"
+        android:textSize="18sp"
+        android:textColor="#242424"
+        android:text="Enter the Burner code you received"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="42dp"
+        android:layout_marginRight="42dp">
+        <EditText
+            android:id="@+id/chat_id_edit_text_1_activity_join"
+            android:tag="1"
+            android:maxLength="1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:background="@drawable/colored_border_orange"/>
+        <EditText
+            android:id="@+id/chat_id_edit_text_2_activity_join"
+            android:tag="2"
+            android:maxLength="1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:background="@drawable/colored_border_orange"/>
+        <EditText
+            android:id="@+id/chat_id_edit_text_3_activity_join"
+            android:tag="3"
+            android:maxLength="1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:background="@drawable/colored_border_orange"/>
+        <EditText
+            android:id="@+id/chat_id_edit_text_4_activity_join"
+            android:tag="4"
+            android:maxLength="1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:background="@drawable/colored_border_orange"/>
+        <EditText
+            android:id="@+id/chat_id_edit_text_5_activity_join"
+            android:tag="1"
+            android:maxLength="1"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:background="@drawable/colored_border_orange"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:fontFamily="@font/avenir_book"
+        android:textSize="18sp"
+        android:textColor="#242424"
+        android:text="Your nickname:"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/nickname_edit_text"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="3dp"
+            android:textColor="#000000"
+            android:background="@drawable/colored_border_orange"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/update_nickname"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:padding="5dp"
+            android:src="@drawable/edit_icon"
+            android:clickable="false"
+            android:background="#FF7A2F"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:fontFamily="@font/avenir_book"
+        android:textSize="18sp"
+        android:textColor="#242424"
+        android:text="Conversation name:"/>
+
+    <EditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Conversation Name"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:paddingStart="3dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:background="@drawable/colored_border_orange" />
+
+    <Button
+        android:id="@+id/join_chat_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/round_button_no_opacity"
+        android:text="Join the chat"/>
+
+</LinearLayout>

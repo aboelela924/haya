@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
+import com.bignerdranch.android.haya.view.activities.JoinConversationActivity;
 import com.bignerdranch.android.haya.viewModel.CreateRoomViewModel;
 import com.github.ybq.android.spinkit.SpinKitView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -318,6 +319,12 @@ public class BurnerCodeFragment extends Fragment {
     @OnClick(R.id.close_show_code_bottom_cheat_button)
     public void closeShow(View v){
         mShowBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    @OnClick(R.id.join_conversation)
+    public void joinConversation(View v){
+        Intent i = JoinConversationActivity.newIntent(getActivity(),mUser);
+        startActivity(i);
     }
 
     public void shareText(String text){

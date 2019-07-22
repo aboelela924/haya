@@ -1,6 +1,9 @@
 package com.bignerdranch.android.haya.model.repo;
 
-public class Room {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Room implements Parcelable {
     private String updated_at;
 
     private Subscriber[] subscribers;
@@ -126,4 +129,52 @@ public class Room {
     {
         return "ClassPojo [updated_at = "+updated_at+", subscribers = "+subscribers+", __v = "+__v+", name = "+name+", created_at = "+created_at+", _id = "+_id+", id = "+id+", type = "+type+", status = "+status+", token = "+token+"]";
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.updated_at);
+        dest.writeTypedArray(this.subscribers, flags);
+        dest.writeString(this.__v);
+        dest.writeString(this.name);
+        dest.writeString(this.created_at);
+        dest.writeString(this._id);
+        dest.writeString(this.id);
+        dest.writeString(this.type);
+        dest.writeString(this.status);
+        dest.writeString(this.token);
+    }
+
+    public Room() {
+    }
+
+    protected Room(Parcel in) {
+        this.updated_at = in.readString();
+        this.subscribers = in.createTypedArray(Subscriber.CREATOR);
+        this.__v = in.readString();
+        this.name = in.readString();
+        this.created_at = in.readString();
+        this._id = in.readString();
+        this.id = in.readString();
+        this.type = in.readString();
+        this.status = in.readString();
+        this.token = in.readString();
+    }
+
+    public static final Parcelable.Creator<Room> CREATOR = new Parcelable.Creator<Room>() {
+        @Override
+        public Room createFromParcel(Parcel source) {
+            return new Room(source);
+        }
+
+        @Override
+        public Room[] newArray(int size) {
+            return new Room[size];
+        }
+    };
 }

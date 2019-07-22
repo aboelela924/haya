@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.UserExample;
 import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
+import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,6 +38,7 @@ public class RegistrationRepo implements Callback<UserExample> {
     public void onResponse(Call<UserExample> call, Response<UserExample> response) {
         if(response.isSuccessful()){
             mData.setValue(response.body());
+            GetSocket.getInstance(response.body().getUser().getAccessToken());
         }
     }
 

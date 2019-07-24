@@ -35,6 +35,7 @@ public class ChatNetworkingRepo {
     }
     public MutableLiveData<Message> mData = new MutableLiveData<>();
     public MutableLiveData<SyncMessageMaster> mMessages = new MutableLiveData<>();
+    public MutableLiveData<DeleteMessageResponse> mDeleteResponse = new MutableLiveData<>();
 
     private ChatNetworkingRepo() {
     }
@@ -67,7 +68,7 @@ public class ChatNetworkingRepo {
             json.put("room_id", roomId);
             json.put("type", type);
             socket.emit(SocketActions.EMIT_MESSAGE, json);
-            
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -86,6 +87,11 @@ public class ChatNetworkingRepo {
 
     }
 
+    public void observeMessageDelete(){
+        Socket socket = GetSocket.getSocket();
+        socket.on(SocketActions.OBSERVE_MSG_DELETED, onDelete);
+    }
+
     public void observeMessages(){
         Socket socket = GetSocket.getSocket();
         socket.on(SocketActions.OBSERVE_MESSAGE, onGetMessage);
@@ -99,6 +105,16 @@ public class ChatNetworkingRepo {
             Gson gson = new Gson();
             Message message = gson.fromJson(jsonObject.toString(), Message.class);
             mData.postValue(message);
+        }
+    };
+
+    private Emitter.Listener onDelete =  new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            JSONObject jsonObject = (JSONObject) args[0];
+            Gson gson = new Gson();
+            DeleteMessageResponse response = gson.fromJson(jsonObject.toString(), DeleteMessageResponse.class);
+            mDeleteResponse.postValue(response);
         }
     };
 

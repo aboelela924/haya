@@ -1,5 +1,7 @@
 package com.bignerdranch.android.haya.model.repo;
 
+import androidx.annotation.Nullable;
+
 public class Message {
     private String room_id;
 
@@ -125,5 +127,11 @@ public class Message {
     public String toString()
     {
         return "ClassPojo [room_id = "+room_id+", isDeleted = "+isDeleted+", updated_at = "+updated_at+", __v = "+__v+", created_at = "+created_at+", _id = "+_id+", id = "+id+", type = "+type+", message = "+message+", user = "+user+"]";
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        Message message = (Message) obj;
+        return message.getId().equals(id);
     }
 }

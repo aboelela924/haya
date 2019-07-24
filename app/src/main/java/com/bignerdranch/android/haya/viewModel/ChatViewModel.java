@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.bignerdranch.android.haya.model.repo.Message;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.ChatNetworkingRepo;
+import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.DeleteMessageResponse;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncBody;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncMessageMaster;
 import com.bignerdranch.android.haya.model.repo.networking.joinRoomNetworking.JoinRoomRepo;
@@ -15,11 +16,13 @@ public class ChatViewModel extends ViewModel {
     private ChatNetworkingRepo mRepo;
     public MutableLiveData<Message> mData;
     public MutableLiveData<SyncMessageMaster> mMessages;
+    public MutableLiveData<DeleteMessageResponse> mDeleteResponse;
 
     public ChatViewModel(){
         mRepo = ChatNetworkingRepo.getInstance();
         mData = mRepo.mData;
         mMessages = mRepo.mMessages;
+        mDeleteResponse = mRepo.mDeleteResponse;
     }
 
     public void sendUserMessage(String message, String roomId){
@@ -40,5 +43,9 @@ public class ChatViewModel extends ViewModel {
 
     public void observeMessages(){
         mRepo.observeMessages();
+    }
+
+    public void observeMessageDelete(){
+        mRepo.observeMessageDelete();
     }
 }

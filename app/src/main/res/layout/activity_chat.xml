@@ -27,6 +27,7 @@
                 android:tint="#FFFFFF"
                 android:src="@drawable/left_arrow_icon"/>
             <TextView
+                android:id="@+id/chat_titile_text_view"
                 android:layout_width="0dp"
                 android:layout_weight="6"
                 android:layout_height="wrap_content"

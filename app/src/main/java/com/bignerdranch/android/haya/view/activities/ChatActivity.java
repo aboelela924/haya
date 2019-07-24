@@ -6,10 +6,15 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,14 +30,20 @@ import com.bignerdranch.android.haya.model.repo.Message;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.Subscriber;
 import com.bignerdranch.android.haya.model.repo.User;
+import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.ChatNetworkingRepo;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncBody;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncMessage;
+import com.bignerdranch.android.haya.utils.networkUtils.ConnectionHelper;
+import com.bignerdranch.android.haya.utils.networkUtils.NetworkUtils;
 import com.bignerdranch.android.haya.view.adapters.MessagesAdapter;
 import com.bignerdranch.android.haya.viewModel.ChatViewModel;
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,8 +63,10 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
     private ChatViewModel mViewModel;
     private MessagesAdapter mAdapter;
     private List<Message> mMessageList = new ArrayList<>();
+    private List<Message> mUnsendMessageList = new ArrayList<>();
     private BottomSheetBehavior mBottomSheetBehavior;
     private Map<String,Subscriber> subscribers = new HashMap<>();
+    private BroadcastReceiver mReceiver;
 
     public static Intent newIntent(Context ctx, User user,Room room){
         Intent i = new Intent(ctx, ChatActivity.class);
@@ -87,6 +100,7 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
     @BindView(R.id.message_edit_text) EditText mMessageEditText;
     @BindView(R.id.messages_recycler_view) RecyclerView mMessagesRecyclerView;
     @BindView(R.id.message_options_bottom_sheet) LinearLayout mMessageBottomSheet;
+    @BindView(R.id.chat_titile_text_view) TextView mChatTitleTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +114,8 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
             mRoom = i.getParcelableExtra(ROOM);
         }
 
+        mChatTitleTextView.setText(mRoom.getName());
+
         for (Subscriber subscriber: mRoom.getSubscribers()){
             subscribers.put(subscriber.getId(), subscriber);
         }
@@ -107,13 +123,51 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
         Log.d(TAG, "onCreate: "+ mUser.getAccessToken());
         Log.d(TAG, "onCreate: "+ mRoom.getId());
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+                if ("android.net.conn.CONNECTIVITY_CHANGE".equals(action)) {
+                    //check internet connection
+                    if (!ConnectionHelper.isConnectedOrConnecting(context)) {
+                        if (context != null) {
+                            boolean show = false;
+                            if (ConnectionHelper.lastNoConnectionTs == -1) {//first time
+                                show = true;
+                                ConnectionHelper.lastNoConnectionTs = System.currentTimeMillis();
+                            } else {
+                                if (System.currentTimeMillis() - ConnectionHelper.lastNoConnectionTs > 1000) {
+                                    show = true;
+                                    ConnectionHelper.lastNoConnectionTs = System.currentTimeMillis();
+                                }
+                            }
+
+                            if (show && ConnectionHelper.isOnline) {
+                                ConnectionHelper.isOnline = false;;
+                            }
+                        }
+                    } else {
+                        // Perform your actions here
+                        ConnectionHelper.isOnline = true;
+                    }
+                }
+            }
+        };
+        //register the broadcast receiver
+        registerReceiver(mReceiver, filter);
+
+        GetSocket.getSocket().on(Socket.EVENT_RECONNECT, sendUnsendMessages);
+
+
         mViewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
         mViewModel.mData.observe(this, message -> {
             if(message.getUser().getUser_id().equals(mUser.getId())){
                 message.setUser(null);
             }
             mMessageList.add(message);
-            mAdapter.notifyDataSetChanged();
+            updateRecyclerView();
         });
         mViewModel.mMessages.observe(this, messages -> {
             for (SyncMessage message: messages.getMessages()){
@@ -132,9 +186,24 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
                     mMessageList.add(sentMessage);
                 }
             }
-            mAdapter.notifyDataSetChanged();
+            updateRecyclerView();
+        });
+        mViewModel.mDeleteResponse.observe(this, deleteMessageResponse -> {
+            Message message = new Message();
+            message.setId(deleteMessageResponse.getMessage_id());
+            message.setRoom_id(deleteMessageResponse.getRoom_id());
+            int index = mMessageList.indexOf(message);
+            mMessageList.remove(index);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateRecyclerView();
+                }
+            });
+
         });
         mViewModel.observeMessages();
+        mViewModel.observeMessageDelete();
         List<SyncBody> bodies = new ArrayList<>();
         SyncBody body = new SyncBody(mRoom.getId(), 0);
         bodies.add(body);
@@ -144,7 +213,8 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
 
 
         mAdapter = new MessagesAdapter(this,mMessageList, this);
-        mMessagesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        final LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+        mMessagesRecyclerView.setLayoutManager(linearLayout);
         mMessagesRecyclerView.setAdapter(mAdapter);
 
         mBottomSheetBehavior = BottomSheetBehavior.from(mMessageBottomSheet);
@@ -167,11 +237,31 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
 
     @OnClick(R.id.send_image_view)
     public void sendMessage(View v){
+
         String message = mMessageEditText.getText().toString();
-        if(message.isEmpty()){
-            return;
+        if(ConnectionHelper.isOnline){
+            if(message.isEmpty()){
+                return;
+            }
+            mViewModel.sendUserMessage(message,mRoom.getId());
+        }else{
+            Long tsLong = System.currentTimeMillis()/1000;
+            String ts = tsLong.toString();
+            Message messageObj = new Message();
+            messageObj.setRoom_id(mRoom.getId());
+            messageObj.setMessage(message);
+            messageObj.setCreated_at(ts);
+            mUnsendMessageList.add(messageObj);
+            mMessageList.add(messageObj);
+            updateRecyclerView();
+
         }
-        mViewModel.sendUserMessage(message,mRoom.getId());
+
+    }
+
+    private void updateRecyclerView() {
+        mAdapter.notifyDataSetChanged();
+        mMessagesRecyclerView.scrollToPosition(mMessageList.size() - 1);
     }
 
     @OnClick(R.id.message_cancel_button)
@@ -197,4 +287,26 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
         toast.setView(v);
         toast.show();
     }
+
+
+
+    Emitter.Listener sendUnsendMessages = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            for (Message message: mUnsendMessageList){
+                mViewModel.sendUserMessage(message.getMessage(),message.getRoom_id());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int index = mMessageList.indexOf(message);
+                        mMessageList.remove(index);
+                        updateRecyclerView();
+                    }
+                });
+
+            }
+            mUnsendMessageList.clear();
+
+        }
+    };
 }

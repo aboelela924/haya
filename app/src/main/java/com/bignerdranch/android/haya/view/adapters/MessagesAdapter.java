@@ -26,10 +26,13 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private static final int CITIZIEN_MESSAGE = 0;
     private static final int FOREIGNER_MESSAGE = 1;
     private static final int SYSTEM_MESSAGE = 2;
+    private static final int CITIZIEN_MESSAGE_NO_NETWORK = 3;
 
     private Context mContext;
     private List<Message> mMessages;
     private MessageClickCallbacks mCallbacks;
+
+
 
     public MessagesAdapter(Context context, List<Message> messages, MessageClickCallbacks callbacks) {
         mContext = context;
@@ -40,11 +43,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemViewType(int position) {
         Message message = mMessages.get(position);
+        if (message.getId() == null){
+            return CITIZIEN_MESSAGE_NO_NETWORK;
+        }
+
         if(message.getUser() == null){
             return CITIZIEN_MESSAGE;
         }
         return FOREIGNER_MESSAGE;
     }
+
 
     @NonNull
     @Override
@@ -62,6 +70,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         parent,
                         false);
                 return new ForeignMessageViewHolder(v2);
+            case CITIZIEN_MESSAGE_NO_NETWORK:
+                View v3 = LayoutInflater.from(mContext).inflate(
+                        R.layout.citizien_message_no_network,
+                        parent,
+                        false);
+                return new CitizienMessageNoNetworkViewHolder(v3);
         }
         return null;
     }
@@ -74,12 +88,38 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.bind(message);
         }else if(holder instanceof ForeignMessageViewHolder){
             ((ForeignMessageViewHolder) holder).bind(message);
+        }else if(holder instanceof CitizienMessageNoNetworkViewHolder){
+            ((CitizienMessageNoNetworkViewHolder) holder).bind(message);
         }
     }
 
     @Override
     public int getItemCount() {
         return mMessages.size();
+    }
+
+    private class CitizienMessageNoNetworkViewHolder extends RecyclerView.ViewHolder{
+        private TextView mMessageTextView;
+        private TextView mTimeTextView;
+
+        public CitizienMessageNoNetworkViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            mMessageTextView = itemView.findViewById(R.id.citizien_no_network_message_text_view);
+            mTimeTextView = itemView.findViewById(R.id.citizien_no_network_message_time_text_View);
+        }
+
+        public void bind(Message message){
+            mMessageTextView.setText(message.getMessage());
+            mTimeTextView.setText(getTime(message.getCreated_at()));
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mCallbacks.onMessageLongClick(message);
+                    return true;
+                }
+            });
+        }
     }
 
     private class CitizienMessageViewHolder extends RecyclerView.ViewHolder{

@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -29,6 +30,10 @@ public class GetRetrofit {
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
                     .addInterceptor(new HttpLoggingInterceptor())
                     .build();
+
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(100, TimeUnit.SECONDS)
+                    .readTimeout(100, TimeUnit.SECONDS).build();
 
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(new Interceptor() {

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_hideable="true"
+    android:layout_margin="16dp"
+    android:id="@+id/message_options_bottom_sheet">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/round_white">
+        <Button
+            android:id="@+id/message_delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Message"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:textColor="#FF0000"
+            android:background="@drawable/round_white"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#d3d3d3"/>
+        <Button
+            android:id="@+id/message_copy_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Copy Message"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:background="@drawable/round_white"/>
+    </LinearLayout>
+    <Button
+        android:id="@+id/message_cancel_button"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:textSize="20sp"
+        android:textAllCaps="false"
+        android:textColor="#FF0000"
+        android:background="@drawable/round_white"/>
+
+</LinearLayout>

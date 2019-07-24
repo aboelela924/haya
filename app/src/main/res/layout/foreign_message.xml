@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:padding="8dp"
+    android:layout_gravity="left"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:rotation="180"
+            android:src="@drawable/bubble_me"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="4dp"
+            android:background="#FFFFFF"
+            android:outlineSpotShadowColor="#000000"
+            android:outlineAmbientShadowColor="#000000"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/foreinger_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:fontFamily="@font/arial_regular"
+                android:layout_marginBottom="8dp"
+                android:textColor="#FF782E"
+                android:textSize="18sp"
+                tools:text="Golden-rayed lily" />
+
+            <TextView
+                android:id="@+id/foreinger_message_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:fontFamily="@font/arial_regular"
+                android:textColor="#242424"
+                android:textSize="18sp"
+                tools:text="Everything is okay, Thank you!" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|right">
+                <TextView
+                    android:id="@+id/foreinger_message_time_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#242424"
+                    tools:text="10:55 AM"/>
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

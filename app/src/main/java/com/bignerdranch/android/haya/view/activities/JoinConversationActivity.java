@@ -19,6 +19,7 @@ import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.networking.joinRoomNetworking.JoinRoomRepo;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.Chat;
 import com.bignerdranch.android.haya.viewModel.JoinRoomViewModel;
 
 import java.util.Random;
@@ -101,6 +102,7 @@ public class JoinConversationActivity extends AppCompatActivity implements TextW
         mViewModel = ViewModelProviders.of(this).get(JoinRoomViewModel.class);
         mViewModel.mRoomData.observe(this,room -> {
             mRoom = room;
+
             View v = getLayoutInflater().inflate(R.layout.success_toast,null);
             TextView editText = v.findViewById(R.id.success_message_text_view);
             editText.setText("Joined successfully");
@@ -109,6 +111,8 @@ public class JoinConversationActivity extends AppCompatActivity implements TextW
             toast.setDuration(Toast.LENGTH_LONG);
             toast.setView(v);
             toast.show();
+            Intent intent = ChatActivity.newIntent(this,mUser,mRoom);
+            startActivity(intent);
         });
         mViewModel.mSubscriberData.observe(this, subscriber -> {
             nicknameEditText.setText(subscriber.getName());

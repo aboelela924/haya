@@ -165,11 +165,11 @@ public class BurnerCodeFragment extends Fragment {
             hideLoading();
             if(isGroup){
                 mGroupBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                populateGroupBottomSheet(roomExample.getRoom().getId(), roomExample.getRoom().getName(),
+                populateGroupBottomSheet(roomExample.getRoom().getToken(), roomExample.getRoom().getName(),
                         roomExample.getRoom().getSubscribers()[0].getName());
             }else{
                 mSingleBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                populateSingleBottomSheet(roomExample.getRoom().getId(), roomExample.getRoom().getName());
+                populateSingleBottomSheet(roomExample.getRoom().getToken(), roomExample.getRoom().getName());
             }
             chatNameEditText.addTextChangedListener(new TextWatcher() {
                 @Override

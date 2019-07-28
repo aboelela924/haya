@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background_gradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -73,59 +74,69 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp">
+
                 <EditText
                     android:id="@+id/sign_in_edit_text_1"
-                    android:tag="0"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/colored_border_orange"
                     android:gravity="center"
                     android:maxLength="1"
-                    android:background="@drawable/colored_border_orange"/>
+                    android:tag="0"
+                    tools:text="G" />
+
                 <EditText
                     android:id="@+id/sign_in_edit_text_2"
-                    android:tag="1"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/colored_border_orange"
                     android:gravity="center"
                     android:maxLength="1"
-                    android:background="@drawable/colored_border_orange"/>
+                    android:tag="1"
+                    tools:text="S" />
+
                 <EditText
                     android:id="@+id/sign_in_edit_text_3"
-                    android:tag="2"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/colored_border_orange"
                     android:gravity="center"
                     android:maxLength="1"
-                    android:background="@drawable/colored_border_orange"/>
+                    android:tag="2"
+                    tools:text="B" />
+
                 <EditText
                     android:id="@+id/sign_in_edit_text_4"
-                    android:tag="3"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
-                    android:layout_weight="1"
-                    android:layout_marginRight="8dp"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/colored_border_orange"
                     android:gravity="center"
                     android:maxLength="1"
-                    android:background="@drawable/colored_border_orange"/>
+                    android:tag="3"
+                    tools:text="N" />
+
                 <EditText
                     android:id="@+id/sign_in_edit_text_5"
-                    android:tag="4"
                     android:layout_width="0dp"
                     android:layout_height="60dp"
                     android:layout_weight="1"
+                    android:background="@drawable/colored_border_orange"
                     android:gravity="center"
                     android:maxLength="1"
-                    android:background="@drawable/colored_border_orange"/>
+                    android:tag="4"
+                    android:text="3" />
             </LinearLayout>
 
             <EditText
@@ -136,7 +147,8 @@
                 android:background="@drawable/colored_border_orange"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:text="1234567899" />
 
             <LinearLayout
                 android:layout_width="match_parent"

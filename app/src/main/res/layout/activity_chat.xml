@@ -38,6 +38,7 @@
                 android:textColor="#242424"
                 android:text="Nerine 951"/>
             <ImageView
+                android:id="@+id/settings_image_view"
                 android:layout_width="0dp"
                 android:layout_weight="2"
                 android:layout_height="30dp"

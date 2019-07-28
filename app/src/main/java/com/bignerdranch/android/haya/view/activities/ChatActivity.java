@@ -272,6 +272,26 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
     }
 
+    @OnClick(R.id.settings_image_view)
+    public void goToSettings(View v){
+        boolean isPrivate = false;
+        boolean isAdmin = false;
+        for (Subscriber sb : mRoom.getSubscribers()){
+            if (sb.getUser_id().equals(mUser.getId())){
+                isPrivate = Boolean.valueOf(sb.getIs_secret());
+                isAdmin = Boolean.valueOf(sb.getIs_admin());
+            }
+        }
+        if(Integer.parseInt(mRoom.getType()) == 1){
+           Intent i = OneToOneSettingsActivity.newIntent(this, mRoom.getName(), isPrivate,mUser, mRoom);
+            startActivity(i);
+        }else{
+            if(isAdmin){
+                Intent i = GroupChatSettingsAdminActivity.newIntent(this, isPrivate,mUser,mRoom);
+                startActivity(i);
+            }
+        }
+    }
 
     public void copyToClipboard(String text){
         ClipboardManager manager = (ClipboardManager)

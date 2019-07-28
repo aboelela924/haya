@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.ChatActivity"></activity>
+        <activity android:name=".view.activities.GroupChatSettingsAdminActivity"></activity>
+        <activity android:name=".view.activities.OneToOneSettingsActivity" />
+        <activity android:name=".view.activities.ChatActivity" />
         <activity android:name=".view.activities.JoinConversationActivity" />
         <activity android:name=".view.activities.RegistrationSuccessActivity" />
         <activity android:name=".view.activities.SigninActivity" />

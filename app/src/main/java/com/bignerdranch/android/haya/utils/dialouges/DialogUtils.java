@@ -4,10 +4,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.utils.networkUtils.NetworkUtils;
 import com.bignerdranch.android.haya.view.activities.SigninActivity;
+
+import org.w3c.dom.Text;
 
 public class DialogUtils {
 
@@ -33,6 +36,33 @@ public class DialogUtils {
             }
         });
 
+
+        dialog.show();
+    }
+
+    public static void confirmationDialouge(Context ctx, String title, String message, OnNetwrokBack onNetwrokBack){
+        Dialog dialog = new Dialog(ctx);
+        dialog.setContentView(R.layout.confirmation_dialog);
+
+        TextView titleTextView = dialog.findViewById(R.id.confirmation_dialog_title_text_view);
+        TextView messageTextView = dialog.findViewById(R.id.confirmation_dialog_message_text_view);
+        Button cancelButton = dialog.findViewById(R.id.confirmation_dialog_cancel_button);
+        Button confirmButton = dialog.findViewById(R.id.confirmation_dialog_confirm_button);
+
+        titleTextView.setText(title);
+        messageTextView.setText(message);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onNetwrokBack.onConnectionBack();
+            }
+        });
 
         dialog.show();
     }

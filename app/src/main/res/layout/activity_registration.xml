@@ -181,6 +181,7 @@
                         android:background="@drawable/round_button_no_opacity"
                         android:textColor="#FFFFFF"/>
                     <Button
+                        android:id="@+id/skip_button_sign_up"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Skip"

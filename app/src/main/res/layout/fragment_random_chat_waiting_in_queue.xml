@@ -29,14 +29,14 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textview_randomchat_title"
+        android:id="@+id/textview_randomchat_inqueue_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/avenir_book"
-        android:text="Chat to someone on HaYa Network"
+        android:text="Be patient"
         android:textColor="@android:color/black"
         android:textSize="20dp"
         android:textStyle="bold"
@@ -44,41 +44,58 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
+    <TextView
+        android:id="@+id/textview_in_queue_explanation"
+        android:layout_width="0dp"
+        android:layout_height="161dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/avenir_book"
+        android:text="We are connecting you with another user on Random Chat.\nOnce connected you will be notified in the Conversations tab. You will stay in the queue until you are connected with another user or click 'Leave Queue'."
+        android:textColor="@android:color/black"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_randomchat_inqueue_title" />
+
+    <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/loading_indecator_joining_random_chat"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="54dp"
+        android:layout_height="41dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
+        app:SpinKit_Color="#FF7A2F"
+        app:layout_constraintEnd_toEndOf="@+id/frameLayout"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="@+id/frameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/textview_in_queue_explanation" />
+
     <Button
-        android:id="@+id/button_join_queue"
+        android:id="@+id/button_leave_queue"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_margin="4dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/round_button_no_opacity"
+        android:background="@drawable/colored_border_orange_round"
         android:fontFamily="@font/avenir_book"
         android:paddingStart="6dp"
         android:paddingEnd="6dp"
-        android:text="Join Queue"
+        android:text="Leave Queue"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF"
+        android:textColor="#EB5602"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_picture" />
-
-    <ImageView
-        android:id="@+id/imageview_picture"
-        android:layout_width="264dp"
-        android:layout_height="261dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="108dp"
-        android:layout_marginEnd="8dp"
-        android:adjustViewBounds="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textview_randomchat_title"
-        android:src="@drawable/random_chat_icon" />
+        app:layout_constraintTop_toBottomOf="@+id/loading_indecator_joining_random_chat" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/tab_bar_bg"
         app:itemIconSize="28dp"
-        app:itemTextColor="@drawable/bottom_nav_color"
         app:itemIconTint="@drawable/bottom_nav_color"
-        app:menu="@menu/bottom_bar_item"/>
+        app:itemTextColor="@drawable/bottom_nav_color"
+        app:menu="@menu/bottom_bar_item" />
 </LinearLayout>

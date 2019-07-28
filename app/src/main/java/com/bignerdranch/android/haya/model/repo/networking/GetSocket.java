@@ -17,6 +17,7 @@ public class GetSocket {
     private static GetSocket ourInstance;
     private static Socket sSocket;
     private static String sToken;
+
     public static GetSocket getInstance(String token) {
         try {
             sSocket =  IO.socket("http://104.248.25.114:4000/chat");
@@ -28,10 +29,11 @@ public class GetSocket {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        return ourInstance;
-    }
+        if(ourInstance == null){
+            ourInstance =  new GetSocket();
+        }
 
-    private GetSocket() {
+        return ourInstance;
     }
 
     public static Socket getSocket() {

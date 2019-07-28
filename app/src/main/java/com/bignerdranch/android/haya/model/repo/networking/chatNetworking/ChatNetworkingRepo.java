@@ -2,9 +2,11 @@ package com.bignerdranch.android.haya.model.repo.networking.chatNetworking;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bignerdranch.android.haya.model.repo.Message;
+import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.model.repo.networking.SocketActions;
@@ -36,14 +38,15 @@ public class ChatNetworkingRepo {
     public MutableLiveData<Message> mData = new MutableLiveData<>();
     public MutableLiveData<SyncMessageMaster> mMessages = new MutableLiveData<>();
     public MutableLiveData<DeleteMessageResponse> mDeleteResponse = new MutableLiveData<>();
+    public MutableLiveData<List<String>> mLastMessage = new MutableLiveData<>();
 
     private ChatNetworkingRepo() {
     }
 
-    public void syncMessages(String token,List<SyncBody> body){
+    public void syncMessages(String token, List<SyncBody> body){
         Retrofit retrofit = GetRetrofit.getRetrofitInstance();
         SyncAPI syncAPI = retrofit.create(SyncAPI.class);
-        Call<SyncMessageMaster> call = syncAPI.getOldMessages(token,body);
+        Call<SyncMessageMaster> call = syncAPI.getOldMessages(token, body);
         call.enqueue(new Callback<SyncMessageMaster>() {
             @Override
             public void onResponse(Call<SyncMessageMaster> call, Response<SyncMessageMaster> response) {
@@ -59,7 +62,27 @@ public class ChatNetworkingRepo {
         });
     }
 
+    public void syncLastMessages(String token, List<SyncBody> body){
+        Retrofit retrofit = GetRetrofit.getRetrofitInstance();
+        SyncAPI syncAPI = retrofit.create(SyncAPI.class);
+        Call<SyncMessageMaster> call = syncAPI.getOldMessages(token, body);
+        call.enqueue(new Callback<SyncMessageMaster>() {
+            @Override
+            public void onResponse(Call<SyncMessageMaster> call, Response<SyncMessageMaster> response) {
+                if (response.isSuccessful()){
+                    Log.i("Test", response.body().toString());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<SyncMessageMaster> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+    public MutableLiveData<List<String>> getRoomLastMessages() {
+        return this.mLastMessage;
+    }
     public void sendMessage(String message, String roomId, int type){
         Socket socket = GetSocket.getSocket();
         try{

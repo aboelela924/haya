@@ -46,7 +46,6 @@ public class JoinRoomRepo {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
 
     public void changeNickname(String nickname, String roomId){
@@ -62,6 +61,7 @@ public class JoinRoomRepo {
         }
     }
 
+    //--------------------------------------------------------------
 
     private Emitter.Listener onJoinChat = new Emitter.Listener() {
         @Override

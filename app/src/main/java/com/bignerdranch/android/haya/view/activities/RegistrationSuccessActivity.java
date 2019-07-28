@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.bignerdranch.android.haya.CurrentUser;
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.User;
 
@@ -60,5 +61,6 @@ public class RegistrationSuccessActivity extends AppCompatActivity {
     public void goToBurner(View view){
         Intent i = ContainerActivity.newIntent(this, mUser);
         startActivity(i);
+
     }
 }

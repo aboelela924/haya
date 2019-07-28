@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bignerdranch.android.haya.CurrentUser;
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
@@ -99,7 +100,8 @@ public class BurnerCodeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUser = getArguments().getParcelable(USER);
+        //mUser = getArguments().getParcelable(USER);
+        mUser = CurrentUser.user;
         mViewModel = ViewModelProviders.of(this).get(CreateRoomViewModel.class);
     }
 

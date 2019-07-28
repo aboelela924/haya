@@ -45,6 +45,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private RegistrationViewModel mViewModel;
     private UserExample mUserExample;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

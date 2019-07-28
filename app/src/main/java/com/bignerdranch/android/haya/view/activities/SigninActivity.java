@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.networking.signinNetworking.SigninBody;
@@ -69,6 +70,8 @@ public class SigninActivity extends AppCompatActivity implements TextWatcher {
         mViewModel.mData.observe(this, userExample -> {
             Log.d(TAG, "onCreate: sing in successfully");
             Log.d(TAG, "onCreate: "+ userExample.getUser().getId());
+            Intent i = ContainerActivity.newIntent(this, userExample.getUser());
+            startActivity(i);
         });
 
     }
@@ -76,7 +79,7 @@ public class SigninActivity extends AppCompatActivity implements TextWatcher {
     @OnClick(R.id.sign_in_button_sign_in_activity)
     public void signin(){
         String id = "";
-        for (EditText editText: userId){
+        for (EditText editText : userId){
             id = id+editText.getText().toString().toUpperCase();
         }
         String password = passwordEditText.getText().toString();
@@ -85,7 +88,6 @@ public class SigninActivity extends AppCompatActivity implements TextWatcher {
             mViewModel.singUser(new SigninBody(id, password, androidId));
         }
     }
-
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

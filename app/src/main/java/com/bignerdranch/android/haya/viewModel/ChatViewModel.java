@@ -38,7 +38,7 @@ public class ChatViewModel extends ViewModel {
     }
 
     public void syncMessages(String token,List<SyncBody> body){
-        mRepo.syncMessages(token,body);
+        mRepo.syncMessages(token, body);
     }
 
     public void observeMessages(){

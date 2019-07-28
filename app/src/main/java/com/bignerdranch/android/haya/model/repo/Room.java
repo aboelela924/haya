@@ -3,7 +3,12 @@ package com.bignerdranch.android.haya.model.repo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Room implements Parcelable {
+
     private String updated_at;
 
     private Subscriber[] subscribers;

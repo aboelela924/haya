@@ -145,7 +145,7 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
                             }
 
                             if (show && ConnectionHelper.isOnline) {
-                                ConnectionHelper.isOnline = false;;
+                                ConnectionHelper.isOnline = false;
                             }
                         }
                     } else {

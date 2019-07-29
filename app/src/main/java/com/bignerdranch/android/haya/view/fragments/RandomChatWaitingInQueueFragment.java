@@ -20,6 +20,7 @@ import com.bignerdranch.android.haya.view.activities.ChatActivity;
 import com.bignerdranch.android.haya.viewModel.RandomRoomViewModel;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RandomChatWaitingInQueueFragment extends Fragment {
     private RandomRoomViewModel randomRoomViewModel;
@@ -28,20 +29,21 @@ public class RandomChatWaitingInQueueFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_random_chat_waiting_in_queue, container,false);
-
-        viewModelFunction();
-        return v;
-    }
-
-    private void viewModelFunction() {
         randomRoomViewModel = ViewModelProviders.of(this).get(RandomRoomViewModel.class);
-        randomRoomViewModel.mRoomData.observe(this, new Observer<Room>() {
-            @Override
-            public void onChanged(Room randomRoom) {
-                Intent intent = ChatActivity.newIntent(getActivity(), CurrentUser.user, randomRoom);
-                startActivity(intent);
-            }
+        randomRoomViewModel.mRoomData.observe(this, randomRoom -> {
+            Intent intent = ChatActivity.newIntent(getActivity(), CurrentUser.user, randomRoom);
+            startActivity(intent);
         });
         randomRoomViewModel.joinQueue();
+
+
+        ButterKnife.bind(this, v);
+        return v;
+    }
+    @OnClick(R.id.button_leave_queue)
+    public void leaveQueue()
+    {
+        randomRoomViewModel.leaveQueue();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new RandomChatFragment()).commit();
     }
 }

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,7 +15,6 @@ import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.Subscriber;
 import com.bignerdranch.android.haya.model.repo.User;
-import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.Chat;
 import com.bignerdranch.android.haya.utils.dialouges.DialogUtils;
 import com.bignerdranch.android.haya.viewModel.ChatSettingsViewModel;
 import com.suke.widget.SwitchButton;
@@ -25,56 +23,53 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GroupChatSettingsAdminActivity extends AppCompatActivity {
-
-    private static final String TAG = "GroupChatSettingsAdmin";
+public class GroupChatSettingsUserActivity extends AppCompatActivity {
+    private static final String TAG = "GroupChatSettingsUserActivity";
     private static final String IS_PRIVATE = "IS_PRIVATE";
     private static final String USER = "USER";
     private static final String ROOM = "ROOM";
 
-    @BindView(R.id.admin_settings_title_chat_name_text_view) TextView mChatNameTitleTextView;
-    @BindView(R.id.admin_settings_chat_info_chat_name_text_view) TextView mChatNameChatInfoTextView;
-    @BindView(R.id.admin_settings_chat_info_nickname_text_view) TextView mNicknameChatInfoTextView;
-    @BindView(R.id.admin_settings_chat_info_is_private_switch_button) SwitchButton mIsPrivateSwitchButton;
-    @BindView(R.id.admin_settings_is_burner_code_enabled_switch_button) SwitchButton mIsBurnerCodeEnabledSwitchButton;
-    @BindView(R.id.admin_settings_share_burner_code_linear_layout) LinearLayout mShareBurnerCodeLinearLayout;
+    @BindView(R.id.user_settings_title_chat_name_text_view) TextView mChatNameTitleTextView;
+    @BindView(R.id.user_settings_chat_info_chat_name_text_view) TextView mChatNameChatInfoTextView;
+    @BindView(R.id.user_settings_chat_info_nickname_text_view) TextView mNicknameChatInfoTextView;
+    @BindView(R.id.user_settings_chat_info_is_private_switch_button) SwitchButton mIsPrivateSwitchButton;
+    @BindView(R.id.user_settings_share_burner_code_linear_layout) LinearLayout mShareBurnerCodeLinearLayout;
 
-    @BindView(R.id.admin_settings_edit_text_1) EditText mEditText1;
-    @BindView(R.id.admin_settings_edit_text_2) EditText mEditText2;
-    @BindView(R.id.admin_settings_edit_text_3) EditText mEditText3;
-    @BindView(R.id.admin_settings_edit_text_4) EditText mEditText4;
-    @BindView(R.id.admin_settings_edit_text_5) EditText mEditText5;
+    @BindView(R.id.user_settings_edit_text_1) EditText mEditText1;
+    @BindView(R.id.user_settings_edit_text_2) EditText mEditText2;
+    @BindView(R.id.user_settings_edit_text_3) EditText mEditText3;
+    @BindView(R.id.user_settings_edit_text_4) EditText mEditText4;
+    @BindView(R.id.user_settings_edit_text_5) EditText mEditText5;
 
-    @BindView(R.id.admin_settings_second_subscriber_linear_layout) LinearLayout mSecondSubscriberLinearLayout;
-    @BindView(R.id.admin_settings_third_subscriber_linear_layout) LinearLayout mThirdSubscriberLinearLayout;
-    @BindView(R.id.admin_settings_more_subscriber_linear_layout) LinearLayout mMoreSubscriberLinearLayout;
+    @BindView(R.id.user_settings_second_subscriber_linear_layout) LinearLayout mSecondSubscriberLinearLayout;
+    @BindView(R.id.user_settings_third_subscriber_linear_layout) LinearLayout mThirdSubscriberLinearLayout;
+    @BindView(R.id.user_settings_more_subscriber_linear_layout) LinearLayout mMoreSubscriberLinearLayout;
 
-    @BindView(R.id.admin_settings_first_subscriber_name_text_view) TextView mFirstSubscriberTextView;
-    @BindView(R.id.admin_settings_second_subscriber_name_text_view) TextView mSecondSubscriberTextView;
-    @BindView(R.id.admin_settings_third_subscriber_name_text_view) TextView mThirdSubscriberTextView;
-    @BindView(R.id.admin_settings_more_subscriber_count_text_view) TextView mMoreSubscriberTextView;
+    @BindView(R.id.user_settings_first_subscriber_name_text_view) TextView mFirstSubscriberTextView;
+    @BindView(R.id.user_settings_second_subscriber_name_text_view) TextView mSecondSubscriberTextView;
+    @BindView(R.id.user_settings_third_subscriber_name_text_view) TextView mThirdSubscriberTextView;
+    @BindView(R.id.user_settings_more_subscriber_count_text_view) TextView mMoreSubscriberTextView;
 
-    @BindView(R.id.admin_settings_second_subscriber_view) View mSecondSubscriberView;
-    @BindView(R.id.admin_settings_third_subscriber_view) View mThirdSubscriberView;
-
-
-    private Room mRoom;
-    private User mUser;
-    private Subscriber mSubscriber;
-    private ChatSettingsViewModel mViewModel;
+    @BindView(R.id.user_settings_second_subscriber_view) View mSecondSubscriberView;
+    @BindView(R.id.user_settings_third_subscriber_view) View mThirdSubscriberView;
 
     public static Intent newIntent(Context ctx, boolean isPrivate, User user, Room room){
-        Intent i = new Intent(ctx, GroupChatSettingsAdminActivity.class);
+        Intent i = new Intent(ctx, GroupChatSettingsUserActivity.class);
         i.putExtra(USER, user);
         i.putExtra(ROOM, room);
         i.putExtra(IS_PRIVATE, isPrivate);
         return i;
     }
 
+    private Room mRoom;
+    private User mUser;
+    private Subscriber mSubscriber;
+    private ChatSettingsViewModel mViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_chat_settings_admin);
+        setContentView(R.layout.activity_group_chat_settings_user);
         ButterKnife.bind(this);
 
         mRoom = getIntent().getParcelableExtra(ROOM);
@@ -85,6 +80,7 @@ public class GroupChatSettingsAdminActivity extends AppCompatActivity {
                 break;
             }
         }
+
         boolean isPrivate = getIntent().getBooleanExtra(IS_PRIVATE, false);
         updateSubscribers();
         mViewModel = ViewModelProviders.of(this).get(ChatSettingsViewModel.class);
@@ -99,7 +95,7 @@ public class GroupChatSettingsAdminActivity extends AppCompatActivity {
         mChatNameChatInfoTextView.setText(mRoom.getName());
         mIsPrivateSwitchButton.setChecked(isPrivate);
 
-        mViewModel.mSubscriptionData.observe(GroupChatSettingsAdminActivity.this, subscriptionExample -> {
+        mViewModel.mSubscriptionData.observe(GroupChatSettingsUserActivity.this, subscriptionExample -> {
             mChatNameTitleTextView.setText(subscriptionExample.getSubscription().getCustom_room_name());
             mChatNameChatInfoTextView.setText(subscriptionExample.getSubscription().getCustom_room_name());
             mIsPrivateSwitchButton.setChecked(Boolean.valueOf(subscriptionExample.getSubscription().getIs_secret()));
@@ -108,9 +104,6 @@ public class GroupChatSettingsAdminActivity extends AppCompatActivity {
         mViewModel.mRoomData.observe(this, room -> {
             mRoom = room;
             updateSubscribers();
-        });
-
-        mViewModel.mBurnerCodeStatus.observe(this, aBoolean -> {
         });
 
         mViewModel.mSubscriberData.observe(this,subscriber -> {
@@ -134,26 +127,6 @@ public class GroupChatSettingsAdminActivity extends AppCompatActivity {
             }
         });
 
-        mIsBurnerCodeEnabledSwitchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                mViewModel.toggleBurnerCode(mUser.getAccessToken(), mRoom.getToken());
-            }
-        });
-    }
-
-    @OnClick(R.id.admin_settings_chat_info_chat_name_linear_layout)
-    public void changeCustomName(View v){
-        DialogUtils.changeAttributeDialog(this,
-                "Change chat name",
-                mSubscriber.getCustom_room_name(),
-                new DialogUtils.AttrChange() {
-                    @Override
-                    public void onChange(String attr) {
-                        mViewModel.updateRoomCustomName(mUser.getAccessToken(), mRoom.getId(), attr);
-
-                    }
-                });
     }
 
     public void updateSubscribers(){
@@ -186,8 +159,7 @@ public class GroupChatSettingsAdminActivity extends AppCompatActivity {
         }
     }
 
-
-    @OnClick(R.id.admin_settings_share_burner_code_linear_layout)
+    @OnClick(R.id.user_settings_share_burner_code_linear_layout)
     public void shareBurnerCode(View v){
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("plain/text");
@@ -195,27 +167,26 @@ public class GroupChatSettingsAdminActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    @OnClick(R.id.admin_settings_clear_your_content_text_view)
+    @OnClick(R.id.user_settings_clear_your_content_text_view)
     public void clearYourContent(View v){
         mViewModel.deleteAll(mRoom.getId());
     }
 
-    @OnClick(R.id.admin_settings_clear_all_content_text_view)
+    @OnClick(R.id.user_settings_clear_all_content_text_view)
     public void clearAllContent(View v){
-        mViewModel.deleteAddAndLeave(mRoom.getId());
     }
 
-    @OnClick(R.id.admin_settings_leave_group_text_view)
+    @OnClick(R.id.user_settings_leave_group_text_view)
     public void leaveGroup(View v){
         mViewModel.deleteAddAndLeave(mRoom.getId());
     }
 
-    @OnClick(R.id.admin_settings_block_report_text_view)
+    @OnClick(R.id.user_settings_block_report_text_view)
     public void blockAndReport(View v){
         mViewModel.deleteAddAndLeave(mRoom.getId());
     }
 
-    @OnClick(R.id.admin_settings_chat_info_nickname_linear_layout)
+    @OnClick(R.id.user_settings_chat_info_nickname_linear_layout)
     public void updateName(){
         DialogUtils.changeAttributeDialog(this, "Change your nickname", mSubscriber.getName(), new DialogUtils.AttrChange() {
             @Override
@@ -223,5 +194,19 @@ public class GroupChatSettingsAdminActivity extends AppCompatActivity {
                 mViewModel.updateNickName(mRoom.getId(), attr);
             }
         });
+    }
+
+    @OnClick(R.id.user_settings_chat_info_chat_name_linear_layout)
+    public void changeCustomName(View v){
+        DialogUtils.changeAttributeDialog(this,
+                "Change chat name",
+                mSubscriber.getCustom_room_name(),
+                new DialogUtils.AttrChange() {
+                    @Override
+                    public void onChange(String attr) {
+                        mViewModel.updateRoomCustomName(mUser.getAccessToken(), mRoom.getId(), attr);
+
+                    }
+                });
     }
 }

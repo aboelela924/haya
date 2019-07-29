@@ -1,4 +1,4 @@
-package com.bignerdranch.android.haya;
+package com.bignerdranch.android.haya.model.repo;
 
 import com.bignerdranch.android.haya.model.repo.User;
 

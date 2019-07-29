@@ -24,7 +24,7 @@
                 android:tint="#FFFFFF"
                 android:src="@drawable/left_arrow_icon"/>
             <TextView
-                android:id="@+id/admin_settings_title_chat_name_text_view"
+                android:id="@+id/user_settings_title_chat_name_text_view"
                 android:layout_width="0dp"
                 android:layout_weight="8"
                 android:layout_height="wrap_content"
@@ -44,64 +44,72 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/round_white">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/arial_regular"
                     android:text="Chat information"
                     android:textColor="#2C2C2C"
-                    android:fontFamily="@font/arial_regular"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="8dp"
-                    android:textSize="24sp"/>
+                    android:textSize="24sp" />
+
                 <LinearLayout
-                    android:id="@+id/admin_settings_chat_info_chat_name_linear_layout"
-                    android:orientation="horizontal"
+                    android:id="@+id/user_settings_chat_info_chat_name_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginTop="8dp">
+                    android:orientation="horizontal">
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="40dp"
                         android:layout_height="40dp">
+
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:padding="8dp"
                             android:background="@drawable/round_orange"
+                            android:padding="8dp"
                             android:src="@drawable/chat_icon"
-                            android:tint="#FFFFFF"/>
+                            android:tint="#FFFFFF" />
                     </androidx.cardview.widget.CardView>
+
                     <TextView
-                        android:id="@+id/admin_settings_chat_info_chat_name_text_view"
+                        android:id="@+id/user_settings_chat_info_chat_name_text_view"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/avenir_book"
-                        android:textSize="20sp"
                         android:gravity="center_vertical"
+                        android:text="Saga 363"
                         android:textColor="#424242"
-                        android:text="Saga 363"/>
+                        android:textSize="20sp" />
+
                     <ImageView
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center_vertical|end"
                         android:src="@drawable/right_arrow_icon" />
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="8dp"
-                    android:background="#D9D9D9"/>
+                    android:background="#D9D9D9" />
 
                 <LinearLayout
-                    android:id="@+id/admin_settings_chat_info_nickname_linear_layout"
+                    android:id="@+id/user_settings_chat_info_nickname_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -123,7 +131,7 @@
                     </androidx.cardview.widget.CardView>
 
                     <TextView
-                        android:id="@+id/admin_settings_chat_info_nickname_text_view"
+                        android:id="@+id/user_settings_chat_info_nickname_text_view"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
@@ -140,46 +148,52 @@
                         android:layout_gravity="center_vertical|end"
                         android:src="@drawable/right_arrow_icon" />
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="8dp"
-                    android:background="#D9D9D9"/>
+                    android:background="#D9D9D9" />
+
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:paddingBottom="16dp"
-                    android:layout_marginTop="8dp">
+                    android:orientation="horizontal"
+                    android:paddingBottom="16dp">
+
                     <androidx.cardview.widget.CardView
                         android:layout_width="40dp"
                         android:layout_height="40dp">
+
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:padding="8dp"
                             android:background="@drawable/round_orange"
+                            android:padding="8dp"
                             android:src="@drawable/tutorial_icon_3"
-                            android:tint="#FFFFFF"/>
+                            android:tint="#FFFFFF" />
                     </androidx.cardview.widget.CardView>
+
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/avenir_book"
-                        android:textSize="20sp"
                         android:gravity="center_vertical"
+                        android:text="Secret Chat"
                         android:textColor="#424242"
-                        android:text="Secret Chat"/>
+                        android:textSize="20sp" />
+
                     <com.suke.widget.SwitchButton
-                        android:id="@+id/admin_settings_chat_info_is_private_switch_button"
+                        android:id="@+id/user_settings_chat_info_is_private_switch_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        app:sb_checked_color="#FF752B"/>
+                        app:sb_checked_color="#FF752B" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -208,72 +222,38 @@
                     android:textSize="24sp"/>
 
                 <LinearLayout
-                    android:orientation="horizontal"
+                    android:id="@+id/user_settings_share_burner_code_linear_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:paddingBottom="16dp"
-                    android:layout_marginTop="8dp">
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp">
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:padding="8dp"
-                            android:background="@drawable/round_orange"
-                            android:src="@drawable/burner_code_icon"
-                            android:tint="#FFFFFF"/>
-                    </androidx.cardview.widget.CardView>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp"
-                        android:fontFamily="@font/avenir_book"
-                        android:textSize="20sp"
-                        android:gravity="center_vertical"
-                        android:textColor="#424242"
-                        android:text="Burner Code status"/>
-                    <com.suke.widget.SwitchButton
-                        android:id="@+id/admin_settings_is_burner_code_enabled_switch_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        app:sb_checked_color="#FF752B"/>
-                </LinearLayout>
+                    android:orientation="horizontal"
+                    android:paddingBottom="16dp">
 
-                <LinearLayout
-                    android:id="@+id/admin_settings_share_burner_code_linear_layout"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:paddingBottom="16dp"
-                    android:layout_marginTop="8dp">
                     <androidx.cardview.widget.CardView
                         android:layout_width="40dp"
                         android:layout_height="40dp">
+
                         <ImageView
                             android:layout_width="40dp"
                             android:layout_height="40dp"
-                            android:padding="8dp"
                             android:background="@drawable/round_orange"
+                            android:padding="8dp"
                             android:src="@drawable/ic_share_white_24dp"
-                            android:tint="#FFFFFF"/>
+                            android:tint="#FFFFFF" />
                     </androidx.cardview.widget.CardView>
+
                     <TextView
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/avenir_book"
-                        android:textSize="20sp"
                         android:gravity="center_vertical"
+                        android:text="Share Burner Code"
                         android:textColor="#424242"
-                        android:text="Share Burner Code"/>
+                        android:textSize="20sp" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -282,7 +262,7 @@
                     android:layout_marginRight="24dp"
                     android:layout_marginBottom="8dp">
                     <EditText
-                        android:id="@+id/admin_settings_edit_text_1"
+                        android:id="@+id/user_settings_edit_text_1"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -292,7 +272,7 @@
                         android:enabled="false"
                         android:background="@drawable/colored_border_orange"/>
                     <EditText
-                        android:id="@+id/admin_settings_edit_text_2"
+                        android:id="@+id/user_settings_edit_text_2"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -302,7 +282,7 @@
                         android:enabled="false"
                         android:background="@drawable/colored_border_orange"/>
                     <EditText
-                        android:id="@+id/admin_settings_edit_text_3"
+                        android:id="@+id/user_settings_edit_text_3"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -312,7 +292,7 @@
                         android:enabled="false"
                         android:background="@drawable/colored_border_orange"/>
                     <EditText
-                        android:id="@+id/admin_settings_edit_text_4"
+                        android:id="@+id/user_settings_edit_text_4"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -322,7 +302,7 @@
                         android:enabled="false"
                         android:background="@drawable/colored_border_orange"/>
                     <EditText
-                        android:id="@+id/admin_settings_edit_text_5"
+                        android:id="@+id/user_settings_edit_text_5"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -334,165 +314,166 @@
         </androidx.cardview.widget.CardView>
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/round_white">
-        <LinearLayout
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Group participants"
-                android:textColor="#2C2C2C"
-                android:fontFamily="@font/arial_regular"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp"
-                android:textSize="24sp"/>
-
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/round_white">
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginTop="8dp">
-                <TextView
-                    android:id="@+id/admin_settings_first_subscriber_name_text_view"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:fontFamily="@font/avenir_book"
-                    android:textSize="18sp"
-                    android:gravity="center_vertical"
-                    android:textColor="#424242"
-                    android:text="Saga 363"/>
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical|end"
-                    android:src="@drawable/right_arrow_icon" />
-            </LinearLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="#D9D9D9"/>
-
-            <LinearLayout
-                android:id="@+id/admin_settings_second_subscriber_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal"
-                android:visibility="invisible">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/admin_settings_second_subscriber_name_text_view"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/avenir_book"
-                    android:gravity="center_vertical"
-                    android:text="Saga 363"
-                    android:textColor="#424242"
-                    android:textSize="18sp" />
+                    android:text="Group participants"
+                    android:textColor="#2C2C2C"
+                    android:fontFamily="@font/arial_regular"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp"
+                    android:textSize="24sp"/>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical|end"
-                    android:src="@drawable/right_arrow_icon" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/admin_settings_second_subscriber_view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="#D9D9D9"
-                android:visibility="invisible" />
-
-            <LinearLayout
-                android:id="@+id/admin_settings_third_subscriber_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal"
-                android:visibility="invisible">
-
-                <TextView
-                    android:id="@+id/admin_settings_third_subscriber_name_text_view"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/avenir_book"
-                    android:gravity="center_vertical"
-                    android:text="Saga 363"
-                    android:textColor="#424242"
-                    android:textSize="18sp" />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginTop="8dp">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical|end"
-                    android:src="@drawable/right_arrow_icon" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/user_settings_first_subscriber_name_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/avenir_book"
+                        android:gravity="center_vertical"
+                        android:text="Saga 363"
+                        android:textColor="#424242"
+                        android:textSize="18sp" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:src="@drawable/right_arrow_icon" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#D9D9D9"/>
 
-            <View
-                android:id="@+id/admin_settings_third_subscriber_view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="8dp"
-                android:background="#D9D9D9"
-                android:visibility="invisible" />
-
-            <LinearLayout
-                android:id="@+id/admin_settings_more_subscriber_linear_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/admin_settings_more_subscriber_count_text_view"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/user_settings_second_subscriber_linear_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/avenir_book"
-                    android:gravity="center_vertical"
-                    android:text="Saga 363"
-                    android:textColor="#424242"
-                    android:textSize="18sp" />
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical|end"
-                    android:rotation="90"
-                    android:src="@drawable/right_arrow_icon" />
+                    <TextView
+                        android:id="@+id/user_settings_second_subscriber_name_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/avenir_book"
+                        android:gravity="center_vertical"
+                        android:text="Saga 363"
+                        android:textColor="#424242"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:src="@drawable/right_arrow_icon" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/user_settings_second_subscriber_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#D9D9D9"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:id="@+id/user_settings_third_subscriber_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
+
+                    <TextView
+                        android:id="@+id/user_settings_third_subscriber_name_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/avenir_book"
+                        android:gravity="center_vertical"
+                        android:text="Saga 363"
+                        android:textColor="#424242"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:src="@drawable/right_arrow_icon" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/user_settings_third_subscriber_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#D9D9D9"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:id="@+id/user_settings_more_subscriber_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/user_settings_more_subscriber_count_text_view"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/avenir_book"
+                        android:gravity="center_vertical"
+                        android:text="Saga 363"
+                        android:textColor="#424242"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:rotation="90"
+                        android:src="@drawable/right_arrow_icon" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -516,17 +497,18 @@
                     android:text="Group chat content"
                     android:textColor="#2C2C2C"
                     android:textSize="24sp" />
+
                 <TextView
-                    android:id="@+id/admin_settings_clear_your_content_text_view"
+                    android:id="@+id/user_settings_clear_your_content_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/avenir_book"
                     android:text="Clear your chat content"
                     android:textColor="#424242"
-                    android:fontFamily="@font/avenir_book"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -534,31 +516,14 @@
                     android:background="#D9D9D9"/>
 
                 <TextView
-                    android:id="@+id/admin_settings_clear_all_content_text_view"
+                    android:id="@+id/user_settings_clear_all_content_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/avenir_book"
                     android:text="Clear all chat content"
-                    android:textColor="#FE2D2D"
-                    android:fontFamily="@font/avenir_book"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
-                    android:textSize="16sp"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="#D9D9D9"/>
-
-                <TextView
-                    android:id="@+id/admin_settings_leave_group_text_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/avenir_book"
-                    android:text="Delete chat &amp; disconnect"
                     android:textColor="#FE2D2D"
                     android:textSize="16sp" />
                 <View
@@ -568,7 +533,24 @@
                     android:background="#D9D9D9"/>
 
                 <TextView
-                    android:id="@+id/admin_settings_block_report_text_view"
+                    android:id="@+id/user_settings_leave_group_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:fontFamily="@font/avenir_book"
+                    android:text="Leave group"
+                    android:textColor="#FE2D2D"
+                    android:textSize="16sp" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#D9D9D9"/>
+
+                <TextView
+                    android:id="@+id/user_settings_block_report_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

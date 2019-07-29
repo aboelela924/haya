@@ -12,10 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.haya.R;
-import com.bignerdranch.android.haya.TimeFormat;
+import com.bignerdranch.android.haya.utils.TimeFormat;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
-import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.Chat;
 import com.bignerdranch.android.haya.view.activities.ChatActivity;
 
 import java.util.List;

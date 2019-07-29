@@ -1,4 +1,4 @@
-package com.bignerdranch.android.haya;
+package com.bignerdranch.android.haya.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

@@ -19,4 +19,10 @@ public interface ChatSettingsAPI {
     @PUT("api/v1/chat-rooms/{roomId}/secret-status")
     Call<SubscriptionExample> toggleChatSecretOrNormal(@Header("x-access-token") String token,
                                                         @Path("roomId") String roomId);
+
+
+
+    @PUT("api/v1/chat-rooms/{roomToken}/toggle-token-status")
+    Call<StatusResponse> toggleBurnerCodeStatus(@Header("x-access-token") String token,
+                                                @Path("roomToken") String roomToken);
 }

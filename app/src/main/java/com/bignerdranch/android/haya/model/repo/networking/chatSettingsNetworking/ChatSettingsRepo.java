@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.bignerdranch.android.haya.model.repo.DeleteResult;
+import com.bignerdranch.android.haya.model.repo.Room;
+import com.bignerdranch.android.haya.model.repo.Subscriber;
 import com.bignerdranch.android.haya.model.repo.SubscriptionExample;
 import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
@@ -29,6 +31,10 @@ public class ChatSettingsRepo {
 
     public MutableLiveData<SubscriptionExample> mSubscriptionData = new MutableLiveData<>();
     public MutableLiveData<DeleteResult> mDeleteData = new MutableLiveData<>();
+    public MutableLiveData<Room> mRoomData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> mBurnerCodeStatus = new MutableLiveData<>();
+    public MutableLiveData<Subscriber> mSubscriberData = new MutableLiveData<>();
+
     private ChatSettingsRepo(){
 
     }
@@ -79,6 +85,26 @@ public class ChatSettingsRepo {
         });
     }
 
+    public void toggleBurnerCodeStatus(String accessToken, String roomToken){
+        Retrofit retrofit = GetRetrofit.getRetrofitInstance();
+
+        ChatSettingsAPI api = retrofit.create(ChatSettingsAPI.class);
+        Call<StatusResponse> call = api.toggleBurnerCodeStatus(accessToken,roomToken);
+        call.enqueue(new Callback<StatusResponse>() {
+            @Override
+            public void onResponse(Call<StatusResponse> call, Response<StatusResponse> response) {
+                if (response.isSuccessful()){
+                    mBurnerCodeStatus.postValue(Boolean.valueOf(response.body().getRoom_status()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<StatusResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
     public void deleteAllMessages(String roomId){
         Socket socket = GetSocket.getSocket();
         try{
@@ -103,6 +129,34 @@ public class ChatSettingsRepo {
         }
     }
 
+    public void observeUsersJoin(){
+        Socket socket = GetSocket.getSocket();
+        socket.on(SocketActions.OBSERVE_USER_JOIN, onUserJoin);
+    }
+
+    public void observeUserLeave(){
+        Socket socket = GetSocket.getSocket();
+        socket.on(SocketActions.OBSERVE_USER_LEAVE, onUserLeave);
+    }
+
+    Emitter.Listener onUserJoin = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            JSONObject jsonObject = (JSONObject) args[0];
+            Gson gson = new Gson();
+            Room room = gson.fromJson(jsonObject.toString(), Room.class);
+            mRoomData.postValue(room);
+        }
+    };
+
+    Emitter.Listener onUserLeave = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            JSONObject jsonObject = (JSONObject) args[0];
+            Gson gson = new Gson();
+        }
+    };
+
     Emitter.Listener onAllMessagesDeleted = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
@@ -110,6 +164,29 @@ public class ChatSettingsRepo {
             Gson gson = new Gson();
             DeleteResult result = gson.fromJson(jsonObject.toString(),DeleteResult.class);
             mDeleteData.postValue(result);
+        }
+    };
+
+    public void changeNickname(String nickname, String roomId){
+        try{
+            Socket socket = GetSocket.getSocket();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("nickname", nickname);
+            jsonObject.put("room_id", roomId);
+            socket.on(SocketActions.OBSERVE_NICKNAME_UPDATED, onNicknameUpdate);
+            socket.emit(SocketActions.EMIT_UPDATE_NICKNAME, jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Emitter.Listener onNicknameUpdate = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            JSONObject jsonObject = (JSONObject) args[0];
+            Gson gson = new Gson();
+            Subscriber subscriber = gson.fromJson(jsonObject.toString(), Subscriber.class);
+            mSubscriberData.postValue(subscriber);
         }
     };
 }

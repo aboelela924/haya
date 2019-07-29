@@ -4,14 +4,12 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.bignerdranch.android.haya.CurrentUser;
+import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.RoomsExample;
 import com.bignerdranch.android.haya.model.repo.User;
-import com.bignerdranch.android.haya.model.repo.UserExample;
 import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;

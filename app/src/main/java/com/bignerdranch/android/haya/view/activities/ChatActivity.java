@@ -289,6 +289,9 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
             if(isAdmin){
                 Intent i = GroupChatSettingsAdminActivity.newIntent(this, isPrivate,mUser,mRoom);
                 startActivity(i);
+            }else{
+                Intent i = GroupChatSettingsUserActivity.newIntent(this, isPrivate,mUser,mRoom);
+                startActivity(i);
             }
         }
     }

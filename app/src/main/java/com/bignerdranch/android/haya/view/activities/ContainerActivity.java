@@ -1,7 +1,6 @@
 package com.bignerdranch.android.haya.view.activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,19 +10,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.bignerdranch.android.haya.CurrentUser;
+import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.view.fragments.BurnerCodeFragment;
 import com.bignerdranch.android.haya.view.fragments.ConversationsFragment;
 import com.bignerdranch.android.haya.view.fragments.RandomChatFragment;
 import com.bignerdranch.android.haya.view.fragments.SettingsFragment;
-import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.net.ServerSocket;
 
 public class ContainerActivity extends AppCompatActivity {
     private static final String USER = "USER";

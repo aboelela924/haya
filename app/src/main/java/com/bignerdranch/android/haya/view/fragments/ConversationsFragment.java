@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bignerdranch.android.haya.CurrentUser;
+import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.view.activities.JoinConversationActivity;

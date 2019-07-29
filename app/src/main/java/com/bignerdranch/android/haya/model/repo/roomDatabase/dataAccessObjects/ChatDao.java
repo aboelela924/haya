@@ -10,7 +10,7 @@ import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.Chat;
 import java.util.List;
 
 @Dao
-public interface Chat_dao {
+public interface ChatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public void add_new_chat(Chat new_chat);
 

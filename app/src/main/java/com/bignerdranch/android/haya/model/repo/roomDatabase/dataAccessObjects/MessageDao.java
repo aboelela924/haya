@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Dao
-public interface Message_dao {
+public interface MessageDao {
     @Query("Select * from Messages where sent_status = 0 and subscriber_id = :subscriberId")
     List<Message> get_all_unsent_messages(String subscriberId);
 

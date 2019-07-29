@@ -13,11 +13,11 @@ import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "Messages",foreignKeys = {
                                                 @ForeignKey(entity = Chat.class,
-                                                        parentColumns = "burnercode",
-                                                        childColumns = "chat_burnercode",
+                                                        parentColumns = "id",
+                                                        childColumns = "chat_id",
                                                         onDelete = CASCADE),
                                                 @ForeignKey(entity = Subscriber.class,
-                                                        parentColumns = "subscriber_id",
+                                                        parentColumns = "id",
                                                         childColumns = "subscriber_id")
                                             })
 public class Message {
@@ -25,62 +25,19 @@ public class Message {
     @NonNull
     @ColumnInfo(name = "id")
         String id;
-    @ColumnInfo(name = "date")
-        Date date;
-    @ColumnInfo(name = "text")
-        String text;
-    @ColumnInfo(name = "sent_status")
-         boolean is_sent;
-    @ColumnInfo(name = "chat_burnercode")
-         String chat_burnercode;
+    @ColumnInfo(name = "message")
+        Date message;
+    @ColumnInfo(name = "updated_at")
+        String updatedAt;
+    @ColumnInfo(name = "created_at")
+         boolean createdAt;
+    @ColumnInfo(name = "type")
+         String type;
+    @ColumnInfo(name = "is_deleted")
+         boolean isDeleted;
+    @ColumnInfo(name = "chat_id")
+        String chatId;
     @ColumnInfo(name = "subscriber_id")
-         String subscriber_id;
+        String subScriberId;
 
-    public Message(@NonNull String id, Date date, String text, String chat_burnercode, String subscriber_id) {
-        this.id = id;
-        this.date = date;
-        this.text = text;
-        this.chat_burnercode = chat_burnercode;
-        this.subscriber_id = subscriber_id;
-
-        is_sent = false;
-    }
-
-    public void setId(@NonNull String id) {
-        this.id = id;
-    }
-    public void setDate(Date date) {
-        this.date = date;
-    }
-    public void setText(String text) {
-        this.text = text;
-    }
-    public void setIs_sent(boolean is_sent) {
-        this.is_sent = is_sent;
-    }
-    public void setChat_burnercode(String chat_burnercode) {
-        this.chat_burnercode = chat_burnercode;
-    }
-    public void setSubscriber_id(String subscriber_id) {
-        this.subscriber_id = subscriber_id;
-    }
-
-    public String getId() {
-        return id;
-    }
-    public Date getDate() {
-        return date;
-    }
-    public String getText() {
-        return text;
-    }
-    public boolean isIs_sent() {
-        return is_sent;
-    }
-    public String getChat_burnercode() {
-        return chat_burnercode;
-    }
-    public String getSubscriber_id() {
-        return subscriber_id;
-    }
 }

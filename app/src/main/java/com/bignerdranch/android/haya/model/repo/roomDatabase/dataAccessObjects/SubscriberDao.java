@@ -12,7 +12,7 @@ import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.Subscriber;
 import java.util.List;
 
 @Dao
-public interface Subscriber_dao {
+public interface SubscriberDao {
     @Query("Select Chats.burnercode, Chats.secret_status, Chats.conversation_nickname, chats.admin_subscriber_id," +
             " chats.last_message_Date from Subscribers, Chats where Subscribers.chat_burnercode = Chats.burnercode and Subscribers.user_id = :user_id")
     List<Chat> select_all_chats_for_user(String user_id);

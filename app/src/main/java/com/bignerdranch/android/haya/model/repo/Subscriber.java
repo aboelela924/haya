@@ -11,13 +11,13 @@ public class Subscriber implements Parcelable {
     private String room_id;
 
     private String updated_at;
-
+    //***********
     private String user_id;
 
     private String is_secret;
 
     private String is_leave;
-
+    //*************
     private String custom_room_name;
 
     private String __v;

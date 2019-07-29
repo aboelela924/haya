@@ -8,21 +8,21 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Room implements Parcelable {
-
+    //
     private String updated_at;
 
     private Subscriber[] subscribers;
 
     private String __v;
-
+    //
     private String name;
-
+    //
     private String created_at;
-
+    //
     private String _id;
-
+    //
     private String id;
-
+    //
     private String type;
 
     private String status;

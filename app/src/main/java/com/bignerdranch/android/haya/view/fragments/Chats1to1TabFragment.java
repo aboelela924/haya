@@ -39,20 +39,31 @@ import retrofit2.Retrofit;
 public class Chats1to1TabFragment extends Fragment {
 
     private static final String tag_chats1to1Tab = "Chats1to1Tab";
+    private static final String USER = "USER";
+
     @BindView(R.id.recyclerview_chats_1to1)
     RecyclerView recyclerView;
+    private User mUser;
 
     private ChatRecyclerViewAdapter adapter;
     private List<Room> chats = new ArrayList<>();
     private List<String> chatLastMessageList = new ArrayList<>();
     private Chats1to1ViewModel viewModel;
 
+    public static Chats1to1TabFragment newInstance(User user){
+        Chats1to1TabFragment fragment = new Chats1to1TabFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(USER, user);
+        fragment.setArguments(args);
+        return  fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chats_1to1, container, false);
         ButterKnife.bind(this,v);
-
+        mUser = getArguments().getParcelable(USER);
         createChatsRecyclerView();
         viewModelFunction();
         return v;
@@ -73,7 +84,7 @@ public class Chats1to1TabFragment extends Fragment {
     private void createChatsRecyclerView() {
         if(chats!=null)
         {
-            adapter = new ChatRecyclerViewAdapter(chats, chatLastMessageList);
+            adapter = new ChatRecyclerViewAdapter(getActivity(),chats, chatLastMessageList, mUser);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(adapter);
         }

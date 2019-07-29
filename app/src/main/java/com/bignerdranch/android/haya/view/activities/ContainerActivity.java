@@ -68,10 +68,10 @@ public class ContainerActivity extends AppCompatActivity {
 
                         switch(menuItem.getItemId()){
                             case R.id.burner_code_item:
-                                fragment = new BurnerCodeFragment();
+                                fragment = BurnerCodeFragment.newInstance(mUser);
                                 break;
                             case R.id.conversations_item:
-                                fragment = new ConversationsFragment();
+                                fragment = ConversationsFragment.newInstance(mUser);
                                 break;
                             case R.id.random_chat_item:
                                 fragment = new RandomChatFragment();

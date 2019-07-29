@@ -27,7 +27,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ConversationsFragment extends Fragment {
-
+    private static final String USER = "USER";
+    private User mUser;
     @BindView(R.id.conversations_view_pager) ViewPager viewPager;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.imageview_add_conversation) ImageView add_conversation;
@@ -35,11 +36,20 @@ public class ConversationsFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static ConversationsFragment newInstance(User user){
+        ConversationsFragment fragment = new ConversationsFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(USER, user);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_conversations, container, false);
         ButterKnife.bind(this,v);
+        mUser = getArguments().getParcelable(USER);
         createConversationsTabLayout();
         return v;
     }
@@ -48,7 +58,7 @@ public class ConversationsFragment extends Fragment {
         List<String> mTitles = new ArrayList<String>();
         List<Fragment> mFragments = new ArrayList<Fragment>();
 
-        mFragments.add(new Chats1to1TabFragment());
+        mFragments.add(Chats1to1TabFragment.newInstance(mUser));
         mFragments.add(new ChatsGroupFragment());
 
         mTitles.add("CHATS");

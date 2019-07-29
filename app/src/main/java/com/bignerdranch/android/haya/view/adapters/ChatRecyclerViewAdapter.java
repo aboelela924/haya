@@ -1,5 +1,7 @@
 package com.bignerdranch.android.haya.view.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +14,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.TimeFormat;
 import com.bignerdranch.android.haya.model.repo.Room;
+import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.Chat;
+import com.bignerdranch.android.haya.view.activities.ChatActivity;
 
 import java.util.List;
 
 public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.ViewHolder> {
 
-    List<Room> chats;
-    List<String> chatLastMessage;
-    public ChatRecyclerViewAdapter(List<Room> chats, List<String> chatLastMessage)
+    private List<Room> chats;
+    private List<String> chatLastMessage;
+    private Context mContext;
+    private User mUser;
+
+    public ChatRecyclerViewAdapter(Context ctx,List<Room> chats, List<String> chatLastMessage, User user)
     {
+        mContext = ctx;
+        mUser = user;
         this.chats = chats;
         this.chatLastMessage = chatLastMessage;
     }
@@ -31,6 +40,7 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_single_chat_outview, parent, false);
+
         return new ViewHolder(v);
     }
 
@@ -38,11 +48,20 @@ public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TimeFormat timeFormat = new TimeFormat();
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = ChatActivity.newIntent(mContext,mUser,chats.get(position));
+                mContext.startActivity(i);
+            }
+        });
         holder.textViewChatNickname.setText(chats.get(position).getName());
         holder.textViewChatLastMessageDate.setText(timeFormat.getTimeFormat(chats.get(position).getUpdated_at()));
         holder.textViewChatLastMessage.setText("");
         holder.imageViewGoToChat.setImageResource(R.drawable.right_arrow_icon);
         holder.imageViewChatBottomLine.setImageResource(R.drawable.costume_single_chat_outview_border);
+
     }
 
     @Override

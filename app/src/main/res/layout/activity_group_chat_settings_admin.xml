@@ -24,6 +24,7 @@
                 android:tint="#FFFFFF"
                 android:src="@drawable/left_arrow_icon"/>
             <TextView
+                android:id="@+id/admin_settings_title_chat_name_text_view"
                 android:layout_width="0dp"
                 android:layout_weight="8"
                 android:layout_height="wrap_content"
@@ -76,6 +77,7 @@
                             android:tint="#FFFFFF"/>
                     </androidx.cardview.widget.CardView>
                     <TextView
+                        android:id="@+id/admin_settings_chat_info_chat_name_text_view"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
@@ -115,6 +117,7 @@
                             android:tint="#FFFFFF"/>
                     </androidx.cardview.widget.CardView>
                     <TextView
+                        android:id="@+id/admin_settings_chat_info_nickname_text_view"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="match_parent"
@@ -165,6 +168,7 @@
                         android:textColor="#424242"
                         android:text="Secret Chat"/>
                     <com.suke.widget.SwitchButton
+                        android:id="@+id/admin_settings_chat_info_is_private_switch_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

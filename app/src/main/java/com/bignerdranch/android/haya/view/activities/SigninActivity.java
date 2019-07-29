@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.networking.signinNetworking.SigninBody;
+import com.bignerdranch.android.haya.utils.SharedPreferncesConstants;
 import com.bignerdranch.android.haya.utils.dialouges.DialogUtils;
 import com.bignerdranch.android.haya.utils.networkUtils.NetworkUtils;
 import com.bignerdranch.android.haya.viewModel.SigninViewModel;
@@ -70,6 +72,10 @@ public class SigninActivity extends AppCompatActivity implements TextWatcher {
         mViewModel.mData.observe(this, userExample -> {
             Log.d(TAG, "onCreate: sing in successfully");
             Log.d(TAG, "onCreate: "+ userExample.getUser().getId());
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putString(SharedPreferncesConstants.USER_ID, userExample.getUser().getUserId())
+                    .putString(SharedPreferncesConstants.ACCESS_TOKEN, userExample.getUser().getAccessToken())
+                    .apply();
             Intent i = ContainerActivity.newIntent(this, userExample.getUser());
             startActivity(i);
         });

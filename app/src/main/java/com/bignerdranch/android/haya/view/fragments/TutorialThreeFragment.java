@@ -2,6 +2,7 @@ package com.bignerdranch.android.haya.view.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.ui.CircleCheckBox;
+import com.bignerdranch.android.haya.utils.SharedPreferncesConstants;
 import com.bignerdranch.android.haya.view.activities.RegistrationActivity;
 import com.bignerdranch.android.haya.view.activities.TermsActivity;
 
@@ -32,6 +34,14 @@ public class TutorialThreeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.tutorial_three_fragment, container, false);
         mUnbinder = ButterKnife.bind(this, v);
+        areTermsAccepted.setOnCheckedChangeListener(new CircleCheckBox.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CircleCheckBox view, boolean isChecked) {
+                PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                        .putBoolean(SharedPreferncesConstants.ACCEPT_TERMS, isChecked)
+                        .apply();
+            }
+        });
         return v;
     }
 

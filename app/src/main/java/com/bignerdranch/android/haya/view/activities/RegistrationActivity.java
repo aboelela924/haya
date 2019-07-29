@@ -1,7 +1,9 @@
 package com.bignerdranch.android.haya.view.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,9 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.bignerdranch.android.haya.R;
+import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.UserExample;
 import com.bignerdranch.android.haya.model.repo.networking.registration.PasswordBody;
 import com.bignerdranch.android.haya.model.repo.networking.registration.RegistrationBody;
+import com.bignerdranch.android.haya.utils.SharedPreferncesConstants;
 import com.bignerdranch.android.haya.utils.dialouges.DialogUtils;
 import com.bignerdranch.android.haya.utils.networkUtils.NetworkUtils;
 import com.bignerdranch.android.haya.viewModel.RegistrationViewModel;
@@ -52,6 +56,20 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
         ButterKnife.bind(this);
 
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        String accessToken = sp.getString(SharedPreferncesConstants.ACCESS_TOKEN,"");
+        String userIdSp = sp.getString(SharedPreferncesConstants.USER_ID,"");
+
+        if( !userIdSp.equals("")  && !accessToken.equals("")){
+            User user = new User();
+            user.setId(userIdSp);
+            user.setUserId(userIdSp);
+            user.setAccessToken(accessToken);
+            Intent i = ContainerActivity.newIntent(this, user);
+            startActivity(i);
+            finish();
+        }
+
         String androidId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
         mViewModel = ViewModelProviders.of(this).get(RegistrationViewModel.class);
@@ -63,6 +81,10 @@ public class RegistrationActivity extends AppCompatActivity {
             thirdNumberEditText.setText(String.valueOf(userId.charAt(2)));
             forthNumberEditText.setText(String.valueOf(userId.charAt(3)));
             fifthNumberEditText.setText(String.valueOf(userId.charAt(4)));
+            PreferenceManager.getDefaultSharedPreferences(this).edit()
+                    .putString(SharedPreferncesConstants.USER_ID, userExample.getUser().getUserId())
+                    .putString(SharedPreferncesConstants.ACCESS_TOKEN, userExample.getUser().getAccessToken())
+                    .apply();
             hideUserIdSpinner();
         });
         mViewModel.mMessageData.observe(this, messageResponseUpdatePassword -> {

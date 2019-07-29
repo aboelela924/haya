@@ -9,9 +9,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 import com.bignerdranch.android.haya.R;
+import com.bignerdranch.android.haya.utils.SharedPreferncesConstants;
 import com.bignerdranch.android.haya.view.fragments.TutorialOneFragment;
 import com.bignerdranch.android.haya.view.fragments.TutorialThreeFragment;
 import com.bignerdranch.android.haya.view.fragments.TutorialTwoFragment;
@@ -41,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean acceptTerms = sp.getBoolean(SharedPreferncesConstants.ACCEPT_TERMS, false);
+        if(acceptTerms){
+            Intent i = new Intent(this,RegistrationActivity.class);
+            startActivity(i);
+            finish();
+        }
+
         mFragments.add(new TutorialOneFragment());
         mFragments.add(new TutorialTwoFragment());
         mFragments.add(new TutorialThreeFragment());

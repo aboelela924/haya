@@ -15,7 +15,7 @@ public interface ChatDao {
     void addNewChat(ChatDB newChatDB);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertChats(ChatDB... chatDBS);
+    void insertChats(List<ChatDB> chatDBS);
 
     @Delete
     void deleteChat(ChatDB chatDB);

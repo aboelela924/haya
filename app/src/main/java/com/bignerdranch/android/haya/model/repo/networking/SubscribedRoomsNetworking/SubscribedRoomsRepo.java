@@ -4,11 +4,14 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.RoomsExample;
 import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.HayaDatabase;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.ChatDB;
 import com.hadilq.liveevent.LiveEvent;
 
 import java.util.ArrayList;
@@ -25,7 +28,6 @@ public class SubscribedRoomsRepo {
     private RoomsExample roomsExample;
     private LiveEvent<List<Room>> mRoomList = new LiveEvent<>();
     private String roomType;
-
     //Singelton Pattern
     public static SubscribedRoomsRepo getInstance(){
         if(instance == null)
@@ -50,8 +52,6 @@ public class SubscribedRoomsRepo {
                 List<Room> toBeSortedRooms = getRoomsAccordingToType(roomsExample.getRooms());
                 Collections.sort(toBeSortedRooms, Collections.reverseOrder());
                 mRoomList.setValue(toBeSortedRooms);
-
-                Log.i("SubscribedRoomsRepo", "API Responded");
             }
 
             public List<Room> getRoomsAccordingToType(List<Room> allRooms) {
@@ -66,6 +66,9 @@ public class SubscribedRoomsRepo {
             @Override
             public void onFailure(Call<RoomsExample> call, Throwable t) {
                 Log.i("SubscribedRoomsRepo", "No Response, error: " + t.getMessage());
+                List<ChatDB> ChatsDB = App.getInstance().getMyDatabase().chat_dao().selectAllChats();
+                List<Room> rooms = ChatDB.toRoomList(ChatsDB);
+                mRoomList.setValue(getRoomsAccordingToType(rooms));
             }
         });
     }

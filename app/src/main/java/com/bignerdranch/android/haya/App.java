@@ -17,7 +17,7 @@ public class App extends Application {
 
         myDatabase = Room.databaseBuilder(this,
                 HayaDatabase.class,
-                HayaDatabase.NAME).fallbackToDestructiveMigration().build();
+                HayaDatabase.NAME).fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
     }
 

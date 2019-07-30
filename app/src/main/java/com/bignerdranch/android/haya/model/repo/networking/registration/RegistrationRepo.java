@@ -38,7 +38,6 @@ public class RegistrationRepo implements Callback<UserExample> {
     public void onResponse(Call<UserExample> call, Response<UserExample> response) {
         if(response.isSuccessful()){
             mData.setValue(response.body());
-            GetSocket.getInstance(response.body().getUser().getAccessToken());
         }
     }
 

@@ -48,22 +48,6 @@ public class CreateRoomRepo implements Callback<RoomExample> {
     public void onResponse(Call<RoomExample> call, Response<RoomExample> response) {
         if (response.isSuccessful()){
             mData.setValue(response.body());
-
-
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    ModelMapper mapper = new ModelMapper();
-                    mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-                    for (Subscriber sb : response.body().getRoom().getSubscribers()){
-                        SubscriberDB subscriberDB = mapper.map(sb, SubscriberDB.class);
-                        App.getInstance().getMyDatabase().subscriber_dao().insertSubscriber(subscriberDB);
-                    }
-                    ChatDB chatDB = mapper.map(response.body().getRoom(), ChatDB.class);
-                    App.getInstance().getMyDatabase().chat_dao().addNewChat(chatDB);
-                    return null;
-                }
-            }.execute();
         }
     }
 

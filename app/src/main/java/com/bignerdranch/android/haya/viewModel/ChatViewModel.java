@@ -48,4 +48,11 @@ public class ChatViewModel extends ViewModel {
     public void observeMessageDelete(){
         mRepo.observeMessageDelete();
     }
+    public void stopObserveMessages(){
+        mRepo.stopObserveMessages();
+    }
+
+    public void stopObserveMessageDelete(){
+        mRepo.stopObserveMessageDelete();
+    }
 }

@@ -14,6 +14,7 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.hadilq.liveevent.LiveEvent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,10 +36,10 @@ public class ChatNetworkingRepo {
     public static ChatNetworkingRepo getInstance() {
         return ourInstance;
     }
-    public MutableLiveData<Message> mData = new MutableLiveData<>();
-    public MutableLiveData<SyncMessageMaster> mMessages = new MutableLiveData<>();
-    public MutableLiveData<DeleteMessageResponse> mDeleteResponse = new MutableLiveData<>();
-    public MutableLiveData<List<String>> mLastMessage = new MutableLiveData<>();
+    public LiveEvent<Message> mData = new LiveEvent<>();
+    public LiveEvent<SyncMessageMaster> mMessages = new LiveEvent<>();
+    public LiveEvent<DeleteMessageResponse> mDeleteResponse = new LiveEvent<>();
+    public LiveEvent<List<String>> mLastMessage = new LiveEvent<>();
 
     private ChatNetworkingRepo() {
     }
@@ -118,6 +119,16 @@ public class ChatNetworkingRepo {
     public void observeMessages(){
         Socket socket = GetSocket.getSocket();
         socket.on(SocketActions.OBSERVE_MESSAGE, onGetMessage);
+    }
+
+    public void stopObserveMessageDelete(){
+        Socket socket = GetSocket.getSocket();
+        socket.off(SocketActions.OBSERVE_MSG_DELETED, onDelete);
+    }
+
+    public void stopObserveMessages(){
+        Socket socket = GetSocket.getSocket();
+        socket.off(SocketActions.OBSERVE_MESSAGE, onGetMessage);
     }
 
     private Emitter.Listener onGetMessage = new Emitter.Listener() {

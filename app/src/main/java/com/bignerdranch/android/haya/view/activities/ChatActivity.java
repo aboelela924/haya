@@ -108,6 +108,8 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
 
+        mMessageList.clear();
+
         Intent i = getIntent();
         if(i != null){
             mUser = i.getParcelableExtra(USER);
@@ -170,6 +172,7 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
             updateRecyclerView();
         });
         mViewModel.mMessages.observe(this, messages -> {
+            if (messages == null) return;
             for (SyncMessage message: messages.getMessages()){
                 if(!Boolean.valueOf(message.getIsDeleted())){
                     Message sentMessage = new Message();
@@ -332,4 +335,11 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
 
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mViewModel.stopObserveMessages();
+        mViewModel.stopObserveMessageDelete();
+    }
 }

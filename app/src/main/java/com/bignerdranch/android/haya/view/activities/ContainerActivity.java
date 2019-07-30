@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.User;
+import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.view.fragments.BurnerCodeFragment;
 import com.bignerdranch.android.haya.view.fragments.ConversationsFragment;
 import com.bignerdranch.android.haya.view.fragments.RandomChatFragment;
@@ -29,6 +30,7 @@ public class ContainerActivity extends AppCompatActivity {
         i.putExtra(USER, user);
 
         CurrentUser.user = user;
+        GetSocket.getInstance(user.getAccessToken());
         Log.i("User is: ", user.getAccessToken() + "-" + user.getId());
 
 

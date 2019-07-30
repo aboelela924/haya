@@ -59,10 +59,11 @@ public class RegistrationActivity extends AppCompatActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String accessToken = sp.getString(SharedPreferncesConstants.ACCESS_TOKEN,"");
         String userIdSp = sp.getString(SharedPreferncesConstants.USER_ID,"");
+        String idSp = sp.getString(SharedPreferncesConstants.ID,"");
 
         if( !userIdSp.equals("")  && !accessToken.equals("")){
             User user = new User();
-            user.setId(userIdSp);
+            user.setId(idSp);
             user.setUserId(userIdSp);
             user.setAccessToken(accessToken);
             Intent i = ContainerActivity.newIntent(this, user);
@@ -84,6 +85,7 @@ public class RegistrationActivity extends AppCompatActivity {
             PreferenceManager.getDefaultSharedPreferences(this).edit()
                     .putString(SharedPreferncesConstants.USER_ID, userExample.getUser().getUserId())
                     .putString(SharedPreferncesConstants.ACCESS_TOKEN, userExample.getUser().getAccessToken())
+                    .putString(SharedPreferncesConstants.ID, userExample.getUser().getId())
                     .apply();
             hideUserIdSpinner();
         });

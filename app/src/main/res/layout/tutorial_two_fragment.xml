@@ -70,7 +70,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="When you delete the chat, they will neveer be able to contact you."
+                android:text="When you delete the chatDB, they will neveer be able to contact you."
                 android:textColor="#242424"
                 android:fontFamily="@font/avenir_book"
                 android:layout_marginTop="8dp"

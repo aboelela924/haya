@@ -70,7 +70,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="if you delete the chat you can use another Burner Code to reconnect."
+                android:text="if you delete the chatDB you can use another Burner Code to reconnect."
                 android:textColor="#242424"
                 android:fontFamily="@font/avenir_book"
                 android:layout_marginTop="8dp"

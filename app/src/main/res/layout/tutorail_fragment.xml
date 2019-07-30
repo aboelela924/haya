@@ -49,7 +49,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         android:fontFamily="@font/arial_regular"
-        android:text="Welcome to Haya the Burner chat app"
+        android:text="Welcome to Haya the Burner chatDB app"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

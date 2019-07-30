@@ -182,6 +182,6 @@
         android:layout_marginRight="32dp"
         android:textColor="#FFFFFF"
         android:background="@drawable/round_button_no_opacity"
-        android:text="Join the chat"/>
+        android:text="Join the chatDB"/>
 
 </LinearLayout>

@@ -5,25 +5,27 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.Chat;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.ChatDB;
 
 import java.util.List;
 
 @Dao
 public interface ChatDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    public void add_new_chat(Chat new_chat);
+    void addNewChat(ChatDB newChatDB);
 
-    @Query("Update Chats set conversation_nickname = :new_nickname where burnercode = :chat_burnercode")
-    void update_conversation_nickname(String new_nickname, String chat_burnercode);
-
-    @Query("Update Chats set secret_status = :new_status where burnercode = :chat_burnercode")
-    void update_secret_status(String chat_burnercode, boolean new_status);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertChats(ChatDB... chatDBS);
 
     @Delete
-    void delete_chat(Chat chat);
+    void deleteChat(ChatDB chatDB);
 
-    //For testing
-    @Query("Select * from Chats")
-    List<Chat> select_all_chats();
+    @Query("update chat set status = :status where id = :id")
+    void updateStatus(String id, String status);
+
+    @Query("update chat set updated_at = :updateAt where id = :chatId")
+    void updateUpdatedAt(String chatId, String updateAt);
+
+    @Query("Select * from chat")
+    List<ChatDB> selectAllChats();
 }

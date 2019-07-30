@@ -111,7 +111,7 @@ public class OneToOneSettingsActivity extends AppCompatActivity {
     @OnClick(R.id.clear_chat_content_text_view)
     public void clearChatContent(View v){
         String title = "Clear your chat content";
-        String message = "You are about to delete all content from this Chat from all users." +
+        String message = "You are about to delete all content from this ChatDB from all users." +
                 " You will still be connected to carry on chatting. Are you sure?";
         DialogUtils.confirmationDialouge(this, title, message, new DialogUtils.OnNetwrokBack() {
             @Override
@@ -125,7 +125,7 @@ public class OneToOneSettingsActivity extends AppCompatActivity {
     @OnClick(R.id.delete_and_disconnect_text_view)
     public void deleteAndDisconnect(View v){
         String title = "Delete chat and disconnect";
-        String message = "You are about to delete all content from this Chat from all users and disconnect."+
+        String message = "You are about to delete all content from this ChatDB from all users and disconnect."+
                 " You will not be able to reconnect to the same user unless you share a new Burner Code. Are you sure?";
         DialogUtils.confirmationDialouge(this, title, message, new DialogUtils.OnNetwrokBack() {
             @Override
@@ -140,7 +140,7 @@ public class OneToOneSettingsActivity extends AppCompatActivity {
     @OnClick(R.id.block_and_report_text_view)
     public void blockAndReport(View v){
         String title = "Delete chat and disconnect";
-        String message = "You are about to delete all content from this Chat from all users."+
+        String message = "You are about to delete all content from this ChatDB from all users."+
                 " As well as block and report the user to HaYa admin. Are you sure?";
         DialogUtils.confirmationDialouge(this, title, message, new DialogUtils.OnNetwrokBack() {
             @Override

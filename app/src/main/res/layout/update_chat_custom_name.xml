@@ -22,7 +22,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:textAlignment="center"
-            android:text="Change chat name"/>
+            android:text="Change chatDB name"/>
 
         <EditText
             android:id="@+id/custom_chat_name_edit_text"

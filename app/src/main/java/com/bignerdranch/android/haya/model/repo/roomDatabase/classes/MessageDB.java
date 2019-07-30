@@ -7,37 +7,53 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import com.bignerdranch.android.haya.model.repo.Message;
+
 import java.util.Date;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "Messages",foreignKeys = {
-                                                @ForeignKey(entity = Chat.class,
+@Entity(tableName = "message",foreignKeys = {
+                                                @ForeignKey(entity = ChatDB.class,
                                                         parentColumns = "id",
                                                         childColumns = "chat_id",
                                                         onDelete = CASCADE),
-                                                @ForeignKey(entity = Subscriber.class,
+                                                @ForeignKey(entity = SubscriberDB.class,
                                                         parentColumns = "id",
                                                         childColumns = "subscriber_id")
                                             })
-public class Message {
+public class MessageDB {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
-        String id;
+    public    String id;
     @ColumnInfo(name = "message")
-        Date message;
+    public   String message;
     @ColumnInfo(name = "updated_at")
-        String updatedAt;
+    public  String updatedAt;
     @ColumnInfo(name = "created_at")
-         boolean createdAt;
+    public  String createdAt;
     @ColumnInfo(name = "type")
-         String type;
+    public  String type;
     @ColumnInfo(name = "is_deleted")
-         boolean isDeleted;
+    public   boolean isDeleted;
     @ColumnInfo(name = "chat_id")
-        String chatId;
+    public   String chatId;
     @ColumnInfo(name = "subscriber_id")
-        String subScriberId;
+    public String subScriberId;
+
+
+    public static MessageDB fromMessage(Message message, String chatId, String subScriberId){
+        MessageDB msgDB = new MessageDB();
+        msgDB.id = message.getId();
+        msgDB.message = message.getMessage();
+        msgDB.updatedAt = message.getUpdated_at();
+        msgDB.createdAt = message.getCreated_at();
+        msgDB.type = message.getType();
+        msgDB.isDeleted = Boolean.valueOf(message.getIsDeleted());
+        msgDB.chatId = chatId;
+        msgDB.subScriberId = subScriberId;
+        return msgDB;
+    }
 
 }

@@ -513,14 +513,14 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/arial_regular"
-                    android:text="Group chat content"
+                    android:text="Group chatDB content"
                     android:textColor="#2C2C2C"
                     android:textSize="24sp" />
                 <TextView
                     android:id="@+id/admin_settings_clear_your_content_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Clear your chat content"
+                    android:text="Clear your chatDB content"
                     android:textColor="#424242"
                     android:fontFamily="@font/avenir_book"
                     android:layout_marginStart="16dp"
@@ -537,7 +537,7 @@
                     android:id="@+id/admin_settings_clear_all_content_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Clear all chat content"
+                    android:text="Clear all chatDB content"
                     android:textColor="#FE2D2D"
                     android:fontFamily="@font/avenir_book"
                     android:layout_marginStart="16dp"
@@ -558,7 +558,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
                     android:fontFamily="@font/avenir_book"
-                    android:text="Delete chat &amp; disconnect"
+                    android:text="Delete chatDB &amp; disconnect"
                     android:textColor="#FE2D2D"
                     android:textSize="16sp" />
                 <View

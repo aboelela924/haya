@@ -22,7 +22,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:textAlignment="center"
-            tools:text="Clear you chat content"/>
+            tools:text="Clear you chatDB content"/>
 
         <TextView
             android:id="@+id/confirmation_dialog_message_text_view"

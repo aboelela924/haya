@@ -18,8 +18,6 @@ import android.widget.Toast;
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
-import com.bignerdranch.android.haya.model.repo.networking.joinRoomNetworking.JoinRoomRepo;
-import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.Chat;
 import com.bignerdranch.android.haya.viewModel.JoinRoomViewModel;
 
 import java.util.Random;

@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Room implements Parcelable {
+public class Room implements Parcelable, Comparable<Room> {
     //
     private String updated_at;
 
@@ -182,4 +182,9 @@ public class Room implements Parcelable {
             return new Room[size];
         }
     };
+
+    @Override
+    public int compareTo(Room o) {
+        return this.updated_at.compareTo(o.updated_at);
+    }
 }

@@ -1,10 +1,13 @@
 package com.bignerdranch.android.haya.view.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,7 +44,26 @@ public class RandomChatWaitingInQueueFragment extends Fragment {
     @OnClick(R.id.button_leave_queue)
     public void leaveQueue()
     {
-        randomRoomViewModel.leaveQueue();
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new RandomChatFragment()).commit();
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.confirmation_dialog);
+        Button buttonLeave = dialog.findViewById(R.id.confirmation_dialog_confirm_button);
+        Button buttonCancel = dialog.findViewById(R.id.confirmation_dialog_cancel_button);
+        TextView textViewTitle = dialog.findViewById(R.id.confirmation_dialog_title_text_view);
+        TextView textViewMessage = dialog.findViewById(R.id.confirmation_dialog_message_text_view);
+
+        buttonLeave.setText("LEAVE");
+        textViewTitle.setText("Leave Queue");
+        textViewMessage.setText("Are you sure you want to leave the queue?");
+
+        buttonLeave.setOnClickListener(view -> {
+            randomRoomViewModel.leaveQueue();
+            dialog.dismiss();
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment, new RandomChatFragment()).commit();
+        });
+        buttonCancel.setOnClickListener(view ->{
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 }

@@ -1,14 +1,16 @@
 package com.bignerdranch.android.haya.model.repo.networking.chatNetworking;
 
-public class SyncMessageMaster {
-    private SyncMessage[] messages;
+import com.bignerdranch.android.haya.model.repo.Message;
 
-    public SyncMessage[] getMessages ()
+public class SyncMessageMaster {
+    private Message[] messages;
+
+    public Message[] getMessages ()
     {
         return messages;
     }
 
-    public void setMessages (SyncMessage[] messages)
+    public void setMessages (Message[] messages)
     {
         this.messages = messages;
     }

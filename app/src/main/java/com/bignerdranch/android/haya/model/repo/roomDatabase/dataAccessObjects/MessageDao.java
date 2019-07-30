@@ -38,4 +38,6 @@ public interface MessageDao {
     @Query("select * from message where message.chat_id = :chatId")
     List<MessageDB> getAllMessageForChat(String chatId);
 
+    @Query("select distinct subscriber_id from message where chat_id = :chatId")
+    List<MessageDB> getDinstinctSubscriberId(String chatId);
 }

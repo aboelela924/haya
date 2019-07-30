@@ -1,15 +1,20 @@
 package com.bignerdranch.android.haya.model.repo.networking.chatNetworking;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.model.repo.Message;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.model.repo.networking.SocketActions;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.HayaDatabase;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.MessageDB;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.SubscriberDB;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
@@ -33,6 +38,8 @@ public class ChatNetworkingRepo {
     private static final ChatNetworkingRepo ourInstance = new ChatNetworkingRepo();
     private static final String TAG = "ChatNetworkingRepo";
 
+    private HayaDatabase mDatabase;
+
     public static ChatNetworkingRepo getInstance() {
         return ourInstance;
     }
@@ -42,6 +49,7 @@ public class ChatNetworkingRepo {
     public LiveEvent<List<String>> mLastMessage = new LiveEvent<>();
 
     private ChatNetworkingRepo() {
+        mDatabase = App.getInstance().getMyDatabase();
     }
 
     public void syncMessages(String token, List<SyncBody> body){
@@ -72,6 +80,7 @@ public class ChatNetworkingRepo {
             public void onResponse(Call<SyncMessageMaster> call, Response<SyncMessageMaster> response) {
                 if (response.isSuccessful()){
                     Log.i("Test", response.body().toString());
+
                 }
             }
 
@@ -81,6 +90,32 @@ public class ChatNetworkingRepo {
             }
         });
     }
+
+    private void addMessagesToDB(Message[] messages){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                MessageDB[] messageDBS = MessageDB.fromMessagerray(messages);
+                mDatabase.message_dao().insertMessages(messageDBS);
+                return null;
+            }
+        }.execute();
+    }
+
+    private void readMessageFromDB(String chatId){
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                List<MessageDB> subscriberIds = mDatabase.message_dao().getDinstinctSubscriberId(chatId);
+                List<SubscriberDB> subscriberDBS = new ArrayList<>();
+                for (MessageDB messageDB: subscriberIds) {
+                    subscriberDBS.add(mDatabase.subscriber_dao().)
+                }
+                return null;
+            }
+        }.execute();
+    }
+
     public MutableLiveData<List<String>> getRoomLastMessages() {
         return this.mLastMessage;
     }
@@ -138,6 +173,14 @@ public class ChatNetworkingRepo {
             Log.d(TAG, "call: "+jsonObject.toString());
             Gson gson = new Gson();
             Message message = gson.fromJson(jsonObject.toString(), Message.class);
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    MessageDB messageDB = MessageDB.fromMessage(message);
+                    mDatabase.message_dao().insertMessage(messageDB);
+                    return null;
+                }
+            }.execute();
             mData.postValue(message);
         }
     };
@@ -148,6 +191,13 @@ public class ChatNetworkingRepo {
             JSONObject jsonObject = (JSONObject) args[0];
             Gson gson = new Gson();
             DeleteMessageResponse response = gson.fromJson(jsonObject.toString(), DeleteMessageResponse.class);
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    mDatabase.message_dao().updateIsDeleted(response.message_id,true);
+                    return null;
+                }
+            }.execute();
             mDeleteResponse.postValue(response);
         }
     };

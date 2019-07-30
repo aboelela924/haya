@@ -8,6 +8,7 @@ import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.bignerdranch.android.haya.model.repo.Message;
+import com.bignerdranch.android.haya.model.repo.Subscriber;
 
 import java.util.Date;
 
@@ -43,7 +44,7 @@ public class MessageDB {
     public String subScriberId;
 
 
-    public static MessageDB fromMessage(Message message, String chatId, String subScriberId){
+    public static MessageDB fromMessage(Message message){
         MessageDB msgDB = new MessageDB();
         msgDB.id = message.getId();
         msgDB.message = message.getMessage();
@@ -51,9 +52,30 @@ public class MessageDB {
         msgDB.createdAt = message.getCreated_at();
         msgDB.type = message.getType();
         msgDB.isDeleted = Boolean.valueOf(message.getIsDeleted());
-        msgDB.chatId = chatId;
-        msgDB.subScriberId = subScriberId;
+        msgDB.chatId = message.getRoom_id();
+        msgDB.subScriberId = message.getUser().getId();
         return msgDB;
+    }
+
+    public Message toMessage(Subscriber subscriber){
+        Message message = new Message();
+        message.setId(this.id);
+        message.setMessage(this.message);
+        message.setUpdated_at(this.updatedAt);
+        message.setCreated_at(this.createdAt);
+        message.setType(this.type);
+        message.setIsDeleted(String.valueOf(this.isDeleted));
+        message.setRoom_id(this.chatId);
+        message.setUser(subscriber);
+        return  message;
+    }
+
+    public static MessageDB[] fromMessagerray(Message[] messages){
+        MessageDB[] messageDBS = new MessageDB[messages.length];
+        for (int i = 0; i< messages.length; i++){
+            messageDBS[i] = fromMessage(messages[i]);
+        }
+        return messageDBS;
     }
 
 }

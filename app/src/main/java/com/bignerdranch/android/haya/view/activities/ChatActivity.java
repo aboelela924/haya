@@ -6,15 +6,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,11 +28,8 @@ import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.Subscriber;
 import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
-import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.ChatNetworkingRepo;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncBody;
-import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncMessage;
 import com.bignerdranch.android.haya.utils.networkUtils.ConnectionHelper;
-import com.bignerdranch.android.haya.utils.networkUtils.NetworkUtils;
 import com.bignerdranch.android.haya.view.adapters.MessagesAdapter;
 import com.bignerdranch.android.haya.viewModel.ChatViewModel;
 import com.github.nkzawa.emitter.Emitter;
@@ -43,7 +37,6 @@ import com.github.nkzawa.socketio.client.Socket;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -172,8 +165,7 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
             updateRecyclerView();
         });
         mViewModel.mMessages.observe(this, messages -> {
-            if (messages == null) return;
-            for (SyncMessage message: messages.getMessages()){
+            for (Message message: messages.getMessages()){
                 if(!Boolean.valueOf(message.getIsDeleted())){
                     Message sentMessage = new Message();
                     sentMessage.setUser(subscribers.get(message.getUser()));

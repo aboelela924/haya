@@ -1,14 +1,18 @@
 package com.bignerdranch.android.haya.model.repo.networking.joinRoomNetworking;
 
+import android.os.AsyncTask;
 import android.os.Looper;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.RoomExample;
 import com.bignerdranch.android.haya.model.repo.Subscriber;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.model.repo.networking.SocketActions;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.HayaDatabase;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.SubscriberDB;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
@@ -24,6 +28,7 @@ public class JoinRoomRepo {
     public MutableLiveData<Room> mData = new MutableLiveData<>();
     public MutableLiveData<Subscriber> mSubscriberData = new MutableLiveData<>();
     private static JoinRoomRepo sRoomRepo;
+    private HayaDatabase mDatabase;
 
     public static JoinRoomRepo getRoomRepoInstance(){
         if(sRoomRepo == null){
@@ -33,7 +38,9 @@ public class JoinRoomRepo {
     }
 
 
-    private JoinRoomRepo(){}
+    private JoinRoomRepo(){
+        mDatabase = App.getInstance().getMyDatabase();
+    }
 
     public void joinRoom(String nickname, String roomToken){
         try{
@@ -69,6 +76,14 @@ public class JoinRoomRepo {
             JSONObject json = (JSONObject) args[0];
             Gson gson = new Gson();
             Room room = gson.fromJson(json.toString(), Room.class);
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    SubscriberDB[] subscriberDBS = SubscriberDB.toSubscriberDBArray(room.getSubscribers());
+                    mDatabase.subscriber_dao().insertSubscribers(subscriberDBS);
+                    return null;
+                }
+            }.execute();
             mData.postValue(room);
         }
     };
@@ -79,6 +94,14 @@ public class JoinRoomRepo {
             JSONObject jsonObject = (JSONObject) args[0];
             Gson gson = new Gson();
             Subscriber subscriber = gson.fromJson(jsonObject.toString(), Subscriber.class);
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    mDatabase.subscriber_dao().updateCustomName(subscriber.getId(),
+                            subscriber.getCustom_room_name());
+                    return null;
+                }
+            }.execute();
             mSubscriberData.postValue(subscriber);
         }
     };

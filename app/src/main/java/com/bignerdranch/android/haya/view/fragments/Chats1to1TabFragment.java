@@ -18,8 +18,7 @@ import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.view.adapters.SlidingChatRecyclerViewAdapter;
-import com.bignerdranch.android.haya.viewModel.Chats1to1ViewModel;
-import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.bignerdranch.android.haya.viewModel.ChatRoomsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class Chats1to1TabFragment extends Fragment {
     private SlidingChatRecyclerViewAdapter adapter;
     private List<Room> chats = new ArrayList<>();
     private List<String> chatLastMessageList = new ArrayList<>();
-    private Chats1to1ViewModel viewModel;
+    private ChatRoomsViewModel viewModel;
 
     public static Chats1to1TabFragment newInstance(User user){
         Chats1to1TabFragment fragment = new Chats1to1TabFragment();
@@ -60,8 +59,8 @@ public class Chats1to1TabFragment extends Fragment {
     }
 
     private void viewModelFunction(){
-        viewModel = ViewModelProviders.of(this).get(Chats1to1ViewModel.class);
-        viewModel.setmRoomList();
+        viewModel = ViewModelProviders.of(this).get(ChatRoomsViewModel.class);
+        viewModel.set1to1RoomList();
         viewModel.getRoomList().observe(this, new Observer<List<Room>>() {
             @Override
             public void onChanged(List<Room> rooms) {

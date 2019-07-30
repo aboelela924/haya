@@ -15,7 +15,7 @@ public class TimeFormat {
         if(simpleDateFormatTime == null)
         {
             cal = Calendar.getInstance();
-            simpleDateFormatTime = new SimpleDateFormat("hh:mm");
+            simpleDateFormatTime = new SimpleDateFormat("hh:mm a");
             simpleDateFormatDay  = new SimpleDateFormat("EEEE");
             simpleDateFormatDate = new SimpleDateFormat("dd/MM/yyyy" );
         }

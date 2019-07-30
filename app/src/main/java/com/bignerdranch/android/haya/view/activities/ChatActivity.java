@@ -158,7 +158,7 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
             }
         };
         //register the broadcast receiver
-        registerReceiver(mReceiver, filter);
+        //registerReceiver(mReceiver, filter);
 
         GetSocket.getSocket().on(Socket.EVENT_RECONNECT, sendUnsendMessages);
 

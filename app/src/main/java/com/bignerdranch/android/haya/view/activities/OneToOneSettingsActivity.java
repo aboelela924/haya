@@ -104,7 +104,6 @@ public class OneToOneSettingsActivity extends AppCompatActivity {
                 mViewModel.updateRoomCustomName(mUser.getAccessToken(), mRoom.getId(), newName);
             }
         });
-
         dialog.show();
     }
 

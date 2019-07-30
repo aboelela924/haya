@@ -14,10 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.haya.R;
+import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
-import com.bignerdranch.android.haya.view.adapters.ChatRecyclerViewAdapter;
+import com.bignerdranch.android.haya.view.adapters.SlidingChatRecyclerViewAdapter;
 import com.bignerdranch.android.haya.viewModel.Chats1to1ViewModel;
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +32,10 @@ public class Chats1to1TabFragment extends Fragment {
     private static final String tag_chats1to1Tab = "Chats1to1Tab";
     private static final String USER = "USER";
 
-    @BindView(R.id.recyclerview_chats_1to1)
-    RecyclerView recyclerView;
+    @BindView(R.id.recyclerview_chats_1to1) RecyclerView recyclerView;
     private User mUser;
 
-    private ChatRecyclerViewAdapter adapter;
+    private SlidingChatRecyclerViewAdapter adapter;
     private List<Room> chats = new ArrayList<>();
     private List<String> chatLastMessageList = new ArrayList<>();
     private Chats1to1ViewModel viewModel;
@@ -52,7 +53,7 @@ public class Chats1to1TabFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chats_1to1, container, false);
         ButterKnife.bind(this,v);
-        mUser = getArguments().getParcelable(USER);
+        mUser = CurrentUser.user;
         createChatsRecyclerView();
         viewModelFunction();
         return v;
@@ -73,7 +74,7 @@ public class Chats1to1TabFragment extends Fragment {
     private void createChatsRecyclerView() {
         if(chats!=null)
         {
-            adapter = new ChatRecyclerViewAdapter(getActivity(),chats, chatLastMessageList, mUser);
+            adapter = new SlidingChatRecyclerViewAdapter(getActivity(),chats, chatLastMessageList, mUser);
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setAdapter(adapter);
         }

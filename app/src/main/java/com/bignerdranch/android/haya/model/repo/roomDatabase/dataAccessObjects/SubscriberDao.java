@@ -35,5 +35,5 @@ public interface SubscriberDao {
     @Query("select * from subscriber where chat_id = :chatId")
     List<SubscriberDB> getAllSubscribersOfChat(String chatId);
 
-    SubscriberDB getSubscriberId
+    //SubscriberDB getSubscriberId
 }

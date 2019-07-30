@@ -58,7 +58,7 @@ public class CreateRoomRepo implements Callback<RoomExample> {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     Room room = response.body().getRoom();
-                    mHayaDatabase.chat_dao().addNewChat(ChatDB.fromChat(room));
+                    mHayaDatabase.chat_dao().addNewChat(ChatDB.toChat(room));
                     SubscriberDB[] subscriberDBS = new SubscriberDB[room.getSubscribers().length];
                     for(int i=0; i<room.getSubscribers().length; i++){
                         Subscriber subscriber = room.getSubscribers()[i];

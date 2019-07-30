@@ -26,6 +26,6 @@ public interface ChatDao {
     @Query("update chat set updated_at = :updateAt where id = :chatId")
     void updateUpdatedAt(String chatId, String updateAt);
 
-    @Query("Select * from chat")
+    @Query("Select * from chat order by updated_at DESC")
     List<ChatDB> selectAllChats();
 }

@@ -12,7 +12,7 @@ import com.bignerdranch.android.haya.model.repo.roomDatabase.dataAccessObjects.C
 import com.bignerdranch.android.haya.model.repo.roomDatabase.dataAccessObjects.MessageDao;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.dataAccessObjects.SubscriberDao;
 
-@Database(entities = {SubscriberDB.class, ChatDB.class, MessageDB.class}, version = 1)
+@Database(entities = {SubscriberDB.class, ChatDB.class, MessageDB.class}, version = 3)
 @TypeConverters({TimeConverters.class})
 public abstract class HayaDatabase extends RoomDatabase {
     public abstract SubscriberDao subscriber_dao();

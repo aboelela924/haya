@@ -52,6 +52,7 @@ public class SubscribedRoomsRepo {
                 List<Room> toBeSortedRooms = getRoomsAccordingToType(roomsExample.getRooms());
                 Collections.sort(toBeSortedRooms, Collections.reverseOrder());
                 mRoomList.setValue(toBeSortedRooms);
+                //App.getInstance().getMyDatabase().chat_dao().insertChats(ChatDB.toChatDBList(toBeSortedRooms));
             }
 
             public List<Room> getRoomsAccordingToType(List<Room> allRooms) {

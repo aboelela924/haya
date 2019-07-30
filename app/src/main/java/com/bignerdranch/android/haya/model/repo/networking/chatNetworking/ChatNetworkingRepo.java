@@ -102,19 +102,19 @@ public class ChatNetworkingRepo {
         }.execute();
     }
 
-    private void readMessageFromDB(String chatId){
+/*    private void readMessageFromDB(String chatId){
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
                 List<MessageDB> subscriberIds = mDatabase.message_dao().getDinstinctSubscriberId(chatId);
                 List<SubscriberDB> subscriberDBS = new ArrayList<>();
                 for (MessageDB messageDB: subscriberIds) {
-                    subscriberDBS.add(mDatabase.subscriber_dao().)
+                   // subscriberDBS.add(mDatabase.subscriber_dao().)
                 }
                 return null;
             }
         }.execute();
-    }
+    }*/
 
     public MutableLiveData<List<String>> getRoomLastMessages() {
         return this.mLastMessage;

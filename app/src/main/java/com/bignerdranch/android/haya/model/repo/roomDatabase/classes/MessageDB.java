@@ -43,6 +43,9 @@ public class MessageDB {
     @ColumnInfo(name = "subscriber_id")
     public String subScriberId;
 
+    public MessageDB(){
+        this.message = "";
+    }
 
     public static MessageDB fromMessage(Message message){
         MessageDB msgDB = new MessageDB();
@@ -76,6 +79,10 @@ public class MessageDB {
             messageDBS[i] = fromMessage(messages[i]);
         }
         return messageDBS;
+    }
+
+    public String get_message() {
+        return this.message;
     }
 
 }

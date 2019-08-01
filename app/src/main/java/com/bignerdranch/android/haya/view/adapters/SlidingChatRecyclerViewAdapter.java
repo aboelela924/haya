@@ -3,6 +3,7 @@ package com.bignerdranch.android.haya.view.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.R;
+import com.bignerdranch.android.haya.model.repo.Message;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.MessageDB;
 import com.bignerdranch.android.haya.utils.TimeFormat;
 import com.bignerdranch.android.haya.view.activities.ChatActivity;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
@@ -64,7 +68,17 @@ public class SlidingChatRecyclerViewAdapter extends RecyclerView.Adapter<Sliding
 
         holder.textViewChatNickname.setText(chats.get(position).getName());
         holder.textViewChatLastMessageDate.setText(timeFormat.getTimeFormat(chats.get(position).getUpdated_at()));
-        holder.textViewChatLastMessage.setText("");
+
+        MessageDB message;
+        message = App.getInstance().getMyDatabase().message_dao().getLastMessageForChat(chats.get(position).getToken());
+        Log.i("Chat_id: ", chats.get(position).getToken());
+        if(message != null)
+        {
+            Log.i("Last Message: ", message.get_message());
+            holder.textViewChatLastMessage.setText(App.getInstance().getMyDatabase().message_dao().getLastMessageForChat(chats.get(position).getToken()).get_message());
+        }
+        else
+            holder.textViewChatLastMessage.setText("");
         holder.imageViewGoToChat.setImageResource(R.drawable.right_arrow_icon);
         holder.imageViewChatBottomLine.setImageResource(R.drawable.costume_single_chat_outview_border);
         viewBinderHelper.bind(holder.swipeRevealLayout, chats.get(position).getId());

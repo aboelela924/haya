@@ -6,6 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.bignerdranch.android.haya.model.repo.Message;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.MessageDB;
 
 import java.util.List;
@@ -38,9 +39,8 @@ public interface MessageDao {
     @Query("select * from message where message.chat_id = :chatId")
     List<MessageDB> getAllMessageForChat(String chatId);
 
-   @Query("select id, is_deleted,subscriber_id from message where chat_id = :chatId group by subscriber_id")
-    List<MessageDB> getDinstinctSubscriberId(String chatId);
-
-   @Query("select * from message where chat_id = :chatId order by created_at desc limit 1 ")
+    @Query("select * from message where message.chat_id = :chatId order by message.created_at DESC limit 1 offset 0")
     MessageDB getLastMessageForChat(String chatId);
+/*    @Query("select distinct subscriber_id from message where chat_id = :chatId")
+    List<MessageDB> getDinstinctSubscriberId(String chatId);*/
 }

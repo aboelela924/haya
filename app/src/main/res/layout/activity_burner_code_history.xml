@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.BurnerCodeHistoryActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_gradient">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="#FFFFFF"
+            android:text="Burner Code history"
+            android:textAllCaps="false"
+            android:fontFamily="@font/arial_regular"
+            android:textSize="20sp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="#FFFFFF"
+            android:text="Edit"
+            android:textAllCaps="false"
+            android:fontFamily="@font/arial_regular"
+            android:textSize="20sp"
+            android:layout_marginEnd="8dp"
+            android:layout_gravity="end|center_vertical"/>
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/burner_code_history_Recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

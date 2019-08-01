@@ -1,8 +1,10 @@
-package com.bignerdranch.android.haya.model.repo;
+package com.bignerdranch.android.haya.model.repo.networking.chatNetworking;
 
-import androidx.annotation.Nullable;
+import com.bignerdranch.android.haya.model.repo.Message;
+import com.bignerdranch.android.haya.model.repo.Subscriber;
 
-public class Message {
+public class SyncMessage {
+
     private String room_id;
 
     private String isDeleted;
@@ -21,7 +23,7 @@ public class Message {
 
     private String message;
 
-    private Subscriber user;
+    private String user;
 
     public String getRoom_id ()
     {
@@ -113,12 +115,12 @@ public class Message {
         this.message = message;
     }
 
-    public Subscriber getUser ()
+    public String getUser ()
     {
         return user;
     }
 
-    public void setUser (Subscriber user)
+    public void setUser (String user)
     {
         this.user = user;
     }
@@ -129,12 +131,39 @@ public class Message {
         return "ClassPojo [room_id = "+room_id+", isDeleted = "+isDeleted+", updated_at = "+updated_at+", __v = "+__v+", created_at = "+created_at+", _id = "+_id+", id = "+id+", type = "+type+", message = "+message+", user = "+user+"]";
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        Message message = (Message) obj;
-        if(id == null){
-            return message.hashCode() == this.hashCode();
+    public Message toMessage(Subscriber[] subscribers){
+        Message message = new Message();
+        message.setMessage(this.message);
+        message.setUpdated_at(this.updated_at);
+        message.setCreated_at(this.created_at);
+        message.setType(this.type);
+        message.setIsDeleted(this.isDeleted);
+        message.setRoom_id(this.room_id);
+        message.set_id(this._id);
+        message.set__v(this.__v);
+        message.setId(this.id);
+        for (Subscriber subscriber: subscribers){
+            if(subscriber.getId().equals(this.user)){
+                message.setUser(subscriber);
+                break;
+            }
         }
-         return  message.id.equals(this.id);
+        return message;
     }
+
+    public static SyncMessage fromMessage(Message message){
+        SyncMessage syncMessage = new SyncMessage();
+        syncMessage.setUser(message.getUser().getId());
+        syncMessage.set__v(message.get__v());
+        syncMessage.set_id(message.get__v());
+        syncMessage.setCreated_at(message.getCreated_at());
+        syncMessage.setId(message.getId());
+        syncMessage.setIsDeleted(message.getIsDeleted());
+        syncMessage.setRoom_id(message.getRoom_id());
+        syncMessage.setType(message.getType());
+        syncMessage.setUpdated_at(message.getUpdated_at());
+        syncMessage.setMessage(message.getMessage());
+        return syncMessage;
+    }
+
 }

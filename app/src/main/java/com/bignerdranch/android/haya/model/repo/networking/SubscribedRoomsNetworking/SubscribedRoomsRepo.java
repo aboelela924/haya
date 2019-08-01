@@ -8,10 +8,12 @@ import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.RoomsExample;
+import com.bignerdranch.android.haya.model.repo.Subscriber;
 import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.HayaDatabase;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.ChatDB;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.SubscriberDB;
 import com.hadilq.liveevent.LiveEvent;
 
 import java.util.ArrayList;
@@ -52,7 +54,7 @@ public class SubscribedRoomsRepo {
                 List<Room> toBeSortedRooms = getRoomsAccordingToType(roomsExample.getRooms());
                 Collections.sort(toBeSortedRooms, Collections.reverseOrder());
                 mRoomList.setValue(toBeSortedRooms);
-                //App.getInstance().getMyDatabase().chat_dao().insertChats(ChatDB.toChatDBList(toBeSortedRooms));
+                App.getInstance().getMyDatabase().chat_dao().insertChats(ChatDB.toChatDBList(toBeSortedRooms));
             }
 
             public List<Room> getRoomsAccordingToType(List<Room> allRooms) {
@@ -67,8 +69,20 @@ public class SubscribedRoomsRepo {
             @Override
             public void onFailure(Call<RoomsExample> call, Throwable t) {
                 Log.i("SubscribedRoomsRepo", "No Response, error: " + t.getMessage());
-                List<ChatDB> ChatsDB = App.getInstance().getMyDatabase().chat_dao().selectAllChats();
-                List<Room> rooms = ChatDB.toRoomList(ChatsDB);
+                readFromDB();
+            }
+
+            private void readFromDB() {
+                List<ChatDB> chatsDB = App.getInstance().getMyDatabase().chat_dao().selectAllChats();
+                List<Room> rooms = new ArrayList<>();
+                for (ChatDB chatDB : chatsDB){
+                    List<SubscriberDB> subscriberDBS = App.getInstance().getMyDatabase()
+                            .subscriber_dao().getAllSubscribersOfChat(chatDB.id);
+                    SubscriberDB[] subscriberArrary = new SubscriberDB[subscriberDBS.size()];
+                    subscriberDBS.toArray(subscriberArrary);
+                    Subscriber[] roomSubscribers = SubscriberDB.toSubscriberArray(subscriberArrary);
+                    rooms.add(chatDB.toRoom(roomSubscribers));
+                }
                 mRoomList.setValue(getRoomsAccordingToType(rooms));
             }
         });

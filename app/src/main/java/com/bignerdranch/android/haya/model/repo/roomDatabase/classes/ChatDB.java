@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.bignerdranch.android.haya.model.repo.Room;
+import com.bignerdranch.android.haya.model.repo.Subscriber;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,24 +51,25 @@ public class ChatDB {
 
         return chatDB;
     }
-    public static Room toRoom(ChatDB chat) {
+    public Room toRoom( Subscriber[] subscriber) {
         Room room = new Room();
-        room.set_id(chat.id);
-        room.setName(chat.name);
-        room.setUpdated_at(String.valueOf(chat.updatedAt));
-        room.setCreated_at(chat.createdAt);
-        room.setType(chat.type);
-        room.setStatus(chat.status);
-        room.setToken(chat.token);
-
+        room.set_id(this.id);
+        room.setId(this.id);
+        room.setName(this.name);
+        room.setUpdated_at(String.valueOf(this.updatedAt));
+        room.setCreated_at(this.createdAt);
+        room.setType(this.type);
+        room.setStatus(this.status);
+        room.setToken(this.token);
+        room.setSubscribers(subscriber);
         return room;
     }
 
-    public static List<Room> toRoomList(List<ChatDB> chatDBList){
+    /*public static List<Room> toRoomList(List<ChatDB> chatDBList){
         List<Room> rooms = new ArrayList<Room>();
         for(ChatDB c: chatDBList){
             rooms.add(toRoom(c));
         }
         return rooms;
-    }
+    }*/
 }

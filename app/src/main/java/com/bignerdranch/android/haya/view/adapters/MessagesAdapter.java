@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.Message;
+import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.view.activities.ChatActivity;
 import com.bignerdranch.android.haya.view.activities.MessageClickCallbacks;
 import com.bignerdranch.android.haya.viewModel.ChatViewModel;
@@ -30,14 +31,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private Context mContext;
     private List<Message> mMessages;
+    private User mUser;
     private MessageClickCallbacks mCallbacks;
 
 
 
-    public MessagesAdapter(Context context, List<Message> messages, MessageClickCallbacks callbacks) {
+    public MessagesAdapter(Context context, List<Message> messages, User user, MessageClickCallbacks callbacks) {
         mContext = context;
         mMessages = messages;
         mCallbacks = callbacks;
+        mUser = user;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return CITIZIEN_MESSAGE_NO_NETWORK;
         }
 
-        if(message.getUser() == null){
+        if(message.getUser().getUser_id().equals(mUser.getId())){
             return CITIZIEN_MESSAGE;
         }
         return FOREIGNER_MESSAGE;

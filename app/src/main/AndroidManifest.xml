@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.activities.GroupChatSettingsUserActivity"></activity>
+        <activity android:name=".view.activities.BurnerCodeHistoryActivity"></activity>
+        <activity android:name=".view.activities.GroupChatSettingsUserActivity" />
         <activity android:name=".view.activities.GroupChatSettingsAdminActivity" />
         <activity android:name=".view.activities.OneToOneSettingsActivity" />
         <activity android:name=".view.activities.ChatActivity" />

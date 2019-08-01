@@ -74,7 +74,7 @@ public class ContainerActivity extends AppCompatActivity {
                                 fragment = new RandomChatFragment();
                                 break;
                             case R.id.settings_item:
-                                fragment = new SettingsFragment();
+                                fragment = SettingsFragment.newInstance(mUser);
                                 break;
                         }
 

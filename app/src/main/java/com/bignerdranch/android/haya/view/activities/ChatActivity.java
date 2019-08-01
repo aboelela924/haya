@@ -29,6 +29,7 @@ import com.bignerdranch.android.haya.model.repo.Subscriber;
 import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncBody;
+import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncMessage;
 import com.bignerdranch.android.haya.utils.networkUtils.ConnectionHelper;
 import com.bignerdranch.android.haya.view.adapters.MessagesAdapter;
 import com.bignerdranch.android.haya.viewModel.ChatViewModel;
@@ -151,21 +152,21 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
             }
         };
         //register the broadcast receiver
-        //registerReceiver(mReceiver, filter);
+        registerReceiver(mReceiver, filter);
 
         GetSocket.getSocket().on(Socket.EVENT_RECONNECT, sendUnsendMessages);
 
 
         mViewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
         mViewModel.mData.observe(this, message -> {
-            if(message.getUser().getUser_id().equals(mUser.getId())){
+            /*if(message.getUser().getUser_id().equals(mUser.getId())){
                 message.setUser(null);
-            }
+            }*/
             mMessageList.add(message);
             updateRecyclerView();
         });
         mViewModel.mMessages.observe(this, messages -> {
-            for (Message message: messages.getMessages()){
+            for (SyncMessage message: messages.getMessages()){
                 if(!Boolean.valueOf(message.getIsDeleted())){
                     Message sentMessage = new Message();
                     sentMessage.setUser(subscribers.get(message.getUser()));
@@ -199,15 +200,20 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
         });
         mViewModel.observeMessages();
         mViewModel.observeMessageDelete();
-        List<SyncBody> bodies = new ArrayList<>();
-        SyncBody body = new SyncBody(mRoom.getId(), 0);
-        bodies.add(body);
-        mViewModel.syncMessages(mUser.getAccessToken(),bodies);
+        mViewModel.getLastMessageTime(mRoom.getId());
+        mViewModel.mLastMessageTime.observe(this, time -> {
+            long t = Long.valueOf(time);
+            List<SyncBody> bodies = new ArrayList<>();
+            SyncBody body = new SyncBody(mRoom.getId(), t);
+            bodies.add(body);
+            mViewModel.syncMessages(mUser.getAccessToken(),bodies, mRoom.getSubscribers());
+        });
 
 
 
 
-        mAdapter = new MessagesAdapter(this,mMessageList, this);
+
+        mAdapter = new MessagesAdapter(this,mMessageList, mUser,this);
         final LinearLayoutManager linearLayout = new LinearLayoutManager(this);
         mMessagesRecyclerView.setLayoutManager(linearLayout);
         mMessagesRecyclerView.setAdapter(mAdapter);

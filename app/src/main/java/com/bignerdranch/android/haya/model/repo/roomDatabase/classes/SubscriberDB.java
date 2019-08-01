@@ -76,4 +76,13 @@ public class SubscriberDB {
         }
         return subscriberDBS;
     }
+
+    public static Subscriber[] toSubscriberArray(SubscriberDB[] subscriberDBS){
+        Subscriber[] subscribers = new Subscriber[subscriberDBS.length];
+        for (int i = 0; i < subscriberDBS.length; i++){
+            SubscriberDB subscriberDB = subscriberDBS[i];
+            subscribers[i] = subscriberDB.toSubscriber();
+        }
+        return subscribers;
+    }
 }

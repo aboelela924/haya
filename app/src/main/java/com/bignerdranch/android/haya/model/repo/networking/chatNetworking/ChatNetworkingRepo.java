@@ -1,5 +1,6 @@
 package com.bignerdranch.android.haya.model.repo.networking.chatNetworking;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.model.repo.Message;
 import com.bignerdranch.android.haya.model.repo.Room;
+import com.bignerdranch.android.haya.model.repo.Subscriber;
 import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.model.repo.networking.SocketActions;
@@ -47,12 +49,13 @@ public class ChatNetworkingRepo {
     public LiveEvent<SyncMessageMaster> mMessages = new LiveEvent<>();
     public LiveEvent<DeleteMessageResponse> mDeleteResponse = new LiveEvent<>();
     public LiveEvent<List<String>> mLastMessage = new LiveEvent<>();
+    public LiveEvent<String> mLastMessageTime = new LiveEvent<>();
 
     private ChatNetworkingRepo() {
         mDatabase = App.getInstance().getMyDatabase();
     }
 
-    public void syncMessages(String token, List<SyncBody> body){
+    public void syncMessages(String token, List<SyncBody> body, Subscriber[] subscribers){
         Retrofit retrofit = GetRetrofit.getRetrofitInstance();
         SyncAPI syncAPI = retrofit.create(SyncAPI.class);
         Call<SyncMessageMaster> call = syncAPI.getOldMessages(token, body);
@@ -60,13 +63,14 @@ public class ChatNetworkingRepo {
             @Override
             public void onResponse(Call<SyncMessageMaster> call, Response<SyncMessageMaster> response) {
                 if (response.isSuccessful()){
-                    mMessages.setValue(response.body());
+                    addMessagesToDB(body.get(0).room_id,response.body().getMessages(), subscribers);
                 }
             }
 
             @Override
             public void onFailure(Call<SyncMessageMaster> call, Throwable t) {
                 System.out.println(t.getMessage());
+                readMessageFromDB(body.get(0).room_id);
             }
         });
     }
@@ -91,30 +95,85 @@ public class ChatNetworkingRepo {
         });
     }
 
-    private void addMessagesToDB(Message[] messages){
+    public void getLastMessageTimeForChat(String chatId){
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                MessageDB[] messageDBS = MessageDB.fromMessagerray(messages);
-                mDatabase.message_dao().insertMessages(messageDBS);
+                MessageDB messageDB = mDatabase.message_dao().getLastMessageForChat(chatId);
+                if(messageDB == null){
+                    mLastMessageTime.postValue("0");
+                }else{
+                    mLastMessageTime.postValue(messageDB.createdAt);
+                }
+
                 return null;
             }
         }.execute();
     }
 
-/*    private void readMessageFromDB(String chatId){
+    private void addMessagesToDB(String chatId,SyncMessage[] syncMessages, Subscriber[] subscribers){
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
-                List<MessageDB> subscriberIds = mDatabase.message_dao().getDinstinctSubscriberId(chatId);
-                List<SubscriberDB> subscriberDBS = new ArrayList<>();
-                for (MessageDB messageDB: subscriberIds) {
-                   // subscriberDBS.add(mDatabase.subscriber_dao().)
+                if(syncMessages.length != 0){
+                    Message[] messages = new Message[syncMessages.length];
+                    for (int i=0; i < syncMessages.length; i++){
+                        messages[i] = syncMessages[i].toMessage(subscribers);
+                    }
+                    MessageDB[] messageDBS = MessageDB.fromMessagerray(messages);
+                    try{
+                        mDatabase.message_dao().insertMessages(messageDBS);
+                    }catch (SQLiteConstraintException e){
+                        SubscriberDB[] subscriberDBS = SubscriberDB.toSubscriberDBArray(subscribers);
+                        mDatabase.subscriber_dao().insertSubscribers(subscriberDBS);
+                        mDatabase.message_dao().insertMessages(messageDBS);
+                    }
                 }
+                readMessageFromDB(chatId);
                 return null;
             }
         }.execute();
-    }*/
+    }
+
+   private void readMessageFromDB(String chatId){
+       new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                mDatabase.message_dao().getLastMessageForChat(chatId);
+                List<SubscriberDB> subscriberDBS  = mDatabase.subscriber_dao().getAllSubscribersOfChat(chatId);
+                List<MessageDB> chatMessages = mDatabase.message_dao().getAllMessageForChat(chatId);
+                List<Message> messages = getAllChatMessages(chatMessages, subscriberDBS);
+                Message[] messagesArray = new Message[messages.size()];
+                messages.toArray(messagesArray);
+                SyncMessageMaster master = new SyncMessageMaster();
+                SyncMessage[] syncMessages = new SyncMessage[messagesArray.length];
+                for (int i = 0; i < syncMessages.length; i++){
+                    syncMessages[i] = SyncMessage.fromMessage(messagesArray[i]);
+                }
+                master.setMessages(syncMessages);
+                mMessages.postValue(master);
+                return null;
+            }
+        }.execute();
+    }
+
+    private List<Message> getAllChatMessages(List<MessageDB> messageDBS, List<SubscriberDB> subscriberDBS){
+        List<Message> messages = new ArrayList<>();
+        for (MessageDB messageDB : messageDBS){
+            Subscriber subscriber = getSubscriberForMessage(subscriberDBS, messageDB).toSubscriber();
+            messages.add(messageDB.toMessage(subscriber));
+        }
+        return messages;
+    }
+
+    private SubscriberDB getSubscriberForMessage(List<SubscriberDB> subscribers, MessageDB chatMessage){
+        for (SubscriberDB subscriberDB: subscribers){
+            if(subscriberDB.id.equals(chatMessage.subScriberId)){
+                return subscriberDB;
+            }
+        }
+        return null;
+    }
 
     public MutableLiveData<List<String>> getRoomLastMessages() {
         return this.mLastMessage;
@@ -177,7 +236,14 @@ public class ChatNetworkingRepo {
                 @Override
                 protected Void doInBackground(Void... voids) {
                     MessageDB messageDB = MessageDB.fromMessage(message);
-                    mDatabase.message_dao().insertMessage(messageDB);
+                    try{
+                        mDatabase.message_dao().insertMessage(messageDB);
+                    }catch (SQLiteConstraintException e){
+                        Subscriber subscriber = message.getUser();
+                        mDatabase.subscriber_dao().insertSubscriber(SubscriberDB.fromSubscriber(subscriber));
+                        mDatabase.message_dao().insertMessage(messageDB);
+                    }
+
                     return null;
                 }
             }.execute();

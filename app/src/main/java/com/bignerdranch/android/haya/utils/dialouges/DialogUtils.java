@@ -82,7 +82,7 @@ public class DialogUtils {
         Button confirmButton = dialog.findViewById(R.id.change_custom_name_edit_button);
 
         titleTextView.setText(title);
-        attrEditText.setText(attr);
+        attrEditText.setHint(attr);
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

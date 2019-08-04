@@ -14,6 +14,7 @@ public class MainSettingsRepo {
     public LiveEvent<ToggleSecretResponse> mLiveEvent = new LiveEvent<>();
     public LiveEvent<FAQSMaster> mFAQSData = new LiveEvent<>();
     public LiveEvent<ContactUsResponse> mContactData = new LiveEvent<>();
+    public LiveEvent<String> mError = new LiveEvent<>();
 
     public static MainSettingsRepo getInstance() {
         return ourInstance;
@@ -32,12 +33,14 @@ public class MainSettingsRepo {
             public void onResponse(Call<ToggleSecretResponse> call, Response<ToggleSecretResponse> response) {
                 if(response.isSuccessful()){
                     mLiveEvent.setValue(response.body());
+                }else{
+                    mError.setValue("Wrong Password.");
                 }
             }
 
             @Override
             public void onFailure(Call<ToggleSecretResponse> call, Throwable t) {
-
+                mError.setValue("Network error couldn't Enable Secret Chat.");
             }
         });
     }
@@ -51,12 +54,14 @@ public class MainSettingsRepo {
             public void onResponse(Call<FAQSMaster> call, Response<FAQSMaster> response) {
                 if(response.isSuccessful()){
                     mFAQSData.setValue(response.body());
+                }else{
+                    mError.setValue("Network Error. couldn't get FAQs");
                 }
             }
 
             @Override
             public void onFailure(Call<FAQSMaster> call, Throwable t) {
-
+                mError.setValue("Network Error. couldn't get FAQs");
             }
         });
     }
@@ -70,12 +75,14 @@ public class MainSettingsRepo {
             public void onResponse(Call<ContactUsResponse> call, Response<ContactUsResponse> response) {
                 if(response.isSuccessful()){
                     mContactData.setValue(response.body());
+                }else{
+                    mError.setValue("Failed to submit your feedback. Try again.");
                 }
             }
 
             @Override
             public void onFailure(Call<ContactUsResponse> call, Throwable t) {
-
+                mError.setValue("Failed to submit your feedback. Try again.");
             }
         });
     }

@@ -13,6 +13,7 @@ public class MainSettingsViewModel extends ViewModel {
     public LiveEvent<ToggleSecretResponse> mLiveEvent;
     public LiveEvent<FAQSMaster> mFAQsData;
     public LiveEvent<ContactUsResponse> mContactData;
+    public LiveEvent<String> mError;
     private MainSettingsRepo mRepo;
 
     public MainSettingsViewModel(){
@@ -20,6 +21,7 @@ public class MainSettingsViewModel extends ViewModel {
         mLiveEvent = mRepo.mLiveEvent;
         mFAQsData = mRepo.mFAQSData;
         mContactData = mRepo.mContactData;
+        mError = mRepo.mError;
     }
 
     public void getFAQs(){

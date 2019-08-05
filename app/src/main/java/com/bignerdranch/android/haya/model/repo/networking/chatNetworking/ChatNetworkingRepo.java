@@ -50,6 +50,7 @@ public class ChatNetworkingRepo {
     public LiveEvent<DeleteMessageResponse> mDeleteResponse = new LiveEvent<>();
     public LiveEvent<List<String>> mLastMessage = new LiveEvent<>();
     public LiveEvent<String> mLastMessageTime = new LiveEvent<>();
+    public LiveEvent<String> mErrorEvent = new LiveEvent<>();
 
     private ChatNetworkingRepo() {
         mDatabase = App.getInstance().getMyDatabase();
@@ -64,6 +65,8 @@ public class ChatNetworkingRepo {
             public void onResponse(Call<SyncMessageMaster> call, Response<SyncMessageMaster> response) {
                 if (response.isSuccessful()){
                     addMessagesToDB(body.get(0).room_id,response.body().getMessages(), subscribers);
+                }else{
+                    mErrorEvent.setValue("An error occurred while syncing messages, Try again later");
                 }
             }
 

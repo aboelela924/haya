@@ -12,6 +12,7 @@ public class SocketActions {
     public static final String OBSERVE_MSG_DELETE_ALL = "all-messages-deleted";
     public static final String OBSERVE_START_RANDOM_CHAT = "start-chat"; //
     public static final String OBSERVE_USER_TYPING = "user-is-typing";
+
     public static final String EMIT_MESSAGE = "send-message";
     public static final String EMIT_LEAVE_ROOM = "disconnect-room";
     public static final String EMIT_UPDATE_NICKNAME = "update-nickname";

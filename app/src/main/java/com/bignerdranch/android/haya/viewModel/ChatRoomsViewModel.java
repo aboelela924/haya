@@ -9,9 +9,10 @@ import com.bignerdranch.android.haya.model.repo.networking.SubscribedRoomsNetwor
 import com.hadilq.liveevent.LiveEvent;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChatRoomsViewModel extends ViewModel {
-    private LiveEvent<List<Room>> mRoomList;
+    private LiveData<List<Room>> mRoomList;
     private SubscribedRoomsRepo mRoomsRepo;
 
     public ChatRoomsViewModel(){
@@ -22,7 +23,6 @@ public class ChatRoomsViewModel extends ViewModel {
     public void set1to1RoomList(){
         mRoomsRepo.setRoomList("1");
     }
-
     public void setGroupRoomList(){
         mRoomsRepo.setRoomList("2");
     }
@@ -30,6 +30,16 @@ public class ChatRoomsViewModel extends ViewModel {
         mRoomsRepo.setRoomList("3");
     }
 
+
+    public void observeNewChatCreated(){
+        mRoomsRepo.observeNewChatCreated();
+    }
+    public void stopNewChatObserver(){
+        mRoomsRepo.stopNewMessageObserver();
+    }
+    public void observewNewMessage(){
+        mRoomsRepo.observeNewMessage();
+    }
     //Called from the mainactivity whenever needed
     public LiveData<List<Room>> getRoomList(){
         return mRoomList;

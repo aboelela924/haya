@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,7 +22,9 @@ import com.bignerdranch.android.haya.view.adapters.SlidingChatRecyclerViewAdapte
 import com.bignerdranch.android.haya.viewModel.ChatRoomsViewModel;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,17 +38,7 @@ public class ChatsGroupFragment extends Fragment {
     private User mUser;
 
     private SlidingChatRecyclerViewAdapter adapter;
-    private List<Room> chats = new ArrayList<>();
-    private List<String> chatLastMessageList = new ArrayList<>();
     private ChatRoomsViewModel viewModel;
-
-/*    public static ChatsGroupFragment newInstance(User user){
-        ChatsGroupFragment fragment = new ChatsGroupFragment();
-        Bundle args = new Bundle();
-        args.putParcelable(USER, user);
-        fragment.setArguments(args);
-        return  fragment;
-    }*/
 
     @Nullable
     @Override
@@ -53,7 +46,11 @@ public class ChatsGroupFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_chats_group, container, false);
         ButterKnife.bind(this,v);
         mUser = CurrentUser.user;
-        createChatsRecyclerView();
+
+        adapter = new SlidingChatRecyclerViewAdapter(getActivity(), mUser);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(adapter);
+
         viewModelFunction();
         return v;
     }
@@ -61,21 +58,20 @@ public class ChatsGroupFragment extends Fragment {
     private void viewModelFunction(){
         viewModel = ViewModelProviders.of(this).get(ChatRoomsViewModel.class);
         viewModel.setGroupRoomList();
-        viewModel.getRoomList().observe(this, new Observer<List<Room>>() {
+        viewModel.getRoomList().observe(getViewLifecycleOwner(), new Observer<List<Room>>() {
             @Override
             public void onChanged(List<Room> rooms) {
-                chats.clear();
-                chats.addAll(rooms);
+                adapter.setRoomChats(rooms);
                 adapter.notifyDataSetChanged();
             }
         });
+        viewModel.observeNewChatCreated();
+        viewModel.observewNewMessage();
     }
-    private void createChatsRecyclerView() {
-        if(chats!=null)
-        {
-            adapter = new SlidingChatRecyclerViewAdapter(getActivity(),chats, chatLastMessageList, mUser);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            recyclerView.setAdapter(adapter);
-        }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.stopNewChatObserver();
     }
 }

@@ -39,8 +39,9 @@ public interface MessageDao {
     @Query("select * from message where message.chat_id = :chatId")
     List<MessageDB> getAllMessageForChat(String chatId);
 
-    @Query("select * from message where message.chat_id = :chatId order by message.created_at DESC limit 1 offset 0")
+    @Query("select * from message where message.chat_id = :chatId and message.is_deleted = 0 order by message.created_at DESC limit 1 offset 0")
     MessageDB getLastMessageForChat(String chatId);
+
 /*    @Query("select distinct subscriber_id from message where chat_id = :chatId")
     List<MessageDB> getDinstinctSubscriberId(String chatId);*/
 }

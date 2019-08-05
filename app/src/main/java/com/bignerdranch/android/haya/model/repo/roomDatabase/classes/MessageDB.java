@@ -85,4 +85,17 @@ public class MessageDB {
         return this.message;
     }
 
+    public static Message toMessage(MessageDB messageDB){
+        Message message = new Message();
+        message.setId(messageDB.id);
+        message.setMessage(messageDB.message);
+        message.setUpdated_at(messageDB.updatedAt);
+        message.setCreated_at(messageDB.createdAt);
+        message.setType(messageDB.type);
+        message.setIsDeleted(String.valueOf(messageDB.isDeleted));
+        message.setRoom_id(messageDB.chatId);
+
+        return message;
+    }
+
 }

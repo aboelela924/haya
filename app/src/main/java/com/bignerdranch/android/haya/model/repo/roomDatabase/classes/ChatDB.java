@@ -65,6 +65,9 @@ public class ChatDB {
         return room;
     }
 
+    public String get_id(){
+        return this.id;
+    }
     /*public static List<Room> toRoomList(List<ChatDB> chatDBList){
         List<Room> rooms = new ArrayList<Room>();
         for(ChatDB c: chatDBList){

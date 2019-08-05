@@ -3,6 +3,7 @@ package com.bignerdranch.android.haya.view.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,33 +15,37 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.R;
+import com.bignerdranch.android.haya.model.repo.Message;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.MessageDB;
 import com.bignerdranch.android.haya.utils.TimeFormat;
 import com.bignerdranch.android.haya.view.activities.ChatActivity;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class SlidingChatRecyclerViewAdapter extends RecyclerView.Adapter<SlidingChatRecyclerViewAdapter.ViewHolder> {
 
     private List<Room> chats;
-    private List<String> chatLastMessage;
     private Context mContext;
     private User mUser;
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public SlidingChatRecyclerViewAdapter(Context ctx, List<Room> chats, List<String> chatLastMessage, User user)
-    {
+    public SlidingChatRecyclerViewAdapter(Context ctx, User user) {
         mContext = ctx;
-        mUser = user;
-        this.chats = chats;
-        this.chatLastMessage = chatLastMessage;
+        chats = new ArrayList<>();
+        this.mUser = user;
         viewBinderHelper.setOpenOnlyOne(true);
     }
-
+    public void setRoomChats(List<Room>chats){
+        this.chats = chats;
+    }
     //Create new views.
     @NonNull
     @Override
@@ -54,6 +59,9 @@ public class SlidingChatRecyclerViewAdapter extends RecyclerView.Adapter<Sliding
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TimeFormat timeFormat = new TimeFormat();
+        String lastMessage = chats.get(position).getLastMessage().getMessage();
+        if(lastMessage.length()>35)
+            lastMessage = lastMessage.substring(0,34)+"...";
         holder.sliding_constraint_layout_chat_overview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,7 +72,7 @@ public class SlidingChatRecyclerViewAdapter extends RecyclerView.Adapter<Sliding
 
         holder.textViewChatNickname.setText(chats.get(position).getName());
         holder.textViewChatLastMessageDate.setText(timeFormat.getTimeFormat(chats.get(position).getUpdated_at()));
-        holder.textViewChatLastMessage.setText("");
+        holder.textViewChatLastMessage.setText(lastMessage);
         holder.imageViewGoToChat.setImageResource(R.drawable.right_arrow_icon);
         holder.imageViewChatBottomLine.setImageResource(R.drawable.costume_single_chat_outview_border);
         viewBinderHelper.bind(holder.swipeRevealLayout, chats.get(position).getId());

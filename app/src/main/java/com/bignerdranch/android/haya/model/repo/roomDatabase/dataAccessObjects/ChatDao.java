@@ -23,8 +23,8 @@ public interface ChatDao {
     @Query("update chat set status = :status where id = :id")
     void updateStatus(String id, String status);
 
-    @Query("update chat set updated_at = :updateAt where id = :chatId")
-    void updateUpdatedAt(String chatId, String updateAt);
+    @Query("update chat set updated_at = :updateAt where token = :chatToken")
+    void updateUpdatedAt(String updateAt, String chatToken);
 
     @Query("Select * from chat order by updated_at DESC")
     List<ChatDB> selectAllChats();

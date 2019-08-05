@@ -15,6 +15,7 @@ import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.hadilq.liveevent.LiveEvent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,6 +35,7 @@ public class ChatSettingsRepo {
     public MutableLiveData<Room> mRoomData = new MutableLiveData<>();
     public MutableLiveData<Boolean> mBurnerCodeStatus = new MutableLiveData<>();
     public MutableLiveData<Subscriber> mSubscriberData = new MutableLiveData<>();
+    private LiveEvent<String> mError = new LiveEvent<>();
 
     private ChatSettingsRepo(){
 
@@ -55,12 +57,14 @@ public class ChatSettingsRepo {
             public void onResponse(Call<SubscriptionExample> call, Response<SubscriptionExample> response) {
                 if(response.isSuccessful()){
                     mSubscriptionData.setValue(response.body());
+                }else{
+                    mError.setValue("Failed to update chat name. Try again.");
                 }
             }
 
             @Override
             public void onFailure(Call<SubscriptionExample> call, Throwable t) {
-
+                mError.setValue("Failed to update chat name. Try again.");
             }
         });
     }
@@ -75,6 +79,8 @@ public class ChatSettingsRepo {
             public void onResponse(Call<SubscriptionExample> call, Response<SubscriptionExample> response) {
                 if (response.isSuccessful()){
                     mSubscriptionData.setValue(response.body());
+                }else{
+
                 }
             }
 

@@ -47,6 +47,7 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.2.0'
     implementation 'com.github.nkzawa:socket.io-client:0.6.0'
     implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     // https://mvnrepository.com/artifact/org.modelmapper/modelmapper
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.5'
 

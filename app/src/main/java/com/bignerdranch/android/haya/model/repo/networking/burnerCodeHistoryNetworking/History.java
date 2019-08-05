@@ -1,5 +1,7 @@
 package com.bignerdranch.android.haya.model.repo.networking.burnerCodeHistoryNetworking;
 
+import androidx.annotation.Nullable;
+
 public class History {
     private String updated_at;
 
@@ -125,5 +127,11 @@ public class History {
     public String toString()
     {
         return "ClassPojo [updated_at = "+updated_at+", subscribers = "+subscribers+", __v = "+__v+", name = "+name+", created_at = "+created_at+", _id = "+_id+", id = "+id+", type = "+type+", status = "+status+", token = "+token+"]";
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        History history = (History) obj;
+        return this.id.equals(history.id);
     }
 }

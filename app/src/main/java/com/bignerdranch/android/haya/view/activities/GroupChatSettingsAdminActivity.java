@@ -151,7 +151,7 @@ public class GroupChatSettingsAdminActivity extends AppCompatActivity {
                         mViewModel.updateRoomCustomName(mUser.getAccessToken(), mRoom.getId(), attr);
 
                     }
-                });
+                }, null);
     }
 
     public void updateSubscribers(){
@@ -220,6 +220,6 @@ public class GroupChatSettingsAdminActivity extends AppCompatActivity {
             public void onChange(String attr) {
                 mViewModel.updateNickName(mRoom.getId(), attr);
             }
-        });
+        },null);
     }
 }

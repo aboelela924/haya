@@ -193,7 +193,7 @@ public class GroupChatSettingsUserActivity extends AppCompatActivity {
             public void onChange(String attr) {
                 mViewModel.updateNickName(mRoom.getId(), attr);
             }
-        });
+        },null);
     }
 
     @OnClick(R.id.user_settings_chat_info_chat_name_linear_layout)
@@ -207,6 +207,6 @@ public class GroupChatSettingsUserActivity extends AppCompatActivity {
                         mViewModel.updateRoomCustomName(mUser.getAccessToken(), mRoom.getId(), attr);
 
                     }
-                });
+                },null);
     }
 }

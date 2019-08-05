@@ -72,7 +72,7 @@ public class DialogUtils {
         dialog.show();
     }
 
-    public static void changeAttributeDialog(Context ctx, String title, String attr,AttrChange attrChange){
+    public static void changeAttributeDialog(Context ctx, String title, String attr,AttrChange attrChange, OnNetwrokBack onNetwrokBack){
         Dialog dialog = new Dialog(ctx);
         dialog.setContentView(R.layout.update_chat_custom_name);
 
@@ -82,11 +82,14 @@ public class DialogUtils {
         Button confirmButton = dialog.findViewById(R.id.change_custom_name_edit_button);
 
         titleTextView.setText(title);
-        attrEditText.setText(attr);
+        attrEditText.setHint(attr);
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(onNetwrokBack != null){
+                    onNetwrokBack.onConnectionBack();
+                }
                 dialog.dismiss();
             }
         });
@@ -94,6 +97,7 @@ public class DialogUtils {
             @Override
             public void onClick(View view) {
                 attrChange.onChange(attrEditText.getText().toString());
+                dialog.dismiss();
             }
         });
 

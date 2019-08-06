@@ -191,6 +191,7 @@
                         android:textColor="#424242"
                         android:text="Mute sounds"/>
                     <com.suke.widget.SwitchButton
+                        android:id="@+id/is_muted_switch_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

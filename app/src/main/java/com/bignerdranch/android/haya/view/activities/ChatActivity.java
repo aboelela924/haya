@@ -12,7 +12,10 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -30,6 +33,7 @@ import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncBody;
 import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncMessage;
+import com.bignerdranch.android.haya.utils.SharedPreferncesConstants;
 import com.bignerdranch.android.haya.utils.networkUtils.ConnectionHelper;
 import com.bignerdranch.android.haya.view.adapters.MessagesAdapter;
 import com.bignerdranch.android.haya.viewModel.ChatViewModel;
@@ -162,6 +166,11 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
             /*if(message.getUser().getUser_id().equals(mUser.getId())){
                 message.setUser(null);
             }*/
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ChatActivity.this);
+            if(!sp.getBoolean(SharedPreferncesConstants.IS_MUTED, false)){
+                MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.twitter_sound);
+                mediaPlayer.start();
+            }
             mMessageList.add(message);
             updateRecyclerView();
         });

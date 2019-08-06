@@ -227,6 +227,14 @@ public class BurnerCodeFragment extends Fragment {
         return v;
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSingleBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        mGroupBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
     @OnClick(R.id.single_chat_button_burner_code_fragment)
     public void generateSingleChatCode(View v){
         showLoading();

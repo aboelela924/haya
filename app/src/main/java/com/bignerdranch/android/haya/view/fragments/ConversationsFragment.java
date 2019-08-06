@@ -3,25 +3,35 @@ package com.bignerdranch.android.haya.view.fragments;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 
 import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.R;
+import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
+import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncBody;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.ChatDB;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.MessageDB;
 import com.bignerdranch.android.haya.view.activities.JoinConversationActivity;
 import com.bignerdranch.android.haya.view.adapters.ConversationsPagerAdapter;
+import com.bignerdranch.android.haya.viewModel.ChatRoomsViewModel;
+import com.bignerdranch.android.haya.viewModel.ChatViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -34,8 +44,10 @@ import butterknife.OnClick;
 public class ConversationsFragment extends Fragment {
     private static final String USER = "USER";
     private User mUser;
+    private ChatRoomsViewModel mViewModel;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.imageview_add_conversation) ImageView add_conversation;
+    @BindView(R.id.swiperefresh) SwipeRefreshLayout mRefreshLayout;
     public ConversationsFragment() {
         // Required empty public constructor
     }
@@ -53,6 +65,18 @@ public class ConversationsFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_conversations, container, false);
         ButterKnife.bind(this, v);
         mUser = getArguments().getParcelable(USER);
+        mViewModel = ViewModelProviders.of(this).get(ChatRoomsViewModel.class);
+        mViewModel.sync(mUser.getAccessToken());
+
+        mRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        mViewModel.sync(mUser.getAccessToken());
+                        mRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
         createConversationsTabLayout();
         return v;
     }

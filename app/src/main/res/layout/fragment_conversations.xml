@@ -1,53 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swiperefresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragments.ConversationsFragment"
-    android:orientation="vertical">
-
-    <!-- TODO: Update blank fragment layout -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/tab_bar_bg">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Conversations"
-            android:textSize="32sp"
-            android:textColor="#FFFFFF"
-            android:fontFamily="@font/arial_regular"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_gravity="bottom"/>
-
-        <ImageView
-            android:id="@+id/imageview_add_conversation"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="end|bottom"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/add_icon"
-            android:tint="@android:color/white"
-            android:foregroundTint="#FFFFFF"/>
-    </FrameLayout>
-    <com.google.android.material.tabs.TabLayout
-        android:id = "@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabIndicatorColor="#FF863A">
-
-    </com.google.android.material.tabs.TabLayout>
-
-
-    <FrameLayout
-        android:id="@+id/fragment_chats_container"
+    android:layout_height="match_parent">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2.6"/>
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".view.fragments.ConversationsFragment"
+        android:orientation="vertical">
+
+        <!-- TODO: Update blank fragment layout -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tab_bar_bg">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Conversations"
+                android:textSize="32sp"
+                android:textColor="#FFFFFF"
+                android:fontFamily="@font/arial_regular"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_gravity="bottom"/>
+
+            <ImageView
+                android:id="@+id/imageview_add_conversation"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end|bottom"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/add_icon"
+                android:tint="@android:color/white"
+                android:foregroundTint="#FFFFFF"/>
+        </FrameLayout>
+        <com.google.android.material.tabs.TabLayout
+            android:id = "@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="#FF863A">
+
+        </com.google.android.material.tabs.TabLayout>
 
 
-</LinearLayout>
+        <FrameLayout
+            android:id="@+id/fragment_chats_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2.6"/>
+
+
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

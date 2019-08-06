@@ -61,6 +61,8 @@ public class ChatsGroupFragment extends Fragment {
         viewModel.getRoomList().observe(getViewLifecycleOwner(), new Observer<List<Room>>() {
             @Override
             public void onChanged(List<Room> rooms) {
+                adapter.setRoomChats(new ArrayList<>());
+                adapter.notifyDataSetChanged();
                 adapter.setRoomChats(rooms);
                 adapter.notifyDataSetChanged();
             }

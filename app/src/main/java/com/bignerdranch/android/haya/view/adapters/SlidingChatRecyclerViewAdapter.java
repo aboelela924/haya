@@ -43,9 +43,12 @@ public class SlidingChatRecyclerViewAdapter extends RecyclerView.Adapter<Sliding
         this.mUser = user;
         viewBinderHelper.setOpenOnlyOne(true);
     }
+
     public void setRoomChats(List<Room>chats){
-        this.chats = chats;
+        this.chats.clear();
+        this.chats.addAll(chats);
     }
+
     //Create new views.
     @NonNull
     @Override

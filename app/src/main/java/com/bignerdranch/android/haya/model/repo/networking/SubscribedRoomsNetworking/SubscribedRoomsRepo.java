@@ -1,5 +1,6 @@
 package com.bignerdranch.android.haya.model.repo.networking.SubscribedRoomsNetworking;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,6 +17,11 @@ import com.bignerdranch.android.haya.model.repo.User;
 import com.bignerdranch.android.haya.model.repo.networking.GetRetrofit;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.model.repo.networking.SocketActions;
+import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.ChatNetworkingRepo;
+import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncAPI;
+import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncBody;
+import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncMessage;
+import com.bignerdranch.android.haya.model.repo.networking.chatNetworking.SyncMessageMaster;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.HayaDatabase;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.ChatDB;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.MessageDB;
@@ -29,6 +35,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +49,7 @@ public class SubscribedRoomsRepo {
     private static SubscribedRoomsRepo instance;
     private RoomsExample roomsExample;
     private LiveEvent<List<Room>> mRoomList = new LiveEvent<>();
+    private HayaDatabase mDatabase;
     private String roomType;
     //Singelton Pattern
     public static SubscribedRoomsRepo getInstance(){
@@ -49,6 +57,48 @@ public class SubscribedRoomsRepo {
             instance = new SubscribedRoomsRepo();
 
         return instance;
+    }
+
+    public SubscribedRoomsRepo(){
+        mDatabase = App.getInstance().getMyDatabase();
+    }
+
+
+    public void sync(String accessToken){
+        Retrofit retrofit = GetRetrofit.getRetrofitInstance();
+        SubscribedRoomsAPI api = retrofit.create(SubscribedRoomsAPI.class);
+        Call<RoomsExample> call = api.getSubscribedRooms(accessToken);
+        call.enqueue(new Callback<RoomsExample>() {
+            @Override
+            public void onResponse(Call<RoomsExample> call, Response<RoomsExample> response) {
+                if (response.isSuccessful()){
+                    new AsyncTask<Void, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            List<Room> rooms = response.body().getRooms();
+                            ChatNetworkingRepo repo = ChatNetworkingRepo.getInstance();
+                            for (Room room : rooms){
+                                MessageDB messageDB = mDatabase.message_dao().getLastMessageForChat(room.getId());
+                                if (messageDB == null) continue;
+                                if(messageDB != null){
+                                    SyncBody body = new SyncBody(room.getId(), Long.valueOf(messageDB.updatedAt));
+                                    List<SyncBody> bodies = new ArrayList<>();
+                                    bodies.add(body);
+                                    repo.syncMessages(accessToken, bodies, room.getSubscribers());
+                                }
+
+                            }
+                            return null;
+                        }
+                    }.execute();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RoomsExample> call, Throwable t) {
+
+            }
+        });
     }
 
     //Called by the ViewModel for initialization the mutable data.

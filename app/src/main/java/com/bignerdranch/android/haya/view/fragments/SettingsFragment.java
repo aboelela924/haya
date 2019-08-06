@@ -49,6 +49,7 @@ public class SettingsFragment extends Fragment {
 
     @BindView(R.id.user_key_text_view) TextView mUserKeyTextView;
     @BindView(R.id.is_secret_chat_enabled_switch_button) SwitchButton mIsSecretChatEnabledSwitchButton;
+    @BindView(R.id.is_muted_switch_button) SwitchButton mIsMutedSwitchButton;
 
     private User mUser;
     private MainSettingsViewModel mViewModel;
@@ -60,7 +61,8 @@ public class SettingsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main_settings, container, false);
         ButterKnife.bind(this,v);
-
+        mIsMutedSwitchButton.setChecked(PreferenceManager.getDefaultSharedPreferences(getActivity())
+                .getBoolean(SharedPreferncesConstants.IS_MUTED,false));
         SwitchButton.OnCheckedChangeListener changeListener = new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
@@ -80,6 +82,16 @@ public class SettingsFragment extends Fragment {
                         });
             }
         };
+
+        mIsMutedSwitchButton.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                sp.edit()
+                        .putBoolean(SharedPreferncesConstants.IS_MUTED, isChecked)
+                        .apply();
+            }
+        });
 
         mUser = getArguments().getParcelable(USER);
 

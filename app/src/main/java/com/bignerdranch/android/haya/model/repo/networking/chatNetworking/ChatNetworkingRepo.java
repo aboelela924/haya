@@ -1,7 +1,9 @@
 package com.bignerdranch.android.haya.model.repo.networking.chatNetworking;
 
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -231,6 +233,7 @@ public class ChatNetworkingRepo {
     private Emitter.Listener onGetMessage = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
+
             JSONObject jsonObject = (JSONObject) args[0];
             Log.d(TAG, "call: "+jsonObject.toString());
             Gson gson = new Gson();

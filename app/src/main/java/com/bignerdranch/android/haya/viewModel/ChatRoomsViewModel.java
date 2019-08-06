@@ -20,6 +20,10 @@ public class ChatRoomsViewModel extends ViewModel {
         mRoomList = mRoomsRepo.getRoomList();
     }
 
+    public void sync(String accessToken){
+        mRoomsRepo.sync(accessToken);
+    }
+
     public void set1to1RoomList(){
         mRoomsRepo.setRoomList("1");
     }

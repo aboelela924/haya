@@ -59,8 +59,20 @@ public class Chats1to1TabFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
-        viewModelFunction();
+
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModelFunction();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        viewModel.stopNewChatObserver();
     }
 
     private void viewModelFunction(){
@@ -75,9 +87,5 @@ public class Chats1to1TabFragment extends Fragment {
         viewModel.observewNewMessage();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        viewModel.stopNewChatObserver();
-    }
+
 }

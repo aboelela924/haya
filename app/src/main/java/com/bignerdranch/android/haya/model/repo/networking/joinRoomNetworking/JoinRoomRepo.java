@@ -1,5 +1,6 @@
 package com.bignerdranch.android.haya.model.repo.networking.joinRoomNetworking;
 
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.os.Looper;
 
@@ -12,6 +13,7 @@ import com.bignerdranch.android.haya.model.repo.Subscriber;
 import com.bignerdranch.android.haya.model.repo.networking.GetSocket;
 import com.bignerdranch.android.haya.model.repo.networking.SocketActions;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.HayaDatabase;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.ChatDB;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.SubscriberDB;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
@@ -79,8 +81,16 @@ public class JoinRoomRepo {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... voids) {
-                    SubscriberDB[] subscriberDBS = SubscriberDB.toSubscriberDBArray(room.getSubscribers());
-                    mDatabase.subscriber_dao().insertSubscribers(subscriberDBS);
+                    try{
+                        SubscriberDB[] subscriberDBS = SubscriberDB.toSubscriberDBArray(room.getSubscribers());
+                        mDatabase.subscriber_dao().insertSubscribers(subscriberDBS);
+                    }catch (SQLiteConstraintException e){
+                        ChatDB chatDB = ChatDB.toChat(room);
+                        mDatabase.chat_dao().addNewChat(chatDB);
+                        SubscriberDB[] subscriberDBS = SubscriberDB.toSubscriberDBArray(room.getSubscribers());
+                        mDatabase.subscriber_dao().insertSubscribers(subscriberDBS);
+                    }
+
                     return null;
                 }
             }.execute();

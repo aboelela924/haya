@@ -43,6 +43,7 @@ public class ChatNetworkingRepo {
     private static final String TAG = "ChatNetworkingRepo";
 
     private HayaDatabase mDatabase;
+    private String mCurrentRoomId;
 
     public static ChatNetworkingRepo getInstance() {
         return ourInstance;
@@ -215,7 +216,8 @@ public class ChatNetworkingRepo {
         socket.on(SocketActions.OBSERVE_MSG_DELETED, onDelete);
     }
 
-    public void observeMessages(){
+    public void observeMessages(String roomId){
+        mCurrentRoomId = roomId;
         Socket socket = GetSocket.getSocket();
         socket.on(SocketActions.OBSERVE_MESSAGE, onGetMessage);
     }
@@ -238,22 +240,25 @@ public class ChatNetworkingRepo {
             Log.d(TAG, "call: "+jsonObject.toString());
             Gson gson = new Gson();
             Message message = gson.fromJson(jsonObject.toString(), Message.class);
-            new AsyncTask<Void, Void, Void>() {
-                @Override
-                protected Void doInBackground(Void... voids) {
-                    MessageDB messageDB = MessageDB.fromMessage(message);
-                    try{
-                        mDatabase.message_dao().insertMessage(messageDB);
-                    }catch (SQLiteConstraintException e){
-                        Subscriber subscriber = message.getUser();
-                        mDatabase.subscriber_dao().insertSubscriber(SubscriberDB.fromSubscriber(subscriber));
-                        mDatabase.message_dao().insertMessage(messageDB);
-                    }
+            if(message.getRoom_id().equals(mCurrentRoomId)){
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        MessageDB messageDB = MessageDB.fromMessage(message);
+                        try{
+                            mDatabase.message_dao().insertMessage(messageDB);
+                        }catch (SQLiteConstraintException e){
+                            Subscriber subscriber = message.getUser();
+                            mDatabase.subscriber_dao().insertSubscriber(SubscriberDB.fromSubscriber(subscriber));
+                            mDatabase.message_dao().insertMessage(messageDB);
+                        }
 
-                    return null;
-                }
-            }.execute();
-            mData.postValue(message);
+                        return null;
+                    }
+                }.execute();
+                mData.postValue(message);
+            }
+
         }
     };
 

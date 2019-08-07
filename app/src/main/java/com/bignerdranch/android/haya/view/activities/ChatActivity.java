@@ -163,14 +163,14 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
 
         mViewModel = ViewModelProviders.of(this).get(ChatViewModel.class);
         mViewModel.mData.observe(this, message -> {
-            /*if(message.getUser().getUser_id().equals(mUser.getId())){
-                message.setUser(null);
-            }*/
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ChatActivity.this);
-            if(!sp.getBoolean(SharedPreferncesConstants.IS_MUTED, false)){
-                MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.twitter_sound);
-                mediaPlayer.start();
+            if(!message.getUser().getUser_id().equals(mUser.getId())){
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ChatActivity.this);
+                if(!sp.getBoolean(SharedPreferncesConstants.IS_MUTED, false)){
+                    MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.twitter_sound);
+                    mediaPlayer.start();
+                }
             }
+
             mMessageList.add(message);
             updateRecyclerView();
         });
@@ -207,7 +207,7 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
             });
 
         });
-        mViewModel.observeMessages();
+        mViewModel.observeMessages(mRoom.getId());
         mViewModel.observeMessageDelete();
         mViewModel.getLastMessageTime(mRoom.getId());
         mViewModel.mLastMessageTime.observe(this, time -> {
@@ -348,5 +348,6 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
         super.onDestroy();
         mViewModel.stopObserveMessages();
         mViewModel.stopObserveMessageDelete();
+        unregisterReceiver(mReceiver);
     }
 }

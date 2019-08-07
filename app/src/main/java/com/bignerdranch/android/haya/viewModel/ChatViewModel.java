@@ -49,8 +49,8 @@ public class ChatViewModel extends ViewModel {
         mRepo.syncMessages(token, body,subscribers);
     }
 
-    public void observeMessages(){
-        mRepo.observeMessages();
+    public void observeMessages(String roomId){
+        mRepo.observeMessages(roomId);
     }
 
     public void observeMessageDelete(){

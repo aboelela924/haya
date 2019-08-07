@@ -145,6 +145,11 @@ public class ChatSettingsRepo {
         socket.on(SocketActions.OBSERVE_USER_LEAVE, onUserLeave);
     }
 
+    public void observeAllMessagesDeleted(){
+        Socket socket = GetSocket.getSocket();
+        socket.on(SocketActions.OBSERVE_MSG_DELETE_ALL, onAllMessagesDeleted);
+    }
+
     Emitter.Listener onUserJoin = new Emitter.Listener() {
         @Override
         public void call(Object... args) {

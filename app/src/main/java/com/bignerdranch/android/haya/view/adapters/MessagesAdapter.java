@@ -18,6 +18,8 @@ import com.bignerdranch.android.haya.view.activities.ChatActivity;
 import com.bignerdranch.android.haya.view.activities.MessageClickCallbacks;
 import com.bignerdranch.android.haya.viewModel.ChatViewModel;
 
+import org.w3c.dom.Text;
+
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -46,6 +48,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public int getItemViewType(int position) {
         Message message = mMessages.get(position);
+        if(message.getType().equals("1")){
+            return  SYSTEM_MESSAGE;
+        }
         if (message.getId() == null){
             return CITIZIEN_MESSAGE_NO_NETWORK;
         }
@@ -79,6 +84,12 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                         parent,
                         false);
                 return new CitizienMessageNoNetworkViewHolder(v3);
+            case SYSTEM_MESSAGE:
+                View v4 = LayoutInflater.from(mContext).inflate(
+                        R.layout.system_message,
+                        parent,
+                        false);
+                return new SystemMessageViewHolder(v4);
         }
         return null;
     }
@@ -93,6 +104,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((ForeignMessageViewHolder) holder).bind(message);
         }else if(holder instanceof CitizienMessageNoNetworkViewHolder){
             ((CitizienMessageNoNetworkViewHolder) holder).bind(message);
+        }else if(holder instanceof SystemMessageViewHolder){
+            ((SystemMessageViewHolder) holder).bind(message.getMessage());
         }
     }
 
@@ -177,8 +190,15 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private class SystemMessageViewHolder extends RecyclerView.ViewHolder{
 
+        private TextView mSystemMessageTextView;
+
         public SystemMessageViewHolder(@NonNull View itemView) {
             super(itemView);
+            mSystemMessageTextView = itemView.findViewById(R.id.system_message_text_view);
+        }
+
+        public void bind(String systemMessage){
+            mSystemMessageTextView.setText(systemMessage);
         }
     }
 

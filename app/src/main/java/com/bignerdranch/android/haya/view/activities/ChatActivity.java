@@ -206,20 +206,18 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
                 }
             });
         });
+        mViewModel.observeSystemActions();
         mViewModel.observeMessages(mRoom.getId());
         mViewModel.observeMessageDelete();
-        mViewModel.getLastMessageTime(mRoom.getId());
-        mViewModel.mLastMessageTime.observe(this, time -> {
-            long t = Long.valueOf(time);
-            List<SyncBody> bodies = new ArrayList<>();
-            SyncBody body = new SyncBody(mRoom.getId(), t);
-            bodies.add(body);
-            mViewModel.syncMessages(mUser.getAccessToken(),bodies, mRoom.getSubscribers());
+        sync();
+
+        mViewModel.mDeleteData.observe(this, deleteResult -> {
+            sync();
         });
 
-
-
-
+        mViewModel.mRoomData.observe(this, room -> {
+            sync();
+        });
 
         mAdapter = new MessagesAdapter(this,mMessageList, mUser,this);
         final LinearLayoutManager linearLayout = new LinearLayoutManager(this);
@@ -242,6 +240,26 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
             }
         });
 
+    }
+
+
+    private void sync() {
+        mMessageList.clear();
+        mViewModel.getLastMessageTime(mRoom.getId());
+        mViewModel.mLastMessageTime.observe(this, time -> {
+            long t = Long.valueOf(time);
+            List<SyncBody> bodies = new ArrayList<>();
+            SyncBody body = new SyncBody(mRoom.getId(), t);
+            bodies.add(body);
+            mViewModel.syncMessages(mUser.getAccessToken(),bodies, mRoom.getSubscribers());
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMessageList.clear();
+        sync();
     }
 
     @OnClick(R.id.send_image_view)

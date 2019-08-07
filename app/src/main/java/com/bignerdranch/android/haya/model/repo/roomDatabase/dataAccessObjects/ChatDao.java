@@ -11,6 +11,9 @@ import java.util.List;
 
 @Dao
 public interface ChatDao {
+    @Query("Delete from chat")
+    void deleteAllChats();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addNewChat(ChatDB newChatDB);
 

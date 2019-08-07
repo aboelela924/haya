@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.haya.App;
@@ -20,9 +22,11 @@ import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.Message;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
+import com.bignerdranch.android.haya.model.repo.networking.SubscribedRoomsNetworking.RoomOptionsCallBacks;
 import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.MessageDB;
 import com.bignerdranch.android.haya.utils.TimeFormat;
 import com.bignerdranch.android.haya.view.activities.ChatActivity;
+import com.bignerdranch.android.haya.viewModel.ChatRoomsViewModel;
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.chauthai.swipereveallayout.ViewBinderHelper;
 
@@ -35,13 +39,17 @@ public class SlidingChatRecyclerViewAdapter extends RecyclerView.Adapter<Sliding
     private List<Room> chats;
     private Context mContext;
     private User mUser;
+    private ChatRoomsViewModel viewModel;
+    private RoomOptionsCallBacks roomOptionsCallBacks;
+
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public SlidingChatRecyclerViewAdapter(Context ctx, User user) {
+    public SlidingChatRecyclerViewAdapter(Context ctx, User user, RoomOptionsCallBacks callBacks) {
         mContext = ctx;
         chats = new ArrayList<>();
         this.mUser = user;
         viewBinderHelper.setOpenOnlyOne(true);
+        roomOptionsCallBacks = callBacks;
     }
 
     public void setRoomChats(List<Room>chats){
@@ -65,12 +73,16 @@ public class SlidingChatRecyclerViewAdapter extends RecyclerView.Adapter<Sliding
         String lastMessage = chats.get(position).getLastMessage().getMessage();
         if(lastMessage.length()>35)
             lastMessage = lastMessage.substring(0,34)+"...";
-        holder.sliding_constraint_layout_chat_overview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = ChatActivity.newIntent(mContext,mUser, chats.get(position));
-                mContext.startActivity(i);
-            }
+
+        holder.sliding_frame_layout_chat_overview.setOnClickListener(view -> {
+            Intent i = ChatActivity.newIntent(mContext,mUser, chats.get(position));
+            mContext.startActivity(i);
+        });
+        holder.buttonDeleteRoom.setOnClickListener(view -> {
+            roomOptionsCallBacks.deleteRoom(chats.get(position).get_id());
+        });
+        holder.buttonSetPrivateRoom.setOnClickListener(view->{
+
         });
 
         holder.textViewChatNickname.setText(chats.get(position).getName());
@@ -93,7 +105,10 @@ public class SlidingChatRecyclerViewAdapter extends RecyclerView.Adapter<Sliding
         private ImageView imageViewGoToChat;
         private ImageView imageViewChatBottomLine;
         private SwipeRevealLayout swipeRevealLayout;
-        private ConstraintLayout sliding_constraint_layout_chat_overview;
+        private FrameLayout sliding_frame_layout_chat_overview;
+
+        private Button buttonDeleteRoom;
+        private Button buttonSetPrivateRoom;
 
         //Make reference to the views
         public ViewHolder(@NonNull View itemView) {
@@ -104,7 +119,10 @@ public class SlidingChatRecyclerViewAdapter extends RecyclerView.Adapter<Sliding
             imageViewGoToChat = itemView.findViewById(R.id.sliding_chat_outview_go_to);
             imageViewChatBottomLine = itemView.findViewById(R.id.sliding_chat_outview_bottom_line);
             swipeRevealLayout = itemView.findViewById(R.id.swipe_reveal_layout);
-            sliding_constraint_layout_chat_overview = itemView.findViewById(R.id.sliding_constraint_layout_chat_overview);
+            sliding_frame_layout_chat_overview = itemView.findViewById(R.id.sliding_framelayout_chat_overview);
+
+            buttonDeleteRoom = itemView.findViewById(R.id.sliding_chat_outview_delete_button);
+            buttonSetPrivateRoom = itemView.findViewById(R.id.sliding_chat_outview_private_button);
         }
     }
 }

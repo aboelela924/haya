@@ -205,7 +205,6 @@ public class ChatActivity extends AppCompatActivity implements MessageClickCallb
                     updateRecyclerView();
                 }
             });
-
         });
         mViewModel.observeMessages(mRoom.getId());
         mViewModel.observeMessageDelete();

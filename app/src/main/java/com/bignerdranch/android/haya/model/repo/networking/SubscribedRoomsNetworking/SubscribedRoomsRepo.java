@@ -3,12 +3,15 @@ package com.bignerdranch.android.haya.model.repo.networking.SubscribedRoomsNetwo
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.RoomDatabase;
 
 import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.model.repo.CurrentUser;
+import com.bignerdranch.android.haya.model.repo.DeleteResult;
 import com.bignerdranch.android.haya.model.repo.Message;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.RoomsExample;
@@ -29,8 +32,10 @@ import com.bignerdranch.android.haya.model.repo.roomDatabase.classes.SubscriberD
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
+import com.google.gson.JsonParseException;
 import com.hadilq.liveevent.LiveEvent;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -51,6 +56,7 @@ public class SubscribedRoomsRepo {
     private LiveEvent<List<Room>> mRoomList = new LiveEvent<>();
     private HayaDatabase mDatabase;
     private String roomType;
+
     //Singelton Pattern
     public static SubscribedRoomsRepo getInstance(){
         if(instance == null)
@@ -156,7 +162,6 @@ public class SubscribedRoomsRepo {
             }
         });
     }
-
     public LiveData<List<Room>> getRoomList() {
         return mRoomList;
     }
@@ -165,50 +170,93 @@ public class SubscribedRoomsRepo {
         Socket socket = GetSocket.getSocket();
         socket.on(SocketActions.OBSERVE_USER_JOIN, onUserJoinNewChat);
     }
-
     public void observeNewMessage(){
         Socket socket = GetSocket.getSocket();
         socket.on(SocketActions.OBSERVE_MESSAGE, onNewMessage);
     }
+    public void observeRoomDeleted(){
+        Socket socket = GetSocket.getSocket();
+        socket.on(SocketActions.OBSERVE_ROOM_DELETED, onRoomDeleted);
+    }
 
+    public void disconnectRoom(String room_id){
+        Socket socket = GetSocket.getSocket();
+        try{
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("room_id", room_id);
+            socket.emit(SocketActions.EMIT_LEAVE_ROOM, jsonObject);
+        }
+        catch(JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void stopNewChatObserver(){
+        Socket socket = GetSocket.getSocket();
+        socket.off(SocketActions.OBSERVE_USER_JOIN);
+    }
     public void stopNewMessageObserver(){
         Socket socket = GetSocket.getSocket();
         socket.off(SocketActions.OBSERVE_MESSAGE);
     }
+    public void stopOnRoomDeleted(){
+        Socket socket = GetSocket.getSocket();
+        socket.off(SocketActions.OBSERVE_ROOM_DELETED);
+    }
 
-    Emitter.Listener onUserJoinNewChat = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            JSONObject jsonObject = (JSONObject) args[0];
-            Gson gson = new Gson();
-            Room room = gson.fromJson(jsonObject.toString(), Room.class);
-
+    private Emitter.Listener onUserJoinNewChat = args -> {
+        JSONObject jsonObject = (JSONObject) args[0];
+        Gson gson = new Gson();
+        Room room = gson.fromJson(jsonObject.toString(), Room.class);
+        if(room.getType().equals(roomType)){
             List<Room> roomList = new ArrayList<>();
             roomList.add(room);
+            roomList.addAll(mRoomList.getValue());
             roomList.addAll(mRoomList.getValue());
             mRoomList.postValue(roomList);
         }
     };
+    private Emitter.Listener onNewMessage = args -> {
+        JSONObject jsonObject = (JSONObject) args[0];
+        Gson gson = new Gson();
+        Message message = gson.fromJson(jsonObject.toString(), Message.class);
+        String room_id_ofMessage = message.getRoom_id();
 
-    Emitter.Listener onNewMessage = new Emitter.Listener(){
-        @Override
-        public void call(Object... args) {
-            JSONObject jsonObject = (JSONObject) args[0];
-            Gson gson = new Gson();
-            Message message = gson.fromJson(jsonObject.toString(), Message.class);
-            List<Room> roomList = new ArrayList<>();
-            Room tempRoom = new Room();
-            roomList.add(tempRoom);
-            for(Room room: mRoomList.getValue())
-            {
-                if(room.get_id().equals(message.getRoom_id()))
-                {
-                    room.setLastMessage(message);
-                    roomList.set(0,room);
-                }
-                roomList.add(room);
-            }
-            mRoomList.postValue(roomList);
+        List<Room> finalRoomList = new ArrayList<>();
+        Room tempRoom = new Room();
+        finalRoomList.add(tempRoom);
+        List<Room> copymRoomList = mRoomList.getValue();
+        for (Room room : copymRoomList) { //O(N)
+
+            if (room.get_id().equals(room_id_ofMessage)) {
+                room.setLastMessage(message);
+                finalRoomList.set(0, room);
+            } else
+                finalRoomList.add(room);
         }
+        mRoomList.postValue(finalRoomList); //O(N)
+    };
+    private Emitter.Listener onRoomDeleted = args->{
+        JSONObject jsonObject = (JSONObject) args[0];
+        Gson gson = new Gson();
+        DeletedRoom deletedRoom = gson.fromJson(jsonObject.toString(),DeletedRoom.class);
+
+        List<Room> copymRoomList = mRoomList.getValue();
+        List<Room> finalRoomList = new ArrayList<>();
+        for(Room room : copymRoomList){ //O(N)
+            if(!room.get_id().equals(deletedRoom.getRoom_id()))
+                finalRoomList.add(room);
+            else
+            {
+                new AsyncTask<Void, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        App.getInstance().getMyDatabase().chat_dao().deleteChat(ChatDB.toChat(room));
+                        return null;
+                    }
+                }.execute();
+            }
+        }
+        mRoomList.postValue(finalRoomList); //O(N)
     };
 }

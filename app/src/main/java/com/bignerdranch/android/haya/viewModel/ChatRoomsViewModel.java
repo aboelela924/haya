@@ -34,15 +34,28 @@ public class ChatRoomsViewModel extends ViewModel {
         mRoomsRepo.setRoomList("3");
     }
 
+    public void disconnectRoom(String room_id){
+        mRoomsRepo.disconnectRoom(room_id);
+    }
 
     public void observeNewChatCreated(){
         mRoomsRepo.observeNewChatCreated();
     }
-    public void stopNewChatObserver(){
-        mRoomsRepo.stopNewMessageObserver();
-    }
     public void observewNewMessage(){
         mRoomsRepo.observeNewMessage();
+    }
+    public void observeOnRoomDeleted(){
+        mRoomsRepo.observeRoomDeleted();
+    }
+
+    public void stopNewChatObserver(){
+        mRoomsRepo.stopNewChatObserver();
+    }
+    public void stopNewMessageObserver(){
+        mRoomsRepo.stopNewMessageObserver();
+    }
+    public void stopOnRoomDeleted(){
+        mRoomsRepo.stopOnRoomDeleted();
     }
     //Called from the mainactivity whenever needed
     public LiveData<List<Room>> getRoomList(){

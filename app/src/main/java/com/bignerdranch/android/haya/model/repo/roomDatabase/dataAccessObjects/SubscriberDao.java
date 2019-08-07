@@ -11,6 +11,9 @@ import java.util.List;
 
 @Dao
 public interface SubscriberDao {
+    @Query("Delete from subscriber")
+    void deleteAllSubscribers();
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertSubscriber(SubscriberDB subscriberDB);
 

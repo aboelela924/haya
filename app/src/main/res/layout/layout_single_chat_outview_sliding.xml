@@ -12,26 +12,12 @@
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:orientation="horizontal">
             <Button
-                android:id="@+id/chat_outview_delete_button"
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:background="@android:color/holo_red_light"
-                android:fontFamily="@font/avenir_book"
-                android:text="Delete"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFFFF"
-                android:textSize="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-            <Button
-                android:id="@+id/chat_outview_private_button"
+                android:id="@+id/sliding_chat_outview_private_button"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
@@ -40,24 +26,33 @@
                 android:text="Private"
                 android:textAllCaps="false"
                 android:textColor="#FFFFFFFF"
-                android:textSize="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/chat_outview_delete_button"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textSize="18dp"/>
+            <Button
+                android:id="@+id/sliding_chat_outview_delete_button"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:background="@android:color/holo_red_light"
+                android:fontFamily="@font/avenir_book"
+                android:text="Delete"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFFFF"
+                android:textSize="18dp"/>
+        </LinearLayout>
     </FrameLayout>
 
     <!-- Your main layout here -->
     <FrameLayout
-        android:id="@+id/sliding_frameLayout_chat_overview"
+        android:id="@+id/sliding_framelayout_chat_overview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sliding_constraint_layout_chat_overview"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="top">
             <TextView
                 android:id="@+id/sliding_chat_outview_nickname"
                 android:layout_width="wrap_content"
@@ -69,57 +64,52 @@
                 android:text="Chat_Nickname"
                 android:textColor="@android:color/black"
                 android:textSize="18dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.123" />
-            <TextView
-                android:id="@+id/sliding_chat_outview_last_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:fontFamily="@font/avenir_book"
-                android:textStyle="italic"
-                android:text="Hello"
-                android:textColor="#323232"
-                android:textSize="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.857" />
+                android:layout_weight="1"/>
             <TextView
                 android:id="@+id/sliding_chat_outview_last_message_date"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="15dp"
                 android:fontFamily="@font/avenir_book"
                 android:text="XX/XX/XXXX"
                 android:textAlignment="textEnd"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="18dp"
-                app:layout_constraintBottom_toBottomOf="@+id/chat_outview_nickname"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/sliding_chat_outview_nickname" />
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:id="@+id/sliding_chat_outview_last_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/avenir_book"
+                android:text="Hello"
+                android:textColor="#323232"
+                android:textSize="15dp"
+                android:textStyle="italic" />
             <ImageView
                 android:id="@+id/sliding_chat_outview_go_to"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/sliding_chat_outview_last_message_date"
-                app:srcCompat="@drawable/right_arrow_icon" />
-            <ImageView
-                android:id="@+id/sliding_chat_outview_bottom_line"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/costume_single_chat_outview_border" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginEnd="15dp"
+                app:srcCompat="@drawable/right_arrow_icon"/>
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/sliding_chat_outview_bottom_line"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="bottom"
+            app:srcCompat="@drawable/costume_single_chat_outview_border" />
+
     </FrameLayout>
 
 </com.chauthai.swipereveallayout.SwipeRevealLayout>

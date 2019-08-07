@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.room.RoomDatabase;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,10 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bignerdranch.android.haya.App;
 import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
+import com.bignerdranch.android.haya.model.repo.roomDatabase.HayaDatabase;
 import com.bignerdranch.android.haya.view.activities.JoinConversationActivity;
 import com.bignerdranch.android.haya.viewModel.CreateRoomViewModel;
 import com.github.ybq.android.spinkit.SpinKitView;

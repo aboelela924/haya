@@ -18,6 +18,7 @@ import com.bignerdranch.android.haya.R;
 import com.bignerdranch.android.haya.model.repo.CurrentUser;
 import com.bignerdranch.android.haya.model.repo.Room;
 import com.bignerdranch.android.haya.model.repo.User;
+import com.bignerdranch.android.haya.model.repo.networking.SubscribedRoomsNetworking.RoomOptionsCallBacks;
 import com.bignerdranch.android.haya.view.adapters.SlidingChatRecyclerViewAdapter;
 import com.bignerdranch.android.haya.viewModel.ChatRoomsViewModel;
 
@@ -29,7 +30,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ChatsGroupFragment extends Fragment {
+public class ChatsGroupFragment extends Fragment implements RoomOptionsCallBacks {
     private static final String tag_chats1to1Tab = "Chats1to1Tab";
     private static final String USER = "USER";
 
@@ -47,18 +48,22 @@ public class ChatsGroupFragment extends Fragment {
         ButterKnife.bind(this,v);
         mUser = CurrentUser.user;
 
-        adapter = new SlidingChatRecyclerViewAdapter(getActivity(), mUser);
+        adapter = new SlidingChatRecyclerViewAdapter(getActivity(), mUser, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
-
-        viewModelFunction();
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModelFunction();
     }
 
     private void viewModelFunction(){
         viewModel = ViewModelProviders.of(this).get(ChatRoomsViewModel.class);
         viewModel.setGroupRoomList();
-        viewModel.getRoomList().observe(getViewLifecycleOwner(), new Observer<List<Room>>() {
+        viewModel.getRoomList().observe(this, new Observer<List<Room>>() {
             @Override
             public void onChanged(List<Room> rooms) {
                 adapter.setRoomChats(new ArrayList<>());
@@ -69,11 +74,33 @@ public class ChatsGroupFragment extends Fragment {
         });
         viewModel.observeNewChatCreated();
         viewModel.observewNewMessage();
+        viewModel.observeOnRoomDeleted();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         viewModel.stopNewChatObserver();
+        viewModel.stopNewMessageObserver();
+        viewModel.stopOnRoomDeleted();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        viewModel.stopNewChatObserver();
+        viewModel.stopNewMessageObserver();
+        viewModel.observeOnRoomDeleted();
+    }
+
+
+    @Override
+    public void deleteRoom(String room_id) {
+        viewModel.disconnectRoom(room_id);
+    }
+
+    @Override
+    public void setToPrivate(String room_id) {
+
     }
 }

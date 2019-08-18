@@ -38,16 +38,14 @@
                     xmlns:app="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:id="@+id/linearLayout3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="72dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="24dp"
                         android:orientation="horizontal"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
@@ -71,15 +69,15 @@
                                 android:fontFamily="@font/avenir_book"
                                 android:text="Generate a code and share it"
                                 android:textColor="#424242"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
 
                     <View
                         android:id="@+id/view13"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="27dp"
                         android:background="@drawable/round_button_no_opacity"
                         app:layout_constraintStart_toEndOf="@+id/cardView4"
                         app:layout_constraintTop_toBottomOf="@+id/view8" />
@@ -87,7 +85,7 @@
                     <View
                         android:id="@+id/view12"
                         android:layout_width="2dp"
-                        android:layout_height="60dp"
+                        android:layout_height="30dp"
                         android:layout_marginStart="32dp"
                         android:background="#7F7F7F"
                         app:layout_constraintStart_toEndOf="@+id/cardView4"
@@ -95,9 +93,9 @@
 
                     <View
                         android:id="@+id/view11"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="27dp"
                         android:background="@drawable/round_button_no_opacity"
                         app:layout_constraintStart_toEndOf="@+id/cardView3"
                         app:layout_constraintTop_toBottomOf="@+id/view10" />
@@ -105,7 +103,7 @@
                     <View
                         android:id="@+id/view10"
                         android:layout_width="2dp"
-                        android:layout_height="60dp"
+                        android:layout_height="30dp"
                         android:layout_marginStart="32dp"
                         android:background="#7F7F7F"
                         app:layout_constraintStart_toEndOf="@+id/cardView2"
@@ -113,9 +111,9 @@
 
                     <View
                         android:id="@+id/view9"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="96dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="82dp"
                         android:background="@drawable/round_button_no_opacity"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -123,7 +121,7 @@
                     <View
                         android:id="@+id/view6"
                         android:layout_width="2dp"
-                        android:layout_height="60dp"
+                        android:layout_height="30dp"
                         android:layout_marginStart="32dp"
                         android:background="#7F7F7F"
                         app:layout_constraintStart_toEndOf="@+id/cardView2"
@@ -131,21 +129,20 @@
 
                     <View
                         android:id="@+id/view7"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="27dp"
                         android:layout_marginEnd="8dp"
                         android:background="@drawable/round_button_no_opacity"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/linearLayout5"
                         app:layout_constraintStart_toEndOf="@+id/cardView4"
                         app:layout_constraintTop_toBottomOf="@+id/view12" />
 
                     <View
                         android:id="@+id/view4"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="20dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:layout_marginStart="27dp"
                         android:background="@drawable/round_button_no_opacity"
                         app:layout_constraintStart_toEndOf="@+id/cardView2"
                         app:layout_constraintTop_toBottomOf="@+id/view6" />
@@ -153,7 +150,7 @@
                     <View
                         android:id="@+id/view8"
                         android:layout_width="2dp"
-                        android:layout_height="60dp"
+                        android:layout_height="30dp"
                         android:layout_marginStart="32dp"
                         android:background="#7F7F7F"
                         app:layout_constraintStart_toEndOf="@+id/cardView3"
@@ -164,7 +161,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="72dp"
+                        android:layout_marginTop="32dp"
                         android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/view4"
                         app:layout_constraintStart_toStartOf="parent"
@@ -172,8 +169,8 @@
 
                         <ImageView
                             android:id="@+id/imageView4"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="4dp"
@@ -188,7 +185,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="36dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/view11"
                         app:layout_constraintStart_toStartOf="parent"
@@ -196,8 +193,8 @@
 
                         <ImageView
                             android:id="@+id/imageView5"
-                            android:layout_width="40dp"
-                            android:layout_height="40sp"
+                            android:layout_width="20dp"
+                            android:layout_height="20sp"
                             android:layout_marginStart="8dp"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="4dp"
@@ -212,7 +209,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
-                        android:layout_marginTop="36dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toStartOf="@+id/view13"
                         app:layout_constraintStart_toStartOf="parent"
@@ -220,8 +217,8 @@
 
                         <ImageView
                             android:id="@+id/imageView6"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="4dp"
@@ -236,8 +233,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="50dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="4dp"
                         android:orientation="horizontal"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
@@ -268,8 +264,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:layout_marginTop="40dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="4dp"
                         android:orientation="horizontal"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
@@ -293,7 +288,7 @@
                                 android:fontFamily="@font/avenir_book"
                                 android:text="You will be connected instantly"
                                 android:textColor="#424242"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
                         </androidx.cardview.widget.CardView>
                     </LinearLayout>
 

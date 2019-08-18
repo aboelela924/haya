@@ -43,6 +43,6 @@ public class RegistrationRepo implements Callback<UserExample> {
 
     @Override
     public void onFailure(Call<UserExample> call, Throwable t) {
-
+        System.out.println(t.getMessage());
     }
 }
